@@ -1,0 +1,41 @@
+#tabelaExterna {
+	border: none;
+	border-spacing: 10px;
+}
+#colunaLateral {
+	width: 100px;
+	background-color: navy;
+	height: 100%;
+}
+#colunaCentral {
+	vertical-align: top;
+}
+#tabelaLista {
+	border: 1px solid black; 
+	width: 100%;
+	border-spacing: 0px;
+}
+#tabelaLista tr th.title {
+	text-align: left;
+	background-color: lightblue;	
+}
+#tabelaLista tr th.price {
+	text-align: right;
+	background-color: lightblue;	
+}
+#tabelaLista tr th.stock {
+	text-align: right;
+	background-color: lightblue;	
+}
+#tabelaLista tr td.title {
+	text-align: left;
+}
+#tabelaLista tr td.price {
+	text-align: right;
+}
+#tabelaLista tr td.stock {
+	text-align: right;
+}
+#tabelaFormulario {
+	border: none;
+}

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN" "http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
+
+<taglib>
+  <tlibversion>1.0</tlibversion>
+  <jspversion>1.1</jspversion>
+  <shortname>Simple MVC Tag Library</shortname>
+  <info></info>
+
+  <tag>
+    <name>redirectLogged</name>
+    <tagclass>br.unirio.simplemvc.tags.user.RedirectLoggedTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info></info>
+
+    <attribute>
+      <name>page</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>redirectUnlogged</name>
+    <tagclass>br.unirio.simplemvc.tags.user.RedirectUnloggedTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info></info>
+
+    <attribute>
+      <name>page</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>redirectUserLevel</name>
+    <tagclass>br.unirio.simplemvc.tags.user.RedirectUserLevelTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info></info>
+
+    <attribute>
+      <name>level</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>page</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>checkLogged</name>
+    <tagclass>br.unirio.simplemvc.tags.user.CheckLoggedTag</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info></info>
+  </tag>
+
+  <tag>
+    <name>checkUnlogged</name>
+    <tagclass>br.unirio.simplemvc.tags.user.CheckUnloggedTag</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info></info>
+  </tag>
+
+  <tag>
+    <name>checkUserLevel</name>
+    <tagclass>br.unirio.simplemvc.tags.user.CheckUserLevelTag</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info></info>
+
+    <attribute>
+      <name>level</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>type</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>error</name>
+    <tagclass>br.unirio.simplemvc.tags.html.ErrorTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info></info>
+
+    <attribute>
+      <name>name</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>notice</name>
+    <tagclass>br.unirio.simplemvc.tags.html.NoticeTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info></info>
+  </tag>
+
+  <tag>
+    <name>selector</name>
+    <tagclass>br.unirio.simplemvc.tags.html.TagSelector</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info></info>
+
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>listName</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>nameField</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>valueField</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>value</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>simpleSelector</name>
+    <tagclass>br.unirio.simplemvc.tags.html.TagSimpleSelector</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info></info>
+
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>class</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>style</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>optionNames</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>optionValues</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>colNames</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>colValues</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>value</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+</taglib>

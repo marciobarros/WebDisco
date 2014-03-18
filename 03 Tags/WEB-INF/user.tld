@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN" "http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
+
+<taglib>
+  <tlibversion>2.0</tlibversion>
+  <jspversion>1.1</jspversion>
+  <shortname>User Tag Library</shortname>
+  <info></info>
+
+  <tag>
+    <name>redirectLogged</name>
+    <tagclass>taglib.user.RedirectLoggedTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info></info>
+
+    <attribute>
+      <name>page</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>redirectUnlogged</name>
+    <tagclass>taglib.user.RedirectUnloggedTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info></info>
+
+    <attribute>
+      <name>page</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>redirectUserLevel</name>
+    <tagclass>taglib.user.RedirectUserLevelTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info></info>
+
+    <attribute>
+      <name>page</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>level</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>checkLogged</name>
+    <tagclass>taglib.user.CheckLoggedTag</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info></info>
+  </tag>
+
+  <tag>
+    <name>checkUnlogged</name>
+    <tagclass>taglib.user.CheckUnloggedTag</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info></info>
+  </tag>
+
+  <tag>
+    <name>checkUserLevel</name>
+    <tagclass>taglib.user.CheckUserLevelTag</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info></info>
+
+    <attribute>
+      <name>level</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>invalidateUser</name>
+    <tagclass>taglib.user.InvalidateUser</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info></info>
+  </tag>
+
+</taglib>
