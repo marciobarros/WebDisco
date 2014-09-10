@@ -1,0 +1,11 @@
+CREATE DATABASE webdisco;
+
+CREATE TABLE CompactDisc
+(
+	id INT NOT NULL AUTO_INCREMENT,
+	title VARCHAR(80) NOT NULL,
+	price NUMERIC(14, 2) NOT NULL,
+	stock NUMERIC(14, 2) NOT NULL,
+	
+	PRIMARY KEY (id)
+);
