@@ -12,7 +12,7 @@
 
 <c:set var="cd" value="${requestScope.cd}"/>
 
-<form action="SaveDisc.jsp">
+<form action="/WebdiscoJSTL/save.do">
 	<input type="hidden" name="id" value="${cd.id}"/>
 
 	<table id="tabelaFormulario">
@@ -52,7 +52,7 @@
 </form>
 
 <p>
-  <a href="index.jsp">Lista</a>
+  <a href="/WebdiscoJSTL/list.do">Lista</a>
 </p>
 
 <%@include file="footer.jsp"%>

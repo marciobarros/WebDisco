@@ -13,27 +13,23 @@
   <th class='stock'>Estoque</th>							
 </tr>
 
-<%
-	List<CompactDisc> cdlist = DAOFactory.getCompactDiscDAO().lista();
-	pageContext.setAttribute("cdlist", cdlist);
-%>
-	<c:forEach var="cd" items="${cdlist}">
-		<tr>
-			<td class='title'>
-				<a href='RemoveDisc.jsp?id=${cd.id}'><img src='img/Delete.gif' border=0/></a>&nbsp;
-				<a href='EditDisc.jsp?id=${cd.id}'><c:out value="${cd.title}"/></a>&nbsp;
-			</td>
-			<td class='price'>
-				<c:out value="${cd.price}"/>
-			</td>
-			<td class='stock'>
-				<c:out value="${cd.stock}"/>
-			</td>
-		</tr>
-	</c:forEach>
+<c:forEach var="cd" items="${requestScope.cdlist}">
+	<tr>
+		<td class='title'>
+			<a href='/WebdiscoJSTL/remove.do?id=${cd.id}'><img src='img/Delete.gif' border=0/></a>&nbsp;
+			<a href='/WebdiscoJSTL/edit.do?id=${cd.id}'><c:out value="${cd.title}"/></a>&nbsp;
+		</td>
+		<td class='price'>
+			<c:out value="${cd.price}"/>
+		</td>
+		<td class='stock'>
+			<c:out value="${cd.stock}"/>
+		</td>
+	</tr>
+</c:forEach>
 </table>					
 
 <br>
-<a href='CreateDisc.jsp'>New Disc</a>
+<a href='/WebdiscoJSTL/create.do'>Novo CD</a>
 
 <%@include file="footer.jsp"%>
