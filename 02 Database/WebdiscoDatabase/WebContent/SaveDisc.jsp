@@ -21,9 +21,9 @@
 
 	CompactDisc cd = new CompactDisc ();
 	cd.setId(id);
-	cd.setTitle (title);
-	cd.setPrice (price);
-	cd.setStock (stock);
+	cd.setTitle(title);
+	cd.setPrice(price);
+	cd.setStock(stock);
 
 	if ((title == null) || (title.length() < 1))
 	{
