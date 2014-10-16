@@ -1,19 +1,20 @@
 <%@include file="header.jsp"%>
 <%@ page import="java.util.Enumeration" %>
 
-<%@taglib uri="/WEB-INF/c.tld" prefix="c"%>
-
 <h2>WEBDISCO - Catálogo de Compact Discs</h2>
 <h3>Menu</h3>
 
-<c:if test="${not empty requestScope.error}">
-	<p><font color=red><b><c:out value="${requestScope.error}"/></b></font></p>
-</c:if>
+<%
+	String error = (String) request.getAttribute (Constants.ERROR_KEY);
+	
+	if (error != null)
+		out.println ("<p><font color=red><B>" + error + "</B></font></p>");
+	
+	CompactDisc cd = (CompactDisc) request.getAttribute (Constants.CD_KEY);
+%>
 
-<c:set var="cd" value="${requestScope.cd}"/>
-
-<form action="/Webdisco_basic/save.do">
-	<input type="hidden" name="id" value="${cd.id}"/>
+<form action="/WebdiscoServlets/save.do">
+	<input type="hidden" name="id" value="<%=cd.getId()%>"/>
 
 	<table id="tabelaFormulario">
 	<tr>
@@ -21,7 +22,7 @@
 		Título:
 	  </th>
 	  <td align="left">
-		<input type="text" name="title" value="${cd.title}" size="64"/>
+		<input type="text" name="title" value="<%=cd.getTitle()%>" size="64"/>
 	  </td>
 	</tr>
 
@@ -30,7 +31,7 @@
 		Preço:
 	  </th>
 	  <td align="left">
-		<input type="text" name="price" value="${cd.price}" size="12"/>
+		<input type="text" name="price" value="<%=cd.getPrice()%>" size="12"/>
 	  </td>
 	</tr>
 
@@ -39,7 +40,7 @@
 		Estoque:
 	  </th>
 	  <td align="left">
-		<input type="text" name="stock" value="${cd.stock}" size="12"/>
+		<input type="text" name="stock" value="<%=cd.getStock()%>" size="12"/>
 	  </td>
 	</tr>								
 

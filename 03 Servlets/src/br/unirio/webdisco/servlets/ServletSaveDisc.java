@@ -120,6 +120,6 @@ public class ServletSaveDisc extends HttpServlet
 		else
 			DAOFactory.getCompactDiscDAO().atualiza(cd);
 		
-		response.sendRedirect ("/Webdisco_basic/list.do");
+		response.sendRedirect ("/WebdiscoServlets/list.do");
 	}
 }

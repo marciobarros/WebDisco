@@ -41,6 +41,6 @@ public class ServletRemoveDisc extends HttpServlet
 	{
 		int id = Integer.valueOf (request.getParameter ("id"));
 		DAOFactory.getCompactDiscDAO().remove(id);
-		response.sendRedirect("/Webdisco_basic/list.do");
+		response.sendRedirect("/WebdiscoServlets/list.do");
 	}
 }
