@@ -3,7 +3,7 @@ package br.unirio.inscricaoppgi.model;
 import java.util.Date;
 
 import lombok.Data;
-import br.unirio.simplemvc.gae.datastore.DataObject;
+import br.unirio.inscricaoppgi.gae.datastore.DataObject;
 import br.unirio.simplemvc.servlets.IUser;
 import br.unirio.simplemvc.utils.DateUtils;
 
@@ -14,7 +14,7 @@ import br.unirio.simplemvc.utils.DateUtils;
  */
 public @Data class Usuario implements IUser, DataObject
 {
-	private int id;
+	private long id;
 	private TipoUsuario tipoUsuario;
 	private String nome;
 	private String email;

@@ -3,7 +3,7 @@ package br.unirio.inscricaoppgi.model;
 import java.util.Date;
 
 import lombok.Data;
-import br.unirio.simplemvc.gae.datastore.DataObject;
+import br.unirio.inscricaoppgi.gae.datastore.DataObject;
 
 /**
  * Classe que representa um edital de vagas
@@ -12,7 +12,7 @@ import br.unirio.simplemvc.gae.datastore.DataObject;
  */
 public @Data class Edital implements DataObject
 {
-	private int id;
+	private long id;
 	private Date dataAbertura;
 	private Date dataFechamento;
 

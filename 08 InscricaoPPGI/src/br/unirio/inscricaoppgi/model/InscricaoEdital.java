@@ -6,7 +6,7 @@ import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
-import br.unirio.simplemvc.gae.datastore.DataObject;
+import br.unirio.inscricaoppgi.gae.datastore.DataObject;
 
 /**
  * Classe que representa a inscrição em um edital de vagas
@@ -15,9 +15,9 @@ import br.unirio.simplemvc.gae.datastore.DataObject;
  */
 public class InscricaoEdital implements DataObject
 {
-	private @Getter @Setter int id;
-	private @Getter @Setter int idCandidato;
-	private @Getter @Setter int idEdital;
+	private @Getter @Setter long id;
+	private @Getter @Setter long idCandidato;
+	private @Getter @Setter long idEdital;
 	private @Getter @Setter Date dataInscricao;
 	private @Getter @Setter LinhaPesquisa linhaPesquisaPrincipal;
 	private @Getter @Setter LinhaPesquisa linhaPesquisaSecundaria;

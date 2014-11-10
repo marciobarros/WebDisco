@@ -3,10 +3,10 @@ package br.unirio.inscricaoppgi.dao;
 import java.util.Date;
 import java.util.List;
 
+import br.unirio.inscricaoppgi.gae.datastore.AbstractDAO;
 import br.unirio.inscricaoppgi.model.InscricaoEdital;
 import br.unirio.inscricaoppgi.model.LinhaPesquisa;
 import br.unirio.inscricaoppgi.model.TopicoInteresse;
-import br.unirio.simplemvc.gae.datastore.AbstractDAO;
 
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Query.FilterOperator;
@@ -89,7 +89,7 @@ public class InscricaoEditalDAO extends AbstractDAO<InscricaoEdital>
 	/**
 	 * Carrega a inscrição de um usuário em um edital
 	 */
-	public InscricaoEdital carrega(int idUsuario, int idEdital)
+	public InscricaoEdital carrega(long idUsuario, long idEdital)
 	{
 		return get(and(exactFilter("idCandidato", FilterOperator.EQUAL, idUsuario), exactFilter("idEdital", FilterOperator.EQUAL, idEdital)));
 	}
@@ -97,7 +97,7 @@ public class InscricaoEditalDAO extends AbstractDAO<InscricaoEdital>
 	/**
 	 * Carrega a lista de inscrições em um determinado edital
 	 */
-	public List<InscricaoEdital> pegaInscricoesEdital(int idEdital)
+	public List<InscricaoEdital> pegaInscricoesEdital(long idEdital)
 	{
 		return list(exactFilter("idEdital", FilterOperator.EQUAL, idEdital));
 	}

@@ -10,7 +10,7 @@ public class ServicoAutenticacao implements IUserService
 	 * Retorna um usuário, dado seu identificador
 	 */
 	@Override
-	public IUser getUserId(int id) 
+	public IUser getUserId(long id) 
 	{
 		return DAOFactory.getUsuarioDAO().get(id);
 	}

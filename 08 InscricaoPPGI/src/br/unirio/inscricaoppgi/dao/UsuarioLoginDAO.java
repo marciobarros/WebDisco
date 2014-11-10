@@ -4,9 +4,9 @@ import java.util.Date;
 import java.util.List;
 
 import lombok.Data;
+import br.unirio.inscricaoppgi.gae.datastore.AbstractDAO;
+import br.unirio.inscricaoppgi.gae.datastore.DataObject;
 import br.unirio.inscricaoppgi.model.Usuario;
-import br.unirio.simplemvc.gae.datastore.AbstractDAO;
-import br.unirio.simplemvc.gae.datastore.DataObject;
 
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Query.FilterOperator;
@@ -55,7 +55,7 @@ public class UsuarioLoginDAO extends AbstractDAO<LoginUsuario>
 	/**
 	 * Registra uma falha de login de um usuário
 	 */
-	public void registraLoginFalha(int idUsuario)
+	public void registraLoginFalha(long idUsuario)
 	{
 		this.put(new LoginUsuario(idUsuario, false));
 
@@ -76,7 +76,7 @@ public class UsuarioLoginDAO extends AbstractDAO<LoginUsuario>
 	/**
 	 * Registra um login de sucesso de um usuário
 	 */
-	public void registraLoginSucesso(int idUsuario)
+	public void registraLoginSucesso(long idUsuario)
 	{
 		this.put(new LoginUsuario(idUsuario, true));
 
@@ -88,7 +88,7 @@ public class UsuarioLoginDAO extends AbstractDAO<LoginUsuario>
 	/**
 	 * Pega a data de último login de um usuário
 	 */
-	public Date pegaDataUltimoLogin(int idUsuario)
+	public Date pegaDataUltimoLogin(long idUsuario)
 	{
 		List<LoginUsuario> logins = list(0, 1, exactFilter("idUsuario", FilterOperator.EQUAL, idUsuario), "timestamp", SortDirection.DESCENDING);
 		return (logins.size() > 0) ? logins.get(0).getTimestamp() : null;
@@ -100,12 +100,12 @@ public class UsuarioLoginDAO extends AbstractDAO<LoginUsuario>
  */
 @Data class LoginUsuario implements DataObject
 {
-	private int id;
-	private int idUsuario;
+	private long id;
+	private long idUsuario;
 	private boolean sucesso;
 	private Date timestamp;
 	
-	public LoginUsuario(int idUsuario, boolean sucesso)
+	public LoginUsuario(long idUsuario, boolean sucesso)
 	{
 		this.id = -1;
 		this.idUsuario = idUsuario;

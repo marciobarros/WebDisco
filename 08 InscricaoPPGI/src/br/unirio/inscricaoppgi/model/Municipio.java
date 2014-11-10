@@ -1,7 +1,7 @@
 package br.unirio.inscricaoppgi.model;
 
 import lombok.Data;
-import br.unirio.simplemvc.gae.datastore.DataObject;
+import br.unirio.inscricaoppgi.gae.datastore.DataObject;
 
 /**
  * Classe que representa um município brasileiro
@@ -10,7 +10,7 @@ import br.unirio.simplemvc.gae.datastore.DataObject;
  */
 public @Data class Municipio implements DataObject
 {
-	private int id;
+	private long id;
 	private String nome;
 	private String estado;
 

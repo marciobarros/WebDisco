@@ -1,10 +1,10 @@
 package br.unirio.inscricaoppgi.dao;
 
+import br.unirio.inscricaoppgi.gae.datastore.AbstractDAO;
 import br.unirio.inscricaoppgi.model.Sexo;
 import br.unirio.inscricaoppgi.model.TipoUsuario;
 import br.unirio.inscricaoppgi.model.Universidade;
 import br.unirio.inscricaoppgi.model.Usuario;
-import br.unirio.simplemvc.gae.datastore.AbstractDAO;
 
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Text;

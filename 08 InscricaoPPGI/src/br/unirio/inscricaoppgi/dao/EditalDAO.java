@@ -2,8 +2,8 @@ package br.unirio.inscricaoppgi.dao;
 
 import java.util.List;
 
+import br.unirio.inscricaoppgi.gae.datastore.AbstractDAO;
 import br.unirio.inscricaoppgi.model.Edital;
-import br.unirio.simplemvc.gae.datastore.AbstractDAO;
 
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Query.SortDirection;

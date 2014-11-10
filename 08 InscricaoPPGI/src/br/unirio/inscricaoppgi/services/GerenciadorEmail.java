@@ -1,9 +1,9 @@
 package br.unirio.inscricaoppgi.services;
 
 import br.unirio.inscricaoppgi.config.Configuracao;
+import br.unirio.inscricaoppgi.gae.mail.GAEMailSender;
 import br.unirio.simplemvc.actions.smtp.IMailSender;
 import br.unirio.simplemvc.actions.smtp.MailMessage;
-import br.unirio.simplemvc.gae.mail.GAEMailSender;
 import br.unirio.simplemvc.utils.StringUtils;
 
 /**

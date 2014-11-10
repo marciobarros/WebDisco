@@ -4,8 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import lombok.Data;
-import br.unirio.simplemvc.gae.datastore.AbstractDAO;
-import br.unirio.simplemvc.gae.datastore.DataObject;
+import br.unirio.inscricaoppgi.gae.datastore.AbstractDAO;
+import br.unirio.inscricaoppgi.gae.datastore.DataObject;
 import br.unirio.simplemvc.utils.DateUtils;
 
 import com.google.appengine.api.datastore.Entity;
@@ -55,7 +55,7 @@ public class UsuarioTokenSenhaDAO extends AbstractDAO<TokenSenhaUsuario>
 	/**
 	 * Armazena um token de recuperação de senha
 	 */
-	public void armazenaTokenTrocaSenha(int idUsuario, String token)
+	public void armazenaTokenTrocaSenha(long idUsuario, String token)
 	{
 		TokenSenhaUsuario tokenSenha = new TokenSenhaUsuario();
 		tokenSenha.setIdUsuario(idUsuario);
@@ -66,7 +66,7 @@ public class UsuarioTokenSenhaDAO extends AbstractDAO<TokenSenhaUsuario>
 	/**
 	 * Verifica se um token de recuperação de senha é válido
 	 */
-	public boolean verificaTokenTrocaSenha(int idUsuario, String token, int numeroHoras)
+	public boolean verificaTokenTrocaSenha(long idUsuario, String token, int numeroHoras)
 	{
 		Filter filter1 = exactFilter("idUsuario", FilterOperator.EQUAL, idUsuario);
 		Filter filter2 = exactFilter("token", FilterOperator.EQUAL, token);
@@ -89,8 +89,8 @@ public class UsuarioTokenSenhaDAO extends AbstractDAO<TokenSenhaUsuario>
  */
 @Data class TokenSenhaUsuario implements DataObject
 {
-	private int id;
-	private int idUsuario;
+	private long id;
+	private long idUsuario;
 	private String token;
 	private Date timestamp;
 	
