@@ -22,7 +22,7 @@ public class TestCompactDiscDAO extends ListMockDAO<CompactDisc> implements ICom
 	@Override
 	public List<CompactDisc> lista(int pagina, int tamanho) 
 	{
-		return page(pagina, tamanho);
+		return null; //page(pagina, tamanho);
 	}
 
 	@Override

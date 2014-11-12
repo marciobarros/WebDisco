@@ -4,10 +4,6 @@
 	<filter>
     	<filter-name>AuthenticationFilter</filter-name>
     	<filter-class>br.unirio.simplemvc.servlets.AuthenticationFilter</filter-class>
-    	<init-param>
-            <param-name>authService</param-name>
-            <param-value>br.unirio.webdisco.services.ServicoAutenticacao</param-value>
-    	</init-param>
 	</filter>
 
 	<filter-mapping>
@@ -20,7 +16,7 @@
 		<servlet-class>br.unirio.simplemvc.servlets.RouterServlet</servlet-class>
  		<init-param>
             <param-name>actionsPackage</param-name>
-            <param-value>br.unirio.webdisco.actions, br.unirio.simplemvc.actions</param-value>
+            <param-value>br.unirio.webdisco.actions</param-value>
         </init-param>
  		<init-param>
             <param-name>applicationName</param-name>
