@@ -1,0 +1,78 @@
+body {
+	padding-top: 60px;
+	padding-bottom: 40px;
+}
+div.error {
+	border: 1px solid red;
+	border-left: 4px solid red;
+	background-color: rgb(255, 163, 177);
+	color: black;
+	line-height: 16px;
+	padding: 8px 4px 8px 4px;
+	text-align: justify;
+	margin-bottom: 8px;
+	display: none;
+}
+div.error p {
+	margin-bottom: 0px;
+}
+div.notice {
+	border: 1px solid yellow;
+	border-left: 4px solid yellow;
+	background-color: rgb(255, 249, 189);
+	color: black;
+	line-height: 16px;
+	padding: 8px 4px 8px 4px;
+	text-align: justify;
+	margin-bottom: 8px;
+	display: none;
+}
+div.notice p {
+	margin-bottom: 0px;
+}
+.errorMessage {
+	border: 1px solid red;
+	background-color: rgb(255, 163, 177);
+	color: black;
+	line-height: 16px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	padding-left: 4px;
+	padding-right: 4px;
+	margin-bottom: 8px;
+	width: 100%;
+	font-size: 12px;
+}
+input.long {
+	width: 500px;
+}
+select.long {
+	width: 500px;
+}
+.wide {
+	width: 100%;
+}
+.left {
+	float: left;
+}
+.right {
+	float: right;
+}
+.clear {
+	clear: both;
+}
+div.filtro {
+	background: #eee;
+	border: 1px solid #ccc;
+	margin-bottom: 16px;
+	padding: 4px;
+}
+div.filtro input {
+	margin: 0px 8px 0px 0px;
+}
+div.filtro select {
+	margin: 0px 8px 0px 0px;
+}
+table.jtable thead {
+	border-top: 1px solid #ccc !important;
+}
