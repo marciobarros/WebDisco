@@ -23,32 +23,45 @@ public class ServletSaveDisc extends HttpServlet
 	private static final long serialVersionUID = 1L;
        
 	/**
-	 * Execução do servlet - protocolo GET
+	 * Execucao do servlet - protocolo GET
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		execute(request, response);
-	}
+		int id = safeConversionInt(request.getParameter ("id"));
+		String title = request.getParameter ("title");
+		double price = safeConversionDouble(request.getParameter ("price"));
+		double stock = safeConversionDouble(request.getParameter ("stock"));
 
-	/**
-	 * Execução do servlet - protocolo POST
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
-	{
-		execute(request, response);
-	}
+		CompactDisc cd = new CompactDisc ();
+		cd.setId(id);
+		cd.setTitle (title);
+		cd.setPrice (price);
+		cd.setStock (stock);
 
-	/**
-	 * Gera uma mensagem de erro pela crítica dos dados do CD
-	 */
-	private void notifyError (HttpServletRequest request, HttpServletResponse response, CompactDisc cd, String error) throws ServletException, IOException
-	{
-		request.setAttribute (Constants.CD_KEY, cd);
-		request.setAttribute (Constants.ERROR_KEY, error);
+		if ((title == null) || (title.length() < 1))
+		{
+			notifyError (request, response, cd, "O tÃ­tulo deve ser preenchido");
+			return;
+		}
 
-		ServletContext context = getServletContext();
-		RequestDispatcher rd = context.getRequestDispatcher("/FormDisc.jsp");
-		rd.forward(request, response);
+		if (price <= 0.0)
+		{
+			notifyError (request, response, cd, "O preÃ§o deve ser maior do que zero");
+			return;
+		}
+
+		if (stock < 0.0)
+		{
+			notifyError (request, response, cd, "A quantidade em estoque deve ser maior ou igual a zero");
+			return;
+		}
+
+		if (id == -1)
+			DAOFactory.getCompactDiscDAO().insere(cd);
+		else
+			DAOFactory.getCompactDiscDAO().atualiza(cd);
+		
+		response.sendRedirect ("/list.do");
 	}
 	
 	/**
@@ -82,44 +95,15 @@ public class ServletSaveDisc extends HttpServlet
 	}
 
 	/**
-	 * Salva os dados do CD sendo editado
+	 * Gera uma mensagem de erro pela critica dos dados do CD
 	 */
-	private void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	private void notifyError (HttpServletRequest request, HttpServletResponse response, CompactDisc cd, String error) throws ServletException, IOException
 	{
-		int id = safeConversionInt(request.getParameter ("id"));
-		String title = request.getParameter ("title");
-		double price = safeConversionDouble(request.getParameter ("price"));
-		double stock = safeConversionDouble(request.getParameter ("stock"));
+		request.setAttribute (Constants.CD_KEY, cd);
+		request.setAttribute (Constants.ERROR_KEY, error);
 
-		CompactDisc cd = new CompactDisc ();
-		cd.setId(id);
-		cd.setTitle (title);
-		cd.setPrice (price);
-		cd.setStock (stock);
-
-		if ((title == null) || (title.length() < 1))
-		{
-			notifyError (request, response, cd, "O título deve ser preenchido");
-			return;
-		}
-
-		if (price <= 0.0)
-		{
-			notifyError (request, response, cd, "O preço deve ser maior do que zero");
-			return;
-		}
-
-		if (stock < 0.0)
-		{
-			notifyError (request, response, cd, "A quantidade em estoque deve ser maior ou igual a zero");
-			return;
-		}
-
-		if (id == -1)
-			DAOFactory.getCompactDiscDAO().insere(cd);
-		else
-			DAOFactory.getCompactDiscDAO().atualiza(cd);
-		
-		response.sendRedirect ("/WebdiscoServlets/list.do");
+		ServletContext context = getServletContext();
+		RequestDispatcher rd = context.getRequestDispatcher("/FormDisc.jsp");
+		rd.forward(request, response);
 	}
 }

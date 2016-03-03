@@ -1,5 +1,7 @@
 CREATE DATABASE webdisco;
 
+USE webdisco;
+
 CREATE TABLE CompactDisc
 (
 	id INT NOT NULL AUTO_INCREMENT,

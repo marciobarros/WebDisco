@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.unirio.webdisco.Constants;
 import br.unirio.webdisco.dao.DAOFactory;
 import br.unirio.webdisco.model.CompactDisc;
 
@@ -22,29 +23,10 @@ public class ServletList extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * Execução do servlet - protocolo GET
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
-	{
-		execute(request, response);
-	}
-
-	/**
-	 * Execução do servlet - protocolo POST
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
-	{
-		execute(request, response);
-	}
-
-	/**
-	 * Coloca a lista de CDs na memória de requisição
-	 */
-	private void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		List<CompactDisc> cdlist = DAOFactory.getCompactDiscDAO().lista();
-		request.setAttribute("cdlist", cdlist);
+		request.setAttribute(Constants.CDLIST_KEY, cdlist);
 
 		ServletContext context = getServletContext();
 		RequestDispatcher rd = context.getRequestDispatcher("/index.jsp");

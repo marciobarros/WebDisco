@@ -1,25 +1,26 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <%@include file="header.jsp"%>
 <%@ page import="java.util.Enumeration" %>
 
-<h2>WEBDISCO - Cat·logo de Compact Discs</h2>
-<h3>Menu</h3>
+<h2>WEBDISCO - Cat√°logo de Compact Discs</h2>
 
 <%
 	String error = (String) request.getAttribute (Constants.ERROR_KEY);
 	
 	if (error != null)
-		out.println ("<p><font color=red><B>" + error + "</B></font></p>");
+		out.println ("<p><font color=red><b>" + error + "</b></font></p>");
 	
 	CompactDisc cd = (CompactDisc) request.getAttribute (Constants.CD_KEY);
 %>
 
-<form action="/WebdiscoServlets/save.do">
+<form method="post" action="/save.do">
 	<input type="hidden" name="id" value="<%=cd.getId()%>"/>
 
-	<table id="tabelaFormulario">
+	<table>
 	<tr>
 	  <th align="right">
-		TÌtulo:
+		T√≠tulo:
 	  </th>
 	  <td align="left">
 		<input type="text" name="title" value="<%=cd.getTitle()%>" size="64"/>
@@ -28,7 +29,7 @@
 
 	<tr>
 	  <th align="right">
-		PreÁo:
+		Pre√ßo:
 	  </th>
 	  <td align="left">
 		<input type="text" name="price" value="<%=cd.getPrice()%>" size="12"/>
@@ -53,7 +54,7 @@
 </form>
 
 <p>
-  <a href="index.jsp">Lista</a>
+  <a href="/list.do">Retorna para a lista</a>
 </p>
 
 <%@include file="footer.jsp"%>
