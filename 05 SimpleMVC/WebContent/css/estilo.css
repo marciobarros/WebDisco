@@ -1,15 +1,3 @@
-#tabelaExterna {
-	border: none;
-	border-spacing: 10px;
-}
-#colunaLateral {
-	width: 100px;
-	background-color: navy;
-	height: 100%;
-}
-#colunaCentral {
-	vertical-align: top;
-}
 #tabelaLista {
 	border: 1px solid black; 
 	width: 100%;
@@ -35,7 +23,4 @@
 }
 #tabelaLista tr td.stock {
 	text-align: right;
-}
-#tabelaFormulario {
-	border: none;
 }

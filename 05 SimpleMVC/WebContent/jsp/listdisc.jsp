@@ -1,13 +1,14 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="header.jsp"%>
 
 <%@taglib uri="/WEB-INF/c.tld" prefix="c"%>
 
-<h2>WEBDISCO - Cat·logo de Compact Discs</h2>				
+<h2>WEBDISCO - Cat√°logo de Compact Discs</h2>				
 		
 <table id="tabelaLista">
 <tr>
-  <th class='title'>TÌtulo</th>
-  <th class='price'>PreÁo</th>																
+  <th class='title'>T√≠tulo</th>
+  <th class='price'>Pre√ßo</th>																
   <th class='stock'>Estoque</th>							
 </tr>
 
@@ -29,10 +30,10 @@
 
 <br>
 <c:if test="${requestScope.hasPriorPage}">
-	<a href='/compactDisc/retrieve.do?page=${requestScope.page-1}'>Ant</a> | 
+	<a href='/compactDisc/retrieve.do?page=${requestScope.page-1}'>Anterior</a> | 
 </c:if>
 <c:if test="${requestScope.hasNextPage}">
-	<a href='/compactDisc/retrieve.do?page=${requestScope.page+1}'>PrÛx</a> |
+	<a href='/compactDisc/retrieve.do?page=${requestScope.page+1}'>Pr√≥xima</a> |
 </c:if> 
 <a href='/compactDisc/create.do'>Novo CD</a>
 

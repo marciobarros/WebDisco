@@ -35,7 +35,7 @@ public class TestEdit extends TestCaseAction
 		
 		ActionCompactDisc action = new ActionCompactDisc();
 		assertEquals(Action.ERROR, execute(action, "edit"));
-		assertEquals("O CD selecionado n„o est· registrado no sistema", getErrorMessage(action));
+		assertEquals("O CD selecionado n√£o est√° registrado no sistema", getErrorMessage(action));
 		
 		CompactDisc cd = (CompactDisc) dataConnector.getAttribute("cd");
 		assertNull(cd);

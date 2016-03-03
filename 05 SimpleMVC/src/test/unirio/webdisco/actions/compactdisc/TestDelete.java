@@ -33,7 +33,7 @@ public class TestDelete extends TestCaseAction
 		
 		ActionCompactDisc action = new ActionCompactDisc();
 		assertEquals(Action.ERROR, execute(action, "delete"));
-		assertEquals("O CD selecionado n„o est· registrado no sistema", getErrorMessage(action));
+		assertEquals("O CD selecionado n√£o est√° registrado no sistema", getErrorMessage(action));
 		
 		assertEquals(1, dao.conta());
 	}

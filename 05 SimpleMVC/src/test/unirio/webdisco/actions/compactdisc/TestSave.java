@@ -41,7 +41,7 @@ public class TestSave extends TestCaseAction
 		
 		ActionCompactDisc action = new ActionCompactDisc();
 		assertEquals(Action.ERROR, execute(action, "save"));
-		assertEquals("O tÌtulo do CD n„o pode ser vazio", getErrorMessage(action));
+		assertEquals("O t√≠tulo do CD n√£o pode ser vazio", getErrorMessage(action));
 		
 		assertEquals(0, dao.conta());
 	}
@@ -58,7 +58,7 @@ public class TestSave extends TestCaseAction
 		
 		ActionCompactDisc action = new ActionCompactDisc();
 		assertEquals(Action.ERROR, execute(action, "save"));
-		assertEquals("O preÁo do CD deve ser maior do que zero", getErrorMessage(action));
+		assertEquals("O pre√ßo do CD deve ser maior do que zero", getErrorMessage(action));
 		
 		assertEquals(0, dao.conta());
 	}
@@ -75,7 +75,7 @@ public class TestSave extends TestCaseAction
 		
 		ActionCompactDisc action = new ActionCompactDisc();
 		assertEquals(Action.ERROR, execute(action, "save"));
-		assertEquals("O preÁo do CD deve ser maior do que zero", getErrorMessage(action));
+		assertEquals("O pre√ßo do CD deve ser maior do que zero", getErrorMessage(action));
 		
 		assertEquals(0, dao.conta());
 	}
@@ -145,7 +145,7 @@ public class TestSave extends TestCaseAction
 		
 		ActionCompactDisc action = new ActionCompactDisc();
 		assertEquals(Action.ERROR, execute(action, "save"));
-		assertEquals("O tÌtulo do CD n„o pode ser vazio", getErrorMessage(action));
+		assertEquals("O t√≠tulo do CD n√£o pode ser vazio", getErrorMessage(action));
 		
 		assertEquals(1, dao.conta());
 	}
@@ -163,7 +163,7 @@ public class TestSave extends TestCaseAction
 		
 		ActionCompactDisc action = new ActionCompactDisc();
 		assertEquals(Action.ERROR, execute(action, "save"));
-		assertEquals("O preÁo do CD deve ser maior do que zero", getErrorMessage(action));
+		assertEquals("O pre√ßo do CD deve ser maior do que zero", getErrorMessage(action));
 		
 		assertEquals(1, dao.conta());
 	}
@@ -181,7 +181,7 @@ public class TestSave extends TestCaseAction
 		
 		ActionCompactDisc action = new ActionCompactDisc();
 		assertEquals(Action.ERROR, execute(action, "save"));
-		assertEquals("O preÁo do CD deve ser maior do que zero", getErrorMessage(action));
+		assertEquals("O pre√ßo do CD deve ser maior do que zero", getErrorMessage(action));
 		
 		assertEquals(1, dao.conta());
 	}
@@ -217,7 +217,7 @@ public class TestSave extends TestCaseAction
 		
 		ActionCompactDisc action = new ActionCompactDisc();
 		assertEquals(Action.ERROR, execute(action, "save"));
-		assertEquals("O CD selecionado n„o est· registrado no sistema", getErrorMessage(action));
+		assertEquals("O CD selecionado n√£o est√° registrado no sistema", getErrorMessage(action));
 		
 		assertEquals(1, dao.conta());
 	}

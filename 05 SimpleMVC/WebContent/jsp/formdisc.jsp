@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <%@include file="header.jsp"%>
 <%@ page import="java.util.Enumeration" %>
 
@@ -5,8 +7,7 @@
 <%@taglib uri="/WEB-INF/fmt.tld" prefix="fmt"%>
 <%@taglib uri="/WEB-INF/simplemvc.tld" prefix="mvc"%>
 
-<h2>WEBDISCO - Cat·logo de Compact Discs</h2>
-<h3>Menu</h3>
+<h2>WEBDISCO - Cat√°logo de Compact Discs</h2>
 
 <mvc:error/>
 <mvc:notice/>
@@ -19,7 +20,7 @@
 	<table id="tabelaFormulario">
 	<tr>
 	  <th align="right">
-		TÌtulo:
+		T√≠tulo:
 	  </th>
 	  <td align="left">
 		<input type="text" name="title" value="${cd.title}" size="64"/>
@@ -28,7 +29,7 @@
 
 	<tr>
 	  <th align="right">
-		PreÁo:
+		Pre√ßo:
 	  </th>
 	  <td align="left">
 		<input type="text" name="price" value='<fmt:formatNumber value="${cd.price}" pattern="#,##0.00"/>' size="12"/>
@@ -53,7 +54,7 @@
 </form>
 
 <p>
-  <a href="/compactDisc/retrieve.do">Lista</a>
+  <a href="/compactDisc/retrieve.do">Retorna para a lista</a>
 </p>
 
 <%@include file="footer.jsp"%>

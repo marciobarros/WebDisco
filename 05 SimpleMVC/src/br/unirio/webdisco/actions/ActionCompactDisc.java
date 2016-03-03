@@ -17,7 +17,7 @@ public class ActionCompactDisc extends Action
 	public static final int PAGE_SIZE = 10;
 	
 	/**
-	 * Recupera os discos da página atual
+	 * Recupera os discos da pagina atual
 	 */
 	@DisableUserVerification
 	@Any("/jsp/listdisc.jsp")
@@ -59,7 +59,7 @@ public class ActionCompactDisc extends Action
 	{
 		int id = getIntParameter("id", -1);
 		CompactDisc cd = DAOFactory.getCompactDiscDAO().getCompactDiscId(id);
-		check(cd != null, "O CD selecionado não está registrado no sistema");
+		check(cd != null, "O CD selecionado nÃ£o estÃ¡ registrado no sistema");
 		setAttribute("cd", cd);
 		return SUCCESS;
 	}
@@ -73,7 +73,7 @@ public class ActionCompactDisc extends Action
 	{
 		int id = getIntParameter("id", -1);
 		CompactDisc cd = DAOFactory.getCompactDiscDAO().getCompactDiscId(id);
-		check(cd != null, "O CD selecionado não está registrado no sistema");
+		check(cd != null, "O CD selecionado nÃ£o estÃ¡ registrado no sistema");
 	
 		DAOFactory.getCompactDiscDAO().remove(id);
 		addRedirectNotice("O CD selecionado foi removido com sucesso");
@@ -94,7 +94,7 @@ public class ActionCompactDisc extends Action
 		if (id > 0)
 		{
 			cd = DAOFactory.getCompactDiscDAO().getCompactDiscId(id);
-			check(cd != null, "O CD selecionado não está registrado no sistema");
+			check(cd != null, "O CD selecionado nÃ£o estÃ¡ registrado no sistema");
 		}
 		else
 			cd = new CompactDisc();
@@ -104,8 +104,8 @@ public class ActionCompactDisc extends Action
 		cd.setStock(getDoubleParameter("stock", 0.0));
 		setAttribute("cd", cd);
 
-		check(cd.getTitle().length() > 0, "O título do CD não pode ser vazio");
-		check(cd.getPrice() > 0, "O preço do CD deve ser maior do que zero");
+		check(cd.getTitle().length() > 0, "O tÃ­tulo do CD nÃ£o pode ser vazio");
+		check(cd.getPrice() > 0, "O preÃ§o do CD deve ser maior do que zero");
 		check(cd.getStock() >= 0, "A quantidade em estoque do CD deve ser maior ou igual a zero");
 
 		if (cd.getId() <= 0)

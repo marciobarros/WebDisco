@@ -2,6 +2,8 @@ package test.unirio.webdisco.actions.compactdisc;
 
 import java.util.List;
 
+import org.junit.Test;
+
 import br.unirio.simplemvc.actions.Action;
 import br.unirio.simplemvc.test.TestCaseAction;
 import br.unirio.webdisco.actions.ActionCompactDisc;
@@ -18,6 +20,7 @@ public class TestRetrieve extends TestCaseAction
 			dao.setup(i, new CompactDisc(i, "CD " + i, 10, 20));
 	}
 	
+	@Test
 	public void testListaPaginaVazio()
 	{
 		TestCompactDiscDAO dao = new TestCompactDiscDAO();
