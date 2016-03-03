@@ -1,23 +1,24 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="header.jsp"%>
 
 <%@taglib uri="/WEB-INF/c.tld" prefix="c"%>
 
 <h2>
-  WEBDISCO - Cat·logo de Compact Discs
+  WEBDISCO - Cat√°logo de Compact Discs
 </h2>				
 		
 <table id="tabelaLista">
 <tr>
-  <th class='title'>TÌtulo</th>
-  <th class='price'>PreÁo</th>																
+  <th class='title'>T√≠tulo</th>
+  <th class='price'>Pre√ßo</th>																
   <th class='stock'>Estoque</th>							
 </tr>
 
 <c:forEach var="cd" items="${requestScope.cdlist}">
 	<tr>
 		<td class='title'>
-			<a href='/WebdiscoJSTL/remove.do?id=${cd.id}'><img src='img/Delete.gif' border=0/></a>&nbsp;
-			<a href='/WebdiscoJSTL/edit.do?id=${cd.id}'><c:out value="${cd.title}"/></a>&nbsp;
+			<a href='/remove.do?id=${cd.id}'><img src='img/Delete.gif' border=0/></a>&nbsp;
+			<a href='/edit.do?id=${cd.id}'><c:out value="${cd.title}"/></a>&nbsp;
 		</td>
 		<td class='price'>
 			<c:out value="${cd.price}"/>
@@ -30,6 +31,6 @@
 </table>					
 
 <br>
-<a href='/WebdiscoJSTL/create.do'>Novo CD</a>
+<a href='/create.do'>Novo CD</a>
 
 <%@include file="footer.jsp"%>

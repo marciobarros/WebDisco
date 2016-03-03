@@ -1,10 +1,10 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="header.jsp"%>
 <%@ page import="java.util.Enumeration" %>
 
 <%@taglib uri="/WEB-INF/c.tld" prefix="c"%>
 
-<h2>WEBDISCO - Cat·logo de Compact Discs</h2>
-<h3>Menu</h3>
+<h2>WEBDISCO - Cat√°logo de Compact Discs</h2>
 
 <c:if test="${not empty requestScope.error}">
 	<p><font color=red><b><c:out value="${requestScope.error}"/></b></font></p>
@@ -12,13 +12,13 @@
 
 <c:set var="cd" value="${requestScope.cd}"/>
 
-<form action="/WebdiscoJSTL/save.do">
+<form method="post" action="/save.do">
 	<input type="hidden" name="id" value="${cd.id}"/>
 
-	<table id="tabelaFormulario">
+	<table>
 	<tr>
 	  <th align="right">
-		TÌtulo:
+		T√≠tulo:
 	  </th>
 	  <td align="left">
 		<input type="text" name="title" value="${cd.title}" size="64"/>
@@ -27,7 +27,7 @@
 
 	<tr>
 	  <th align="right">
-		PreÁo:
+		Pre√ßo:
 	  </th>
 	  <td align="left">
 		<input type="text" name="price" value="${cd.price}" size="12"/>
@@ -52,7 +52,7 @@
 </form>
 
 <p>
-  <a href="/WebdiscoJSTL/list.do">Lista</a>
+  <a href="/list.do">Retorna para a lista</a>
 </p>
 
 <%@include file="footer.jsp"%>

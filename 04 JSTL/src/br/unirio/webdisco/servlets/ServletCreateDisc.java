@@ -13,7 +13,7 @@ import br.unirio.webdisco.Constants;
 import br.unirio.webdisco.model.CompactDisc;
 
 /**
- * Servlet para criação de um novo CD
+ * Servlet para criacao de um novo CD
  * 
  * @author Marcio
  */
@@ -21,26 +21,7 @@ public class ServletCreateDisc extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * Execução do servlet - protocolo GET
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
-	{
-		execute(request, response);
-	}
-
-	/**
-	 * Execução do servlet - protocolo POST
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
-	{
-		execute(request, response);
-	}
-
-	/**
-	 * Cria um novo CD
-	 */
-	private void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		CompactDisc cd = new CompactDisc ();
 		request.setAttribute (Constants.CD_KEY, cd);

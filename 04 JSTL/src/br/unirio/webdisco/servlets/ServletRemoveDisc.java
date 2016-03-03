@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import br.unirio.webdisco.dao.DAOFactory;
 
 /**
- * Servlet que remove um CD da memória
+ * Servlet que remove um CD da memoria
  * 
  * @author Marcio
  */
@@ -18,29 +18,10 @@ public class ServletRemoveDisc extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
        
-	/**
-	 * Execução do servlet - protocolo GET
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
-	{
-		execute(request, response);
-	}
-
-	/**
-	 * Execução do servlet - protocolo POST
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
-	{
-		execute(request, response);
-	}
-
-	/**
-	 * Remove o CD selecionado pelo usuário
-	 */
-	private void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		int id = Integer.valueOf (request.getParameter ("id"));
 		DAOFactory.getCompactDiscDAO().remove(id);
-		response.sendRedirect("/WebdiscoJSTL/list.do");
+		response.sendRedirect("/list.do");
 	}
 }

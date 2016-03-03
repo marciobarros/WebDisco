@@ -23,23 +23,49 @@ public class ServletSaveDisc extends HttpServlet
 	private static final long serialVersionUID = 1L;
        
 	/**
-	 * Execução do servlet - protocolo GET
+	 * Execucao do servlet
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		execute(request, response);
+		int id = safeConversionInt(request.getParameter ("id"));
+		String title = request.getParameter ("title");
+		double price = safeConversionDouble(request.getParameter ("price"));
+		double stock = safeConversionDouble(request.getParameter ("stock"));
+
+		CompactDisc cd = new CompactDisc ();
+		cd.setId(id);
+		cd.setTitle (title);
+		cd.setPrice (price);
+		cd.setStock (stock);
+
+		if ((title == null) || (title.length() < 1))
+		{
+			notifyError (request, response, cd, "O tÃ­tulo deve ser preenchido");
+			return;
+		}
+
+		if (price <= 0.0)
+		{
+			notifyError (request, response, cd, "O preÃ§o deve ser maior do que zero");
+			return;
+		}
+
+		if (stock < 0.0)
+		{
+			notifyError (request, response, cd, "A quantidade em estoque deve ser maior ou igual a zero");
+			return;
+		}
+
+		if (id == -1)
+			DAOFactory.getCompactDiscDAO().insere(cd);
+		else
+			DAOFactory.getCompactDiscDAO().atualiza(cd);
+		
+		response.sendRedirect ("/list.do");
 	}
 
 	/**
-	 * Execução do servlet - protocolo POST
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
-	{
-		execute(request, response);
-	}
-
-	/**
-	 * Gera uma mensagem de erro pela crítica dos dados do CD
+	 * Gera uma mensagem de erro pela critica dos dados do CD
 	 */
 	private void notifyError (HttpServletRequest request, HttpServletResponse response, CompactDisc cd, String error) throws ServletException, IOException
 	{
@@ -79,47 +105,5 @@ public class ServletSaveDisc extends HttpServlet
 		{
 			return 0.0;
 		}
-	}
-
-	/**
-	 * Salva os dados do CD sendo editado
-	 */
-	private void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
-	{
-		int id = safeConversionInt(request.getParameter ("id"));
-		String title = request.getParameter ("title");
-		double price = safeConversionDouble(request.getParameter ("price"));
-		double stock = safeConversionDouble(request.getParameter ("stock"));
-
-		CompactDisc cd = new CompactDisc ();
-		cd.setId(id);
-		cd.setTitle (title);
-		cd.setPrice (price);
-		cd.setStock (stock);
-
-		if ((title == null) || (title.length() < 1))
-		{
-			notifyError (request, response, cd, "O título deve ser preenchido");
-			return;
-		}
-
-		if (price <= 0.0)
-		{
-			notifyError (request, response, cd, "O preço deve ser maior do que zero");
-			return;
-		}
-
-		if (stock < 0.0)
-		{
-			notifyError (request, response, cd, "A quantidade em estoque deve ser maior ou igual a zero");
-			return;
-		}
-
-		if (id == -1)
-			DAOFactory.getCompactDiscDAO().insere(cd);
-		else
-			DAOFactory.getCompactDiscDAO().atualiza(cd);
-		
-		response.sendRedirect ("/WebdiscoJSTL/list.do");
 	}
 }
