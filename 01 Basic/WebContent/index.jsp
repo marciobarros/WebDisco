@@ -1,48 +1,40 @@
 <%@include file="header.jsp"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <h2>
-  WEBDISCO - Cat·logo de Compact Discs
+  WEBDISCO - Cat√°logo de Compact Discs
 </h2>				
-		
+
 <table id="tabelaLista">
 <tr>
-  <th class='title'>TÌtulo</th>
-  <th class='price'>PreÁo</th>																
-  <th class='stock'>Estoque</th>							
+  <th class='title'>T√≠tulo</th>
+  <th class='price'>Pre√ßo</th>																
+  <th class='stock'>Estoque</th>						
 </tr>
 
 <%
-	List<CompactDisc> cdlist = (List<CompactDisc>) session.getValue (Constants.CDLIST_KEY);
+	List<CompactDisc> cdlist = (List<CompactDisc>) request.getAttribute("cdlist");
 	
-	if (cdlist == null)
-	{
-		cdlist = new ArrayList<CompactDisc> ();
-		session.setAttribute(Constants.CDLIST_KEY, cdlist);
-	}
-
 	for (int i = 0; i < cdlist.size(); i++)
 	{
-		CompactDisc disc = cdlist.get(i);
+		CompactDisc cd = cdlist.get(i);
 %>
-		<tr>
-			<td class='title'>
-				<a href='RemoveDisc.jsp?index=<%=i%>'><img src='img/Delete.gif' border=0/></a>&nbsp;
-				<a href='EditDisc.jsp?index=<%=i%>'><%=disc.getTitle()%></a>&nbsp;
-			</td>
-			<td class='price'>
-				<%=disc.getPrice() %>
-			</td>
-			<td class='stock'>
-				<%=disc.getStock() %>
-			</td>
-		</tr>
-<%
-	}
-%>
+	<tr>
+		<td class='title'>
+			<a href='/remove.do?index=<%=i%>'><img src='img/Delete.gif' border=0/></a>&nbsp;
+			<a href='/edit.do?index=<%=i%>'><%=cd.getTitle()%></a>&nbsp;
+		</td>
+		<td class='price'>
+			<%=cd.getPrice()%>
+		</td>
+		<td class='stock'>
+			<%=cd.getStock()%>
+		</td>
+	</tr>
+<% } %>
 </table>					
 
-<BR>
-<a href='CreateDisc.jsp'>New Disc</A>&nbsp;|&nbsp;
-<a href='ClearDiscs.jsp'>Clear Disc</A>
+<br>
+<a href='/create.do'>Novo CD</a>
 
 <%@include file="footer.jsp"%>

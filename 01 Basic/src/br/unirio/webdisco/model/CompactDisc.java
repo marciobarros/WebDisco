@@ -1,9 +1,9 @@
-package br.unirio.webdisco.entity;
+package br.unirio.webdisco.model;
 
 import lombok.Data;
 
 /**
- * Classe que representa um CD de músicas
+ * Classe que representa um CD
  *  
  * @author marcio.barros
  */

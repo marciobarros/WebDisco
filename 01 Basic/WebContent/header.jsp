@@ -1,10 +1,8 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="br.unirio.webdisco.Constants" %>
-<%@ page import="br.unirio.webdisco.entity.CompactDisc" %>
-<%@ page import="java.util.ArrayList" %>
+<%@ page import="br.unirio.webdisco.model.CompactDisc" %>
 <%@ page import="java.util.List" %>
-
-<link rel="stylesheet" type="text/css" href="/css/estilo.css">
 
 <%
 	response.setHeader ("Cache-Control", "no-cache");
@@ -14,15 +12,8 @@
 
 <html>
   <head>
-	<title>
-	  WEBDISCO - Catálogo de Compact Discs
-	</title>
+	<title>WEBDISCO - Catálogo de Compact Discs</title>
+	<link rel="stylesheet" type="text/css" href="css/estilo.css">
   </head>
 	
   <body>
-	<table id="tabelaExterna">
-	<tr>
-	  <td id="colunaLateral">
-	  </td>
-
-	  <td id="colunaCentral">
