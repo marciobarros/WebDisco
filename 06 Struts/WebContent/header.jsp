@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
 <%
@@ -10,13 +10,7 @@
 <html>
   <head>
 	<title><s:text name="app.title"/></title>
+	<link rel="stylesheet" type="text/css" href="/css/estilo.css">
   </head>
-	
-  <link rel="stylesheet" type="text/css" href="/css/estilo.css">
 
   <body>
-	<table id="tabelaExterna">
-	<tr>
-	  <td id="colunaLateral">
-	  </td>
-	  <td id="colunaCentral">
