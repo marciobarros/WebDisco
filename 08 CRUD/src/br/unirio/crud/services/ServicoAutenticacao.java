@@ -7,7 +7,7 @@ import br.unirio.simplemvc.servlets.IUserService;
 public class ServicoAutenticacao implements IUserService
 {
 	/**
-	 * Retorna um usuário, dado seu identificador
+	 * Retorna um usuario, dado seu identificador
 	 */
 	@Override
 	public IUser getUserId(int id) 
@@ -16,7 +16,7 @@ public class ServicoAutenticacao implements IUserService
 	}
 
 	/**
-	 * Retorna um usuário, dado seu e-mail
+	 * Retorna um usuario, dado seu e-mail
 	 */
 	@Override
 	public IUser getUserEmail(String email) 

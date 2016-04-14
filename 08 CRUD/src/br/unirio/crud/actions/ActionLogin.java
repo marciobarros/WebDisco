@@ -308,16 +308,13 @@ public class ActionLogin extends Action
 		String hashNovaSenha = Configuracao.getAmbienteHomologacao() ? senha1 : Crypto.hash(senha1);
 		usuario.setSenhaCodificada(hashNovaSenha);
 
-		// Verifica as regras de neg�cio
+		// Verifica as regras de negocio
 		checkNonEmpty(usuario.getNome(), "O nome do usuário não pode ser vazio");
 		checkLength(usuario.getNome(), 80, "O nome do usuário");
 
 		checkNonEmpty(usuario.getEmail(), "O e-mail do usuário não pode ser vazio");
 		checkLength(usuario.getEmail(), 80, "O e-mail do usuário");
 		checkEmail(usuario.getEmail(), "O e-mail do usuário não está seguindo um formato válido");
-		
-		check(senhaAceitavel(senha1), "A senha selecionada é muito fraca. Entre com uma senha mais forte.");
-		check(senha1.compareToIgnoreCase(senha2) == 0, "A repetição da senha está diferente da senha original.");
 
 		checkNonEmpty(usuario.getEndereco(), "O endereço não pode ser vazio");
 		checkLength(usuario.getEndereco(), 80, "O endereço");
@@ -339,6 +336,9 @@ public class ActionLogin extends Action
 		checkNonEmpty(usuario.getTelefoneCelular(), "O telefone celular do usuário não pode ser vazio");
 		checkLength(usuario.getTelefoneCelular(), 20, "O telefone celular do usuário");
 		checkPhone(usuario.getTelefoneCelular(), "O telefone celular do usuário está com um formato inválido");
+		
+		check(senhaAceitavel(senha1), "A senha selecionada é muito fraca. Entre com uma senha mais forte.");
+		check(senha1.compareToIgnoreCase(senha2) == 0, "A repetição da senha está diferente da senha original.");
 
 		Usuario usuario2 = DAOFactory.getUsuarioDAO().getUsuarioEmail(usuario.getEmail());
 		check(usuario2 == null || usuario2.getId() == usuario.getId(), "Já existe um usuário com esse e-mail");

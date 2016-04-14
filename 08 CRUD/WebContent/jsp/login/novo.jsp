@@ -31,17 +31,6 @@ td { width: 350px; }
 		</tr>
 
 		<tr>
-		<td>
-			<label for="newpassword">Entre com uma senha:</label>
-			<input id="newpassword" type="password" name="password" style="width: 100px"/>
-		</td>
-		<td>
-			<label for="newpassword2">Repita a senha:</label>
-			<input id="newpassword2" type="password" name="password2" style="width: 100px"/>
-		</td>
-		</tr>		
-		
-		<tr>
 		<td colspan="2">
 			<label for="endereco">Endereço*:</label>
 			<input type="text" name="endereco" id="endereco" value="${usuario.endereco}" class="long" /><br>
@@ -58,7 +47,7 @@ td { width: 350px; }
 		<tr>
 		<td>		
 			<label for="estado">Estado*:</label>
-			<crud:seletorEstado name="estado" value="${usuario.estado}" id="estado" blankOption="Selecione o estado ..."/><br>
+			<crud:seletorEstado name="estado" value="${usuario.estado.sigla}" id="estado" blankOption="Selecione o estado ..."/><br>
 		</td>
 		<td>
 			<label for="municipio">Município*:</label>
@@ -83,6 +72,17 @@ td { width: 350px; }
 			<input type="text" name="telefoneCelular" id="telefoneCelular" value="${usuario.telefoneCelular}" /><br>
 		</td>
 		</tr>
+
+		<tr>
+		<td>
+			<label for="newpassword">Entre com uma senha:</label>
+			<input id="newpassword" type="password" name="password" style="width: 100px"/>
+		</td>
+		<td>
+			<label for="newpassword2">Repita a senha:</label>
+			<input id="newpassword2" type="password" name="password2" style="width: 100px"/>
+		</td>
+		</tr>		
 		</table>		
 
 		<button type="submit" class="btn btn-default">Envia Dados</button>

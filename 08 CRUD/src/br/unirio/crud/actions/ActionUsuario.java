@@ -125,7 +125,7 @@ public class ActionUsuario extends Action
 		usuario.setTelefoneCelular(getParameter("telefoneCelular", ""));
 		setAttribute("usuario", usuario);
 
-		// Verifica as regras de neg�cio
+		// Verifica as regras de negacio
 		checkNonEmpty(usuario.getNome(), "O nome do usuário não pode ser vazio");
 		checkLength(usuario.getNome(), 80, "O nome do usuário");
 
