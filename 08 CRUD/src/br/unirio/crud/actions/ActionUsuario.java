@@ -17,14 +17,14 @@ import br.unirio.simplemvc.json.JSONArray;
 import br.unirio.simplemvc.json.JSONObject;
 
 /**
- * AÁıes relacionadas a manutenÁ„o dos usu·rios
+ * Acoes relacionadas a manutencao dos usu√°rios
  * 
  * @author marcio.barros
  */
 public class ActionUsuario extends Action
 {
 	/**
-	 * AÁ„o que apresenta a p·gina principal de manutenÁ„o dos usu·rios
+	 * Acao que apresenta a pagina principal de manutencao dos usu√°rios
 	 */
 	@Error("/login/homepage.do")
 	@Success("/jsp/usuario/lista.jsp")
@@ -35,7 +35,7 @@ public class ActionUsuario extends Action
 	}
 
 	/**
-	 * Lista os usu·rios de acordo com um filtro
+	 * Lista os usu√°rios de acordo com um filtro
 	 */
 	@Ajax
 	public String lista() throws ActionException
@@ -71,7 +71,7 @@ public class ActionUsuario extends Action
 	}
 
 	/**
-	 * AÁ„o para criar um novo usu·rio
+	 * Acao para criar um novo usu√°rio
 	 */
 	@Error("/jsp/usuario/lista.jsp")
 	@Success("/jsp/usuario/form.jsp")
@@ -84,7 +84,7 @@ public class ActionUsuario extends Action
 	}
 
 	/**
-	 * AÁ„o para editar um usu·rio
+	 * Acao para editar um usu√°rio
 	 */
 	@Error("/jsp/usuario/lista.jsp")
 	@Success("/jsp/usuario/form.jsp")
@@ -93,17 +93,17 @@ public class ActionUsuario extends Action
 		checkLogged();
 		
 		int id = getIntParameter("id", -1);
-		check(id > 0, "Selecione o identificador do usu·rio desejado.");
+		check(id > 0, "Selecione o identificador do usu√°rio desejado.");
 
 		Usuario usuario = DAOFactory.getUsuarioDAO().getUsuarioId(id);
-		check(usuario != null, "O usu·rio selecionado n„o foi encontrado no sistema.");
+		check(usuario != null, "O usu√°rio selecionado nao foi encontrado no sistema.");
 		setAttribute("usuario", usuario);
 		
 		return SUCCESS;
 	}
 
 	/**
-	 * AÁ„o para salvar os dados de um usu·rio 
+	 * Acao para salvar os dados de um usu√°rio 
 	 */
 	@Error("/jsp/usuario/form.jsp")
 	@Success(type=ResultType.Redirect, value="/jsp/usuario/lista.jsp")
@@ -111,7 +111,7 @@ public class ActionUsuario extends Action
 	{
 		checkLogged();
 
-		// Captura os dados do formul·rio
+		// Captura os dados do formulario
 		Usuario usuario = new Usuario();
 		usuario.setId(getIntParameter("id", 0));
 		usuario.setNome(getParameter("nome", ""));
@@ -125,48 +125,48 @@ public class ActionUsuario extends Action
 		usuario.setTelefoneCelular(getParameter("telefoneCelular", ""));
 		setAttribute("usuario", usuario);
 
-		// Verifica as regras de negÛcio
-		checkNonEmpty(usuario.getNome(), "O nome do usu·rio n„o pode ser vazio");
-		checkLength(usuario.getNome(), 80, "O nome do usu·rio");
+		// Verifica as regras de negÔøΩcio
+		checkNonEmpty(usuario.getNome(), "O nome do usu√°rio n√£o pode ser vazio");
+		checkLength(usuario.getNome(), 80, "O nome do usu√°rio");
 
-		checkNonEmpty(usuario.getEmail(), "O e-mail do usu·rio n„o pode ser vazio");
-		checkLength(usuario.getEmail(), 80, "O e-mail do usu·rio");
-		checkEmail(usuario.getEmail(), "O e-mail do usu·rio n„o est· seguindo um formato v·lido");
+		checkNonEmpty(usuario.getEmail(), "O e-mail do usu√°rio n√£o pode ser vazio");
+		checkLength(usuario.getEmail(), 80, "O e-mail do usu√°rio");
+		checkEmail(usuario.getEmail(), "O e-mail do usu√°rio n√£o est√° seguindo um formato v√°lido");
 
-		checkNonEmpty(usuario.getEndereco(), "O endereÁo n„o pode ser vazio");
-		checkLength(usuario.getEndereco(), 80, "O endereÁo");
+		checkNonEmpty(usuario.getEndereco(), "O endere√ßo n√£o pode ser vazio");
+		checkLength(usuario.getEndereco(), 80, "O endere√ßo");
 
-		checkLength(usuario.getComplemento(), 80, "O complemento do endereÁo");
+		checkLength(usuario.getComplemento(), 80, "O complemento do endere√ßo");
 
-		check(usuario.getEstado() != null, "Selecione o estado do usu·rio");
+		check(usuario.getEstado() != null, "Selecione o estado do usu√°rio");
 
-		checkNonEmpty(usuario.getMunicipio(), "Selecione o municÌpio do usu·rio");
-		checkLength(usuario.getMunicipio(), 80, "O municÌpio do usu·rio");
+		checkNonEmpty(usuario.getMunicipio(), "Selecione o munic√≠pio do usu√°rio");
+		checkLength(usuario.getMunicipio(), 80, "O munic√≠pio do usu√°rio");
 
-		checkNonEmpty(usuario.getCep(), "O CEP do usu·rio n„o pode ser vazio");
-		checkLength(usuario.getCep(), 10, "O CEP do usu·rio");
+		checkNonEmpty(usuario.getCep(), "O CEP do usu√°rio n√£o pode ser vazio");
+		checkLength(usuario.getCep(), 10, "O CEP do usu√°rio");
 
-		checkNonEmpty(usuario.getTelefoneFixo(), "O telefone fixo do usu·rio n„o pode ser vazio");
-		checkLength(usuario.getTelefoneFixo(), 20, "O telefone fixo do usu·rio");
-		checkPhone(usuario.getTelefoneFixo(), "O telefone fixo do usu·rio est· com um formato inv·lido");
+		checkNonEmpty(usuario.getTelefoneFixo(), "O telefone fixo do usu√°rio n√£o pode ser vazio");
+		checkLength(usuario.getTelefoneFixo(), 20, "O telefone fixo do usu√°rio");
+		checkPhone(usuario.getTelefoneFixo(), "O telefone fixo do usu√°rio est√° com um formato inv√°lido");
 
-		checkNonEmpty(usuario.getTelefoneCelular(), "O telefone celular do usu·rio n„o pode ser vazio");
-		checkLength(usuario.getTelefoneCelular(), 20, "O telefone celular do usu·rio");
-		checkPhone(usuario.getTelefoneCelular(), "O telefone celular do usu·rio est· com um formato inv·lido");
+		checkNonEmpty(usuario.getTelefoneCelular(), "O telefone celular do usu√°rio n√£o pode ser vazio");
+		checkLength(usuario.getTelefoneCelular(), 20, "O telefone celular do usu√°rio");
+		checkPhone(usuario.getTelefoneCelular(), "O telefone celular do usu√°rio est√° com um formato inv√°lido");
 
 		Usuario usuario2 = DAOFactory.getUsuarioDAO().getUsuarioEmail(usuario.getEmail());
-		check(usuario2 == null || usuario2.getId() == usuario.getId(), "J· existe um usu·rio com esse e-mail");
+		check(usuario2 == null || usuario2.getId() == usuario.getId(), "J√° existe um usu√°rio com esse e-mail");
 
 		if (usuario.getId() == -1)
-			check(DAOFactory.getUsuarioDAO().adiciona(usuario), "Ocorreu um erro durante o salvamento dos dados do usu·rio.");
+			check(DAOFactory.getUsuarioDAO().adiciona(usuario), "Ocorreu um erro durante o salvamento dos dados do usu√°rio.");
 		else
-			check(DAOFactory.getUsuarioDAO().atualiza(usuario), "Ocorreu um erro durante o salvamento dos dados do usu·rio.");
+			check(DAOFactory.getUsuarioDAO().atualiza(usuario), "Ocorreu um erro durante o salvamento dos dados do usu√°rio.");
 		
 		return addRedirectNotice("usuario.atualizado");
 	}
 	
 	/**
-	 * AÁ„o AJAX para remover um usu·rio
+	 * Acao AJAX para remover um usu√°rio
 	 */
 	@Ajax
 	public String remove() throws ActionException
@@ -174,12 +174,12 @@ public class ActionUsuario extends Action
 		checkLogged();
 		
 		int id = getIntParameter("id", -1);
-		check(id > 0, "Selecione o identificador do usu·rio desejado.");
+		check(id > 0, "Selecione o identificador do usu√°rio desejado.");
 
 		Usuario usuario = DAOFactory.getUsuarioDAO().getUsuarioId(id);
-		check(usuario != null, "O usu·rio selecionado n„o foi encontrado no sistema.");
+		check(usuario != null, "O usu√°rio selecionado n√£o foi encontrado no sistema.");
 		
-		check(DAOFactory.getUsuarioDAO().remove(usuario.getId()), "Ocorreu um erro ao remover o usu·rio.");
+		check(DAOFactory.getUsuarioDAO().remove(usuario.getId()), "Ocorreu um erro ao remover o usu√°rio.");
 		return ajaxSuccess();
 	}
 }

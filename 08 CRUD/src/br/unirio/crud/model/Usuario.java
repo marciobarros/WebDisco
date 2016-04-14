@@ -7,7 +7,7 @@ import org.joda.time.DateTime;
 import br.unirio.simplemvc.servlets.IUser;
 
 /**
- * Classe que representa um usuário no sistema
+ * Classe que representa um usuario no sistema
  * 
  * @author Marcio
  */

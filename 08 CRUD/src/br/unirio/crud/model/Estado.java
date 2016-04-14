@@ -3,7 +3,7 @@ package br.unirio.crud.model;
 import lombok.Getter;
 
 /**
- * ENumeraÁ„o dos estados brasileiros
+ * ENumeracao dos estados brasileiros
  * 
  * @author Marcio Barros
  */
@@ -11,29 +11,29 @@ public enum Estado
 {
 	Acre("Acre", "AC"),
 	Alagoas("Alagoas", "AL"),
-	Amapa("Amap·", "AP"),
+	Amapa("Amap√°", "AP"),
 	Amazonas("Amazonas", "AM"),
 	Bahia("Bahia", "BA"),
-	Ceara("Cear·", "CE"),
+	Ceara("Cear√°", "CE"),
 	DistritoFederal("Distrito Federal", "DF"),
-	EspiritoSanto("EspÌrito Santo", "ES"),
-	Goias("Goi·s", "GO"),
-	Maranhao("Maranh„o", "MA"),
+	EspiritoSanto("Esp√≠rito Santo", "ES"),
+	Goias("Goi√°s", "GO"),
+	Maranhao("Maranh√£o", "MA"),
 	MatoGrosso("Mato Grosso", "MT"),
 	MatoGrossoSul("Mato Grosso do Sul", "MS"),
 	MinasGerais("Minas Gerais", "MG"),
-	Para("Par·", "PA"),
-	Paraiba("ParaÌba", "PB"),
-	Parana("Paran·", "PR"),
+	Para("Par√°", "PA"),
+	Paraiba("Para√≠ba", "PB"),
+	Parana("Paran√°", "PR"),
 	Pernambuco("Pernambuco", "PE"),
-	Piaui("PiauÌ", "PI"),
+	Piaui("Piau√≠", "PI"),
 	RioJaneiro("Rio de Janeiro", "RJ"),
 	RioGrandeNorte("Rio Grande do Norte", "RN"),
 	RioGrandeSul("Rio Grande do Sul", "RS"),
-	Rondonia("RondÙnia", "RO"),
+	Rondonia("Rond√¥nia", "RO"),
 	Roraima("Roraima", "RR"),
 	SantaCatarina("Santa Catarina", "SC"),
-	SaoPaulo("S„o Paulo", "SP"),
+	SaoPaulo("S√£o Paulo", "SP"),
 	Sergipe("Sergipe", "SE"),
 	Tocantins("Tocantins", "TO");
 	

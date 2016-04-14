@@ -11,24 +11,24 @@ import br.unirio.simplemvc.json.JSONArray;
 import br.unirio.simplemvc.json.JSONObject;
 
 /**
- * Ações gerais da aplicação
+ * Acoes gerais da aplicacao
  * 
  * @author Marcio
  */
 public class ActionCommon extends Action
 {
 	/**
-	 * Ação que lista os municípios de um estado
+	 * Acao que lista os municipios de um estado
 	 */
 	@DisableUserVerification
 	@Ajax
 	public String listaMunicipios() throws ActionException
 	{
 		Estado estado = Estado.get(getParameter("estado", ""));
-		check(estado != null, "Selecione o estado para carregar seus municípios.");
+		check(estado != null, "Selecione o estado para carregar seus municipios.");
 		
 		Iterable<Municipio> municipios = DAOFactory.getMunicipioDAO().getMunicipiosEstado(estado);
-		check(municipios != null, "Não foi possível recuperar os municípios do estado desejado.");
+		check(municipios != null, "Nao foi possivel recuperar os municipios do estado desejado.");
 		
 		JSONArray jsonMunicipios = new JSONArray();
 

@@ -3,7 +3,7 @@ package br.unirio.crud.model;
 import lombok.Data;
 
 /**
- * Classe que representa um município
+ * Classe que representa um municipio
  * 
  * @author Marcio Barros
  */

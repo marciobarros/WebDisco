@@ -16,7 +16,7 @@ public class DAOFactory
 	private static IUsuarioDAO usuarioDAO;
 
 	/**
-	 * Retorna a instância do DAO para persistência dos municipios
+	 * Retorna a instancia do DAO para persistencia dos municipios
 	 */
 	public static IMunicipioDAO getMunicipioDAO()
 	{
@@ -27,7 +27,7 @@ public class DAOFactory
 	}
 
 	/**
-	 * Altera a instância do DAO para persistência de municipios - método para ser usado em testes
+	 * Altera a instancia do DAO para persistencia de municipios - metodo para ser usado em testes
 	 */
 	public static void setMunicipioForTesting()
 	{
@@ -35,7 +35,7 @@ public class DAOFactory
 	}
 
 	/**
-	 * Retorna a instância do DAO para persistência dos usuários
+	 * Retorna a instancia do DAO para persistencia dos usuarios
 	 */
 	public static IUsuarioDAO getUsuarioDAO()
 	{
@@ -46,7 +46,7 @@ public class DAOFactory
 	}
 
 	/**
-	 * Altera a instância do DAO para persistência de usuários - método para ser usado em testes
+	 * Altera a instancia do DAO para persistencia de usuarios - metodo para ser usado em testes
 	 */
 	public static void setUsuarioForTesting()
 	{

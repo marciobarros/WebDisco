@@ -5,14 +5,14 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * Classe de suporte à persistência de informações
+ * Classe de suporte a persistencia de informacoes
  * 
  * @author marcio.barros
  */
 public class SupportDAO
 {
 	/**
-	 * Cria uma conexão com o banco de dados
+	 * Cria uma conexao com o banco de dados
 	 */
 	public static Connection getConnection()
 	{	
@@ -20,25 +20,24 @@ public class SupportDAO
 		{
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			Connection conexao = DriverManager.getConnection("jdbc:mysql://localhost/crud", "root", "root");
-			//conexao.setCatalog("crud");
 			return conexao;
 			
 		} catch (SQLException e)
 		{
-			System.out.println("Não foi possível estabelecer uma conexão com o banco de dados - erro de SQL");
+			System.out.println("Nao foi possivel estabelecer uma conexao com o banco de dados - erro de SQL");
 			System.out.println(e.getMessage());
 			return null;
 		} catch (ClassNotFoundException e)
 		{
-			System.out.println("Não foi possível estabelecer uma conexão com o banco de dados - driver não encontrado");
+			System.out.println("Nao foi possivel estabelecer uma conexao com o banco de dados - driver nao encontrado");
 			return null;
 		} catch (InstantiationException e)
 		{
-			System.out.println("Não foi possível estabelecer uma conexão com o banco de dados - erro de instanciação do driver");
+			System.out.println("Nao foi possivel estabelecer uma conexao com o banco de dados - erro de instanciacao do driver");
 			return null;
 		} catch (IllegalAccessException e)
 		{
-			System.out.println("Não foi possível estabelecer uma conexão com o banco de dados - acesso ilegal no driver");
+			System.out.println("Nao foi possivel estabelecer uma conexao com o banco de dados - acesso ilegal no driver");
 			return null;
 		}
 	}

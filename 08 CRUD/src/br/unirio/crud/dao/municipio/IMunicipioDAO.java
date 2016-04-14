@@ -13,7 +13,7 @@ import br.unirio.crud.model.Municipio;
 public interface IMunicipioDAO
 {
 	/**
-	 * Carrega os nomes dos municípios de um determinado estado
+	 * Carrega os nomes dos municipios de um determinado estado
 	 */
 	List<Municipio> getMunicipiosEstado(Estado estado);
 

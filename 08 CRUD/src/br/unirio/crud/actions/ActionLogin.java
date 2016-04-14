@@ -20,19 +20,19 @@ import br.unirio.simplemvc.actions.results.Success;
 import br.unirio.simplemvc.utils.Crypto;
 
 /**
- * Classe com aÁıes de login e tratamento de usu·rios
+ * Classe com acoes de login e tratamento de usuarios
  * 
  * @author Marcio Barros
  */
 public class ActionLogin extends Action
 {
 	/**
-	 * PerÌodo de validade do token de troca de senha
+	 * Periodo de validade do token de troca de senha
 	 */
 	private static final int VALIDATE_TOKEN_SENHA = 72;
 	
 	/**
-	 * AÁ„o de login
+	 * Acao de login
 	 */
 	@DisableUserVerification
 	@Error("/jsp/login/login.jsp")
@@ -49,16 +49,16 @@ public class ActionLogin extends Action
 			return ERROR;
 
 		Usuario usuario = DAOFactory.getUsuarioDAO().getUsuarioEmail(email);
-		check(usuario != null, "Usu·rio e senha incorretos.");
-		check(usuario.isActive(), "O usu·rio est· desativado no sistema.");
-		check(!usuario.isDeveTrocarSenha(), "O sistema indica que vocÍ precisa fazer um reset de senha. Isto pode ter ocorrido porque vocÍ pediu o reset e ainda n„o recebemos a confirmaÁ„o ou porque houve trÍs tentativas mal-sucedidas de acesso ‡ sua conta. Se necess·rio, clique na opÁ„o \"Esqueceu sua senha?\" para enviarmos novamente o e-mail de reset de senha.");
+		check(usuario != null, "Usu√°rio e senha incorretos.");
+		check(usuario.isActive(), "O usu√°rio est√° desativado no sistema.");
+		check(!usuario.isDeveTrocarSenha(), "O sistema indica que voc√™ precisa fazer um reset de senha. Isto pode ter ocorrido porque voc√™ pediu o reset e ainda n√£o recebemos a confirmacao ou porque houve tr√™s tentativas mal-sucedidas de acesso √† sua conta. Se necess√°rio, clique na op√ß√£o \"Esqueceu sua senha?\" para enviarmos novamente o e-mail de reset de senha.");
 
 		String hashSenha = Configuracao.getAmbienteHomologacao() ? password : Crypto.hash(password);
 
 		if (usuario.getSenhaCodificada().compareTo(hashSenha) != 0)
 		{
 			DAOFactory.getUsuarioDAO().registraLoginFalha(usuario.getId());
-			return addError("Usu·rio e senha incorretos.");
+			return addError("usu√°rio e senha incorretos.");
 		}
 
 		DateTime dataUltimoLogin = DAOFactory.getUsuarioDAO().pegaDataUltimoLogin(usuario.getId());
@@ -66,7 +66,7 @@ public class ActionLogin extends Action
 		if (dataUltimoLogin != null)
 		{
 			DateTimeFormatter sdf = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm");
-			addNotice("Seu ˙ltimo login no sistema foi realizado em " + sdf.print(dataUltimoLogin) + " hr.");
+			addNotice("Seu √∫ltimo login no sistema foi realizado em " + sdf.print(dataUltimoLogin) + " hr.");
 		}
 
 		DAOFactory.getUsuarioDAO().registraLoginSucesso(usuario.getId());
@@ -75,7 +75,7 @@ public class ActionLogin extends Action
 	}
 
 	/**
-	 * AÁ„o de ida para a homepage
+	 * Acao de ida para a homepage
 	 */
 	@Error("/login/login.do")
 	@Success("/jsp/homepage.jsp")
@@ -86,7 +86,7 @@ public class ActionLogin extends Action
 	}
 
 	/**
-	 * AÁ„o de logout
+	 * Acao de logout
 	 */
 	@DisableUserVerification
 	@Any(type=ResultType.Redirect, value="/login/login.do")
@@ -97,7 +97,7 @@ public class ActionLogin extends Action
 	}
 
 	/**
-	 * AÁ„o para preparar para a troca de senha
+	 * Acao para preparar para a troca de senha
 	 */
 	@Error("/login/login.do")
 	@Success("/jsp/login/trocaSenha.jsp")
@@ -108,7 +108,7 @@ public class ActionLogin extends Action
 	}
 
 	/**
-	 * AÁ„o de troca de senha
+	 * Acao de troca de senha
 	 */
 	@Success(type=ResultType.Redirect, value="/login/homepage.do")
 	@Error("/jsp/login/trocaSenha.jsp")
@@ -120,17 +120,17 @@ public class ActionLogin extends Action
 		check(senhaAtual != null, "Entre com sua senha antiga.");
 
 		String hashSenha = Configuracao.getAmbienteHomologacao() ? senhaAtual : Crypto.hash(senhaAtual);
-		check(usuario.getSenhaCodificada().compareTo(hashSenha) == 0, "A senha antiga est· incorreta.");
+		check(usuario.getSenhaCodificada().compareTo(hashSenha) == 0, "A senha antiga est√° incorreta.");
 
 		String novaSenha = getParameter("newpassword");
 		check(novaSenha != null, "Entre com sua nova senha.");
-		check(senhaAceitavel(novaSenha), "A nova senha deve conter pelo menos 8 caracteres, uma letra e um n˙mero.");
+		check(senhaAceitavel(novaSenha), "A nova senha deve conter pelo menos 8 caracteres, uma letra e um n√∫mero.");
 
 		String novaSenha2 = getParameter("newpassword2");
 		check(novaSenha2 != null, "Repita sua nova senha.");
 
-		check(novaSenha.length() != 0, "A nova senha n„o pode ser em branco.");
-		check(novaSenha.compareTo(novaSenha2) == 0, "Sua senha nova e a repetiÁ„o est„o diferentes.");
+		check(novaSenha.length() != 0, "A nova senha n√£o pode ser em branco.");
+		check(novaSenha.compareTo(novaSenha2) == 0, "Sua senha nova e a repeti√ß√£o est√£o diferentes.");
 
 		String hashNovaSenha = Configuracao.getAmbienteHomologacao() ? novaSenha : Crypto.hash(novaSenha);
 		usuario.setSenhaCodificada(hashNovaSenha);
@@ -140,7 +140,7 @@ public class ActionLogin extends Action
 	}
 
 	/**
-	 * Verifica se uma senha È aceit·vel, checando se ela tem pelo menos 8 caracteres, uma letra e um n˙mero
+	 * Verifica se uma senha e aceitavel, checando se ela tem pelo menos 8 caracteres, uma letra e um numero
 	 */
 	private boolean senhaAceitavel(String senha)
 	{
@@ -148,7 +148,7 @@ public class ActionLogin extends Action
 	}
 
 	/**
-	 * Prepara o formul·rio de envio de token por esquecimento de senha
+	 * Prepara o formulario de envio de token por esquecimento de senha
 	 */
 	@DisableUserVerification
 	@Error("/login/login.do")
@@ -159,7 +159,7 @@ public class ActionLogin extends Action
 	}
 
 	/**
-	 * AÁ„o de envio de token por esquecimento de senha
+	 * Acao de envio de token por esquecimento de senha
 	 */
 	@DisableUserVerification
 	@Error("/jsp/login/esqueceuSenha.jsp")
@@ -171,7 +171,7 @@ public class ActionLogin extends Action
 		setAttribute("email", email);
 
 		Usuario usuario = DAOFactory.getUsuarioDAO().getUsuarioEmail(email);
-		check(usuario != null, "Usuario n„o reconhecido.");
+		check(usuario != null, "Usuario n√£o reconhecido.");
 
 		String token = geraTokenTrocaSenha();
 		DAOFactory.getUsuarioDAO().armazenaTokenTrocaSenha(usuario.getId(), token);
@@ -180,8 +180,8 @@ public class ActionLogin extends Action
 		setAttribute("url", url);
 		return SUCCESS;
 		
-//		String corpo = "<p>VocÍ est· recebendo este e-mail porque pediu a reinicializa\u00E7\u00E3o da senha de acesso ao ";
-//		corpo += "sistema do PPGI. Clique <a href='" + url + "'>aqui</a> para acessar a p·gina de troca de senha.</p>";
+//		String corpo = "<p>Voce est√° recebendo este e-mail porque pediu a reinicializa\u00E7\u00E3o da senha de acesso ao ";
+//		corpo += "sistema do PPGI. Clique <a href='" + url + "'>aqui</a> para acessar a pagina de troca de senha.</p>";
 //		boolean envioOK = GerenciadorEmail.getInstance().envia(usuario.getNome(), usuario.getEmail(), "Reinicializacao de senha de acesso ao sistema do PPGI", corpo);
 //		check(envioOK, "Ocorreu um erro ao enviar um e-mail com sua senha");
 //		return addRedirectNotice("pedido.reinicializacao.email");
@@ -205,7 +205,7 @@ public class ActionLogin extends Action
 	}
 
 	/**
-	 * AÁ„o que recebe e verifica a validade do token de troca de senha
+	 * Acao que recebe e verifica a validade do token de troca de senha
 	 */
 	@DisableUserVerification
 	@Error("/login/login.do")
@@ -213,16 +213,16 @@ public class ActionLogin extends Action
 	public String verificaTokenSenha() throws ActionException
 	{
 		String token = getParameter("token", "");
-		checkNonEmpty(token, "O token de reset de senha n„o foi encontrado.");
+		checkNonEmpty(token, "O token de reset de senha n√£o foi encontrado.");
 
 		String email = getParameter("email", "");
-		checkNonEmpty(email, "O e-mail do usu·rio que requisitou o reset de senha n„o foi encontrado.");
+		checkNonEmpty(email, "O e-mail do usu√°rio que requisitou o reset de senha n√£o foi encontrado.");
 
 		Usuario usuario = DAOFactory.getUsuarioDAO().getUsuarioEmail(email);
-		check(usuario != null, "O usu·rio que requisitou o reset de senha n„o est· registrado no sistema.");
+		check(usuario != null, "O usu√°rio que requisitou o reset de senha n√£o est√° registrado no sistema.");
 
 		boolean valido = DAOFactory.getUsuarioDAO().verificaTokenTrocaSenha(usuario.getId(), token, VALIDATE_TOKEN_SENHA);
-		check(valido, "O token de troca de senha n„o È v·lido");
+		check(valido, "O token de troca de senha n√£o √© v√°lido");
 
 		setAttribute("token", token);
 		setAttribute("email", email);
@@ -230,7 +230,7 @@ public class ActionLogin extends Action
 	}
 	
 	/**
-	 * Executa uma troca de senha baseada em reinicializaÁ„o
+	 * Executa uma troca de senha baseada em reinicializacao
 	 */
 	@DisableUserVerification
 	@Success(type=ResultType.Redirect, value="/login/login.do")
@@ -238,27 +238,27 @@ public class ActionLogin extends Action
 	public String executaResetSenha() throws ActionException
 	{
 		String token = getParameter("token", "");
-		checkNonEmpty(token, "O token de reset de senha n„o foi encontrado.");
+		checkNonEmpty(token, "O token de reset de senha n√£o foi encontrado.");
 
 		String email = getParameter("email", "");
-		checkNonEmpty(email, "O e-mail do usu·rio que requisitou o reset de senha n„o foi encontrado.");
+		checkNonEmpty(email, "O e-mail do usu√°rio que requisitou o reset de senha n√£o foi encontrado.");
 
 		setAttribute("token", token);
 		setAttribute("email", email);
 
 		Usuario usuario = DAOFactory.getUsuarioDAO().getUsuarioEmail(email);
-		check(usuario != null, "O usu·rio que requisitou o reset de senha n„o est· registrado no sistema.");
+		check(usuario != null, "O usu√°rio que requisitou o reset de senha n√£o est√° registrado no sistema.");
 
 		boolean valido = DAOFactory.getUsuarioDAO().verificaTokenTrocaSenha(usuario.getId(), token, VALIDATE_TOKEN_SENHA);
-		check(valido, "O token de troca de senha n„o È v·lido");
+		check(valido, "O token de troca de senha n√£o √© v√°lido");
 
 		String novaSenha = getParameter("newpassword");
 		check(novaSenha != null, "Entre com sua nova senha.");
-		check(senhaAceitavel(novaSenha), "A nova senha deve conter pelo menos 8 caracteres, uma letra e um n˙mero.");
+		check(senhaAceitavel(novaSenha), "A nova senha deve conter pelo menos 8 caracteres, uma letra e um n√∫mero.");
 
 		String novaSenha2 = getParameter("newpassword2");
 		check(novaSenha2 != null, "Repita sua nova senha.");
-		check(novaSenha.compareTo(novaSenha2) == 0, "Sua senha nova e a repetiÁ„o est„o diferentes.");
+		check(novaSenha.compareTo(novaSenha2) == 0, "Sua senha nova e a repeti√ß√£o est√£o diferentes.");
 
 		String hashNovaSenha = Configuracao.getAmbienteHomologacao() ? novaSenha : Crypto.hash(novaSenha);
 		usuario.setSenhaCodificada(hashNovaSenha);
@@ -268,7 +268,7 @@ public class ActionLogin extends Action
 	}
 
 	/**
-	 * AÁ„o que cria um novo usu·rio
+	 * Acao que cria um novo usu√°rio
 	 */
 	@DisableUserVerification
 	@Any("/jsp/login/novo.jsp")
@@ -280,14 +280,14 @@ public class ActionLogin extends Action
 	}
 
 	/**
-	 * AÁ„o que salva os dados de um novo usu·rio
+	 * Acao que salva os dados de um novo usu√°rio
 	 */
 	@DisableUserVerification
 	@Success(type=ResultType.Redirect, value="/login/login.do")
 	@Error("/jsp/login/novo.jsp")
 	public String salva() throws ActionException
 	{
-		// Captura os dados do formul·rio
+		// Captura os dados do formulario
 		Usuario usuario = new Usuario();
 		usuario.setNome(getParameter("nome", ""));
 		usuario.setEmail(getParameter("email", usuario.getEmail()));
@@ -308,40 +308,40 @@ public class ActionLogin extends Action
 		String hashNovaSenha = Configuracao.getAmbienteHomologacao() ? senha1 : Crypto.hash(senha1);
 		usuario.setSenhaCodificada(hashNovaSenha);
 
-		// Verifica as regras de negÛcio
-		checkNonEmpty(usuario.getNome(), "O nome do usu·rio n„o pode ser vazio");
-		checkLength(usuario.getNome(), 80, "O nome do usu·rio");
+		// Verifica as regras de negÔøΩcio
+		checkNonEmpty(usuario.getNome(), "O nome do usu√°rio n√£o pode ser vazio");
+		checkLength(usuario.getNome(), 80, "O nome do usu√°rio");
 
-		checkNonEmpty(usuario.getEmail(), "O e-mail do usu·rio n„o pode ser vazio");
-		checkLength(usuario.getEmail(), 80, "O e-mail do usu·rio");
-		checkEmail(usuario.getEmail(), "O e-mail do usu·rio n„o est· seguindo um formato v·lido");
+		checkNonEmpty(usuario.getEmail(), "O e-mail do usu√°rio n√£o pode ser vazio");
+		checkLength(usuario.getEmail(), 80, "O e-mail do usu√°rio");
+		checkEmail(usuario.getEmail(), "O e-mail do usu√°rio n√£o est√° seguindo um formato v√°lido");
 		
-		check(senhaAceitavel(senha1), "A senha selecionada È muito fraca. Entre com uma senha mais forte.");
-		check(senha1.compareToIgnoreCase(senha2) == 0, "A repetiÁ„o da senha est· diferente da senha original.");
+		check(senhaAceitavel(senha1), "A senha selecionada √© muito fraca. Entre com uma senha mais forte.");
+		check(senha1.compareToIgnoreCase(senha2) == 0, "A repeti√ß√£o da senha est√° diferente da senha original.");
 
-		checkNonEmpty(usuario.getEndereco(), "O endereÁo n„o pode ser vazio");
-		checkLength(usuario.getEndereco(), 80, "O endereÁo");
+		checkNonEmpty(usuario.getEndereco(), "O endere√ßo n√£o pode ser vazio");
+		checkLength(usuario.getEndereco(), 80, "O endere√ßo");
 
-		checkLength(usuario.getComplemento(), 80, "O complemento do endereÁo");
+		checkLength(usuario.getComplemento(), 80, "O complemento do endere√ßo");
 
-		check(usuario.getEstado() != null, "Selecione o estado do usu·rio");
+		check(usuario.getEstado() != null, "Selecione o estado do usu√°rio");
 
-		checkNonEmpty(usuario.getMunicipio(), "Selecione o municÌpio do usu·rio");
-		checkLength(usuario.getMunicipio(), 80, "O municÌpio do usu·rio");
+		checkNonEmpty(usuario.getMunicipio(), "Selecione o munic√≠pio do usu√°rio");
+		checkLength(usuario.getMunicipio(), 80, "O munic√≠pio do usu√°rio");
 
-		checkNonEmpty(usuario.getCep(), "O CEP do usu·rio n„o pode ser vazio");
-		checkLength(usuario.getCep(), 10, "O CEP do usu·rio");
+		checkNonEmpty(usuario.getCep(), "O CEP do usu√°rio n√£o pode ser vazio");
+		checkLength(usuario.getCep(), 10, "O CEP do usu√°rio");
 
-		checkNonEmpty(usuario.getTelefoneFixo(), "O telefone fixo do usu·rio n„o pode ser vazio");
-		checkLength(usuario.getTelefoneFixo(), 20, "O telefone fixo do usu·rio");
-		checkPhone(usuario.getTelefoneFixo(), "O telefone fixo do usu·rio est· com um formato inv·lido");
+		checkNonEmpty(usuario.getTelefoneFixo(), "O telefone fixo do usu√°rio n√£o pode ser vazio");
+		checkLength(usuario.getTelefoneFixo(), 20, "O telefone fixo do usu√°rio");
+		checkPhone(usuario.getTelefoneFixo(), "O telefone fixo do usu√°rio est√° com um formato inv√°lido");
 
-		checkNonEmpty(usuario.getTelefoneCelular(), "O telefone celular do usu·rio n„o pode ser vazio");
-		checkLength(usuario.getTelefoneCelular(), 20, "O telefone celular do usu·rio");
-		checkPhone(usuario.getTelefoneCelular(), "O telefone celular do usu·rio est· com um formato inv·lido");
+		checkNonEmpty(usuario.getTelefoneCelular(), "O telefone celular do usu√°rio n√£o pode ser vazio");
+		checkLength(usuario.getTelefoneCelular(), 20, "O telefone celular do usu√°rio");
+		checkPhone(usuario.getTelefoneCelular(), "O telefone celular do usu√°rio est√° com um formato inv√°lido");
 
 		Usuario usuario2 = DAOFactory.getUsuarioDAO().getUsuarioEmail(usuario.getEmail());
-		check(usuario2 == null || usuario2.getId() == usuario.getId(), "J· existe um usu·rio com esse e-mail");
+		check(usuario2 == null || usuario2.getId() == usuario.getId(), "J√° existe um usu√°rio com esse e-mail");
 
 		DAOFactory.getUsuarioDAO().adiciona(usuario);
 		return addRedirectNotice("usuario.cadastrado.sucesso");

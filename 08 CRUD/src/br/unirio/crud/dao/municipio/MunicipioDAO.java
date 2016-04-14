@@ -12,14 +12,14 @@ import br.unirio.crud.model.Estado;
 import br.unirio.crud.model.Municipio;
 
 /**
- * Classe responsável pela persistência de municípios
+ * Classe responsÃ¡vel pela persistÃªncia de municipios
  * 
  * @author Marcio Barros
  */
 public class MunicipioDAO implements IMunicipioDAO
 {
 	/**
-	 * Carrega os dados de um município a partir do resultado de uma consulta
+	 * Carrega os dados de um municipio a partir do resultado de uma consulta
 	 */
 	private Municipio load(ResultSet rs) throws SQLException
 	{
@@ -33,7 +33,7 @@ public class MunicipioDAO implements IMunicipioDAO
 	}
 
 	/**
-	 * Carrega os nomes dos municípios de um determinado estado
+	 * Carrega os nomes dos municipios de um determinado estado
 	 */
 	@Override
 	public List<Municipio> getMunicipiosEstado(Estado estado)

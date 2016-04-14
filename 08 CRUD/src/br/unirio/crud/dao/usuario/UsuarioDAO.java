@@ -18,14 +18,14 @@ import br.unirio.simplemvc.dao.OrderingType;
 import br.unirio.simplemvc.utils.DateUtils;
 
 /**
- * Classe responsável pela persistência de usuários
+ * Classe responsavel pela persistencia de usuarios
  * 
  * @author Marcio Barros
  */
 public class UsuarioDAO implements IUsuarioDAO
 {
 	/**
-	 * Carrega os dados de um usuário a partir do resultado de uma consulta
+	 * Carrega os dados de um usuario a partir do resultado de uma consulta
 	 */
 	private Usuario load(ResultSet rs) throws SQLException
 	{
@@ -47,7 +47,7 @@ public class UsuarioDAO implements IUsuarioDAO
 	}
 
 	/**
-	 * Carrega um usuário, dado seu identificador
+	 * Carrega um usuario, dado seu identificador
 	 */
 	@Override
 	public Usuario getUsuarioId(int id)
@@ -79,7 +79,7 @@ public class UsuarioDAO implements IUsuarioDAO
 	}
 	
 	/**
-	 * Retorna um usuário, dado seu nome
+	 * Retorna um usuario, dado seu nome
 	 */
 	@Override
 	public Usuario getUsuarioNome(String nome)
@@ -111,7 +111,7 @@ public class UsuarioDAO implements IUsuarioDAO
 	}
 
 	/**
-	 * Retorna um usuário, dado seu e-mail
+	 * Retorna um usuario, dado seu e-mail
 	 */
 	@Override
 	public Usuario getUsuarioEmail(String email)
@@ -144,7 +144,7 @@ public class UsuarioDAO implements IUsuarioDAO
 	}
 	
 	/**
-	 * Conta o número de usuários que atendem a um filtro
+	 * Conta o numero de usuarios que atendem a um filtro
 	 */
 	@Override
 	public int conta(String filtroNome, String filtroEmail, String filtroEstado)
@@ -184,7 +184,7 @@ public class UsuarioDAO implements IUsuarioDAO
 	}
 
 	/**
-	 * Retorna a lista de usuários registrados no sistema que atendem a um filtro
+	 * Retorna a lista de usuarios registrados no sistema que atendem a um filtro
 	 */
 	@Override
 	public List<Usuario> lista(int pagina, int tamanho, OrdenacaoUsuario campoOrdenacao, OrderingType tipoOrdenacao, String filtroNome, String filtroEmail, String filtroEstado)
@@ -231,7 +231,7 @@ public class UsuarioDAO implements IUsuarioDAO
 	}
 
 	/**
-	 * Adiciona um usuário no sistema
+	 * Adiciona um usuario no sistema
 	 */
 	@Override
 	public boolean adiciona(Usuario usuario)
@@ -268,7 +268,7 @@ public class UsuarioDAO implements IUsuarioDAO
 	}
 
 	/**
-	 * Atualiza os dados de um usuário
+	 * Atualiza os dados de um usuario
 	 */
 	@Override
 	public boolean atualiza(Usuario usuario)
@@ -303,7 +303,7 @@ public class UsuarioDAO implements IUsuarioDAO
 	}
 
 	/**
-	 * Remove um usuário do sistema
+	 * Remove um usuario do sistema
 	 */
 	@Override
 	public boolean remove(int id)
@@ -329,7 +329,7 @@ public class UsuarioDAO implements IUsuarioDAO
 	}
 
 	/**
-	 * Atualiza a senha de um usuário
+	 * Atualiza a senha de um usuario
 	 */
 	@Override
 	public boolean atualizaSenha(int idUsuario, String senhaCodificada)
@@ -356,7 +356,7 @@ public class UsuarioDAO implements IUsuarioDAO
 	}
 
 	/**
-	 * Registra o login de um usuário com sucesso
+	 * Registra o login de um usuario com sucesso
 	 */
 	@Override
 	public boolean registraLoginSucesso(int idUsuario)
@@ -382,7 +382,7 @@ public class UsuarioDAO implements IUsuarioDAO
 	}
 	
 	/**
-	 * Registra o login de um usuário com falha
+	 * Registra o login de um usuario com falha
 	 */
 	@Override
 	public boolean registraLoginFalha(int idUsuario)
@@ -408,7 +408,7 @@ public class UsuarioDAO implements IUsuarioDAO
 	}
 
 	/**
-	 * Pega a data/hora do último login de um usuário
+	 * Pega a data/hora do ultimo login de um usuario
 	 */
 	@Override
 	public DateTime pegaDataUltimoLogin(int idUsuario)
@@ -445,7 +445,7 @@ public class UsuarioDAO implements IUsuarioDAO
 	}
 	
 	/**
-	 * Pega o número de tentativas de login com falha de um usuário
+	 * Pega o numero de tentativas de login com falha de um usuario
 	 */
 	@Override
 	public int pegaNumeroTentativasFalha(int idUsuario)
@@ -483,7 +483,7 @@ public class UsuarioDAO implements IUsuarioDAO
 	}
 	
 	/**
-	 * Armazena um token de troca de senha para um usuário
+	 * Armazena um token de troca de senha para um usuario
 	 */
 	@Override
 	public boolean armazenaTokenTrocaSenha(int idUsuario, String token)
@@ -510,7 +510,7 @@ public class UsuarioDAO implements IUsuarioDAO
 	}
 	
 	/**
-	 * Verifica se um token de troca de senha é válido para um usuário
+	 * Verifica se um token de troca de senha e valido para um usuario
 	 */
 	@Override
 	public boolean verificaTokenTrocaSenha(int idUsuario, String token, int maxHoras)

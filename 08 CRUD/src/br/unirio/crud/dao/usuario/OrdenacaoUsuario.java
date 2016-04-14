@@ -3,7 +3,7 @@ package br.unirio.crud.dao.usuario;
 import br.unirio.simplemvc.dao.OrderingType;
 
 /**
- * Enumeração dos tipos de ordenação de usuários
+ * Enumeracao dos tipos de ordenacao de usuarios
  * 
  * @author Marcio Barros
  */
