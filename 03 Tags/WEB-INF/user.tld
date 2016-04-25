@@ -9,7 +9,7 @@
 
   <tag>
     <name>redirectLogged</name>
-    <tagclass>taglib.user.RedirectLoggedTag</tagclass>
+    <tagclass>br.unirio.logging.tags.RedirectLoggedTag</tagclass>
     <bodycontent>empty</bodycontent>
     <info></info>
 
@@ -22,7 +22,7 @@
 
   <tag>
     <name>redirectUnlogged</name>
-    <tagclass>taglib.user.RedirectUnloggedTag</tagclass>
+    <tagclass>br.unirio.logging.tags.RedirectUnloggedTag</tagclass>
     <bodycontent>empty</bodycontent>
     <info></info>
 
@@ -35,7 +35,7 @@
 
   <tag>
     <name>redirectUserLevel</name>
-    <tagclass>taglib.user.RedirectUserLevelTag</tagclass>
+    <tagclass>br.unirio.logging.tags.RedirectUserLevelTag</tagclass>
     <bodycontent>empty</bodycontent>
     <info></info>
 
@@ -54,21 +54,21 @@
 
   <tag>
     <name>checkLogged</name>
-    <tagclass>taglib.user.CheckLoggedTag</tagclass>
+    <tagclass>br.unirio.logging.tags.CheckLoggedTag</tagclass>
     <bodycontent>JSP</bodycontent>
     <info></info>
   </tag>
 
   <tag>
     <name>checkUnlogged</name>
-    <tagclass>taglib.user.CheckUnloggedTag</tagclass>
+    <tagclass>br.unirio.logging.tags.CheckUnloggedTag</tagclass>
     <bodycontent>JSP</bodycontent>
     <info></info>
   </tag>
 
   <tag>
     <name>checkUserLevel</name>
-    <tagclass>taglib.user.CheckUserLevelTag</tagclass>
+    <tagclass>br.unirio.logging.tags.CheckUserLevelTag</tagclass>
     <bodycontent>JSP</bodycontent>
     <info></info>
 
@@ -78,12 +78,4 @@
       <rtexprvalue>true</rtexprvalue>
     </attribute>
   </tag>
-
-  <tag>
-    <name>invalidateUser</name>
-    <tagclass>taglib.user.InvalidateUser</tagclass>
-    <bodycontent>empty</bodycontent>
-    <info></info>
-  </tag>
-
 </taglib>

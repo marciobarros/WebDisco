@@ -1,7 +1,7 @@
 /**
- * Tag para redirecionamento de usuários logados
+ * Tag para redirecionamento de usuarios logados
  *
- * @author Márcio Barros
+ * @author Marcio Barros
  * @version 1.0
  */
 

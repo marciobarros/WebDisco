@@ -1,7 +1,7 @@
 /**
- * Tag para trasnferencia de usuários de acordo com seu nível
+ * Tag para trasnferencia de usuarios de acordo com seu nivel
  *
- * @author Márcio Barros
+ * @author Marcio Barros
  * @version 1.0
  */
 

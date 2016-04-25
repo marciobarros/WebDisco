@@ -1,7 +1,7 @@
 /**
- * Tag que processa seu conteúdo de acordo com o nível do usuário logado
+ * Tag que processa seu conteudo de acordo com o nivel do usuario logado
  *
- * @author Márcio Barros
+ * @author Marcio Barros
  * @version 1.0
  */
 

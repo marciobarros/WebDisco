@@ -1,7 +1,7 @@
 /**
- * Analisa o conteúdo da tag somente se não houver usuário logado
+ * Analisa o conteudo da tag somente se nao houver usuario logado
  *
- * @author Márcio Barros
+ * @author Marcio Barros
  * @version 1.0
  */
 

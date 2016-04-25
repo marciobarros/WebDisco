@@ -1,7 +1,7 @@
 /**
- * Interface que representa um usuário genérico para sistemas Web
+ * Interface que representa um usuario generico para sistemas Web
  *
- * @author Márcio Barros
+ * @author Marcio Barros
  * @version 1.0
  */
 
