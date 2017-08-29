@@ -1,4 +1,4 @@
-package br.unirio.webdisco.dao.compactdisc;
+package br.unirio.webdisco.dao;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -9,7 +9,6 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.unirio.webdisco.dao.SupportDAO;
 import br.unirio.webdisco.model.CompactDisc;
 
 /**
@@ -17,7 +16,7 @@ import br.unirio.webdisco.model.CompactDisc;
  * 
  * @author marcio.barros
  */
-public class CompactDiscDAO implements ICompactDiscDAO
+public class CompactDiscDAO
 {
 	/**
 	 * Carrega os dados de um CD a partir de uma consulta
@@ -35,7 +34,6 @@ public class CompactDiscDAO implements ICompactDiscDAO
 	/**
 	 * Retorna um CD, dado seu identificador
 	 */
-	@Override
 	public CompactDisc getCompactDiscId(int id)
 	{
 		Connection c = SupportDAO.getConnection();
@@ -68,7 +66,6 @@ public class CompactDiscDAO implements ICompactDiscDAO
 	/**
 	 * Retorna a lista de CDs armazenados no sistema
 	 */
-	@Override
 	public List<CompactDisc> lista()
 	{
 		Connection c = SupportDAO.getConnection();
@@ -99,7 +96,6 @@ public class CompactDiscDAO implements ICompactDiscDAO
 	/**
 	 * Insere um CD no sistema
 	 */
-	@Override
 	public boolean insere(CompactDisc cd)
 	{
 		Connection c = SupportDAO.getConnection();
@@ -132,7 +128,6 @@ public class CompactDiscDAO implements ICompactDiscDAO
 	/**
 	 * Atualiza os dados de um CD no sistema
 	 */
-	@Override
 	public boolean atualiza(CompactDisc cd)
 	{
 		Connection c = SupportDAO.getConnection();
@@ -161,7 +156,6 @@ public class CompactDiscDAO implements ICompactDiscDAO
 	/**
 	 * Remove um CD do sistema
 	 */
-	@Override
 	public boolean remove(int id)
 	{
 		Connection c = SupportDAO.getConnection();

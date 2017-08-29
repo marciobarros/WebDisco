@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.unirio.webdisco.Constants;
-import br.unirio.webdisco.dao.DAOFactory;
+import br.unirio.webdisco.dao.CompactDiscDAO;
 import br.unirio.webdisco.model.CompactDisc;
 
 /**
@@ -25,7 +25,7 @@ public class ServletEditDisc extends HttpServlet
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		int id = Integer.valueOf (request.getParameter ("id"));
-		CompactDisc cd = DAOFactory.getCompactDiscDAO().getCompactDiscId(id);
+		CompactDisc cd = new CompactDiscDAO().getCompactDiscId(id);
 		request.setAttribute (Constants.CD_KEY, cd);
 
 		ServletContext context = getServletContext();

@@ -1,16 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="header.jsp"%>
 
-<%@taglib uri="/WEB-INF/c.tld" prefix="c"%>
-
 <h2>
-  WEBDISCO - Cat√°logo de Compact Discs
+  WEBDISCO - Cat·logo de Compact Discs
 </h2>				
 		
 <table id="tabelaLista">
 <tr>
-  <th class='title'>T√≠tulo</th>
-  <th class='price'>Pre√ßo</th>																
+  <th class='title'>TÌtulo</th>
+  <th class='price'>PreÁo</th>																
   <th class='stock'>Estoque</th>							
 </tr>
 

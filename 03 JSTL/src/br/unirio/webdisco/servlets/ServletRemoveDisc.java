@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.unirio.webdisco.dao.DAOFactory;
+import br.unirio.webdisco.dao.CompactDiscDAO;
 
 /**
  * Servlet que remove um CD da memoria
@@ -21,7 +21,7 @@ public class ServletRemoveDisc extends HttpServlet
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		int id = Integer.valueOf (request.getParameter ("id"));
-		DAOFactory.getCompactDiscDAO().remove(id);
+		new CompactDiscDAO().remove(id);
 		response.sendRedirect("/list.do");
 	}
 }

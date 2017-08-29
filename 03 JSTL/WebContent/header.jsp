@@ -1,7 +1,7 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib uri="/WEB-INF/c.tld" prefix="c"%>
 
-<%@ page import="br.unirio.webdisco.dao.DAOFactory"%>
 <%@ page import="br.unirio.webdisco.Constants" %>
 <%@ page import="br.unirio.webdisco.model.CompactDisc" %>
 <%@ page import="java.util.List" %>

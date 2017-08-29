@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.unirio.webdisco.Constants;
-import br.unirio.webdisco.dao.DAOFactory;
+import br.unirio.webdisco.dao.CompactDiscDAO;
 import br.unirio.webdisco.model.CompactDisc;
 
 /**
@@ -25,7 +25,7 @@ public class ServletList extends HttpServlet
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		List<CompactDisc> cdlist = DAOFactory.getCompactDiscDAO().lista();
+		List<CompactDisc> cdlist = new CompactDiscDAO().lista();
 		request.setAttribute(Constants.CDLIST_KEY, cdlist);
 
 		ServletContext context = getServletContext();
