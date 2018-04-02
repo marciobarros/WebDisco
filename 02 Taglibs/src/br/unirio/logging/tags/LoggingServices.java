@@ -31,7 +31,7 @@ public class LoggingServices
 		if (instance == null)
 			instance = new LoggingServices();
 
-		return (instance);
+		return instance;
 	}
 
 	/**
@@ -42,10 +42,9 @@ public class LoggingServices
 		HttpSession session = pc.getSession();
 
 		if (session == null)
-			return (null);
+			return null;
 
-		GenericUser user = (GenericUser) session.getAttribute(USER_KEY);
-		return (user);
+		return (GenericUser) session.getAttribute(USER_KEY);
 	}
 
 	/**
@@ -53,7 +52,7 @@ public class LoggingServices
 	 */
 	public boolean isUserLogged(PageContext pc)
 	{
-		return (getLoggedUser(pc) != null);
+		return getLoggedUser(pc) != null;
 	}
 
 	/**
@@ -64,9 +63,9 @@ public class LoggingServices
 		GenericUser user = getLoggedUser(pc);
 
 		if (user == null)
-			return (false);
+			return false;
 
-		return (user.checkLevel(level));
+		return user.checkLevel(level);
 	}
 
 	/**
