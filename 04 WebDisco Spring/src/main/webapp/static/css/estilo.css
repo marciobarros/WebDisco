@@ -1,0 +1,25 @@
+#tabelaLista {
+	border: 1px solid black; 
+	border-spacing: 0px;
+}
+#tabelaLista tr th.title {
+	text-align: left;
+	background-color: lightblue;	
+}
+#tabelaLista tr th.price {
+	text-align: right;
+	background-color: lightblue;	
+}
+#tabelaLista tr th.stock {
+	text-align: right;
+	background-color: lightblue;	
+}
+#tabelaLista tr td.title {
+	text-align: left;
+}
+#tabelaLista tr td.price {
+	text-align: right;
+}
+#tabelaLista tr td.stock {
+	text-align: right;
+}
