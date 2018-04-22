@@ -3,12 +3,12 @@
 <h2>WEBDISCO - Catálogo de Compact Discs</h2>
 
 <c:if test="${not empty requestScope.error}">
-	<p><font color=red><b><c:out value="${requestScope.error}"/></b></font></p>
+	<p><font color="red"><b><c:out value="${requestScope.error}"/></b></font></p>
 </c:if>
 
 <c:set var="cd" value="${requestScope.cd}"/>
 
-<form method="post" action="/save.do">
+<form method="post" action="${pageContext.request.contextPath}/save.do">
 	<input type="hidden" name="id" value="${cd.id}"/>
 
 	<table>
@@ -48,7 +48,7 @@
 </form>
 
 <p>
-  <a href="/list.do">Retorna para a lista</a>
+  <a href="${pageContext.request.contextPath}/list.do">Retorna para a lista</a>
 </p>
 
 <%@include file="footer.jsp"%>

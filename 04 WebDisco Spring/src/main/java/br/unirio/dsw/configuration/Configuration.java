@@ -34,17 +34,6 @@ public class Configuration
 	}
 
 	/**
-	 * Retorna o endereco do host
-	 */
-	public static String getHostname()
-	{
-		if (configuracao == null)
-			carregaConfiguracao();
-		
-		return configuracao.getProperty("HOSTNAME").trim(); 
-	}
-
-	/**
 	 * Retorna a string de conexão ao banco de dados
 	 */
 	public static String getDatabaseConnection()

@@ -14,8 +14,8 @@
 <c:forEach var="cd" items="${requestScope.cdlist}">
 	<tr>
 		<td class='title'>
-			<a href='/remove.do?id=${cd.id}'><img src='img/Delete.gif' border=0/></a>&nbsp;
-			<a href='/edit.do?id=${cd.id}'><c:out value="${cd.title}"/></a>&nbsp;
+			<a href='${pageContext.request.contextPath}/remove/${cd.id}'><img src='${pageContext.request.contextPath}/static/img/Delete.gif' border="0"/></a>&nbsp;
+			<a href='${pageContext.request.contextPath}/edit/${cd.id}'><c:out value="${cd.title}"/></a>&nbsp;
 		</td>
 		<td class='price'>
 			<c:out value="${cd.price}"/>
@@ -28,6 +28,6 @@
 </table>					
 
 <br>
-<a href='/create.do'>Novo CD</a>
+<a href='${pageContext.request.contextPath}/create'>Novo CD</a>
 
 <%@include file="footer.jsp"%>
