@@ -1,14 +1,12 @@
 <%@include file="header.jsp"%>
 
-<h2>
-  WEBDISCO - Catálogo de Compact Discs
-</h2>				
+<h2><spring:message code="app.title" /></h2>				
 		
 <table id="tabelaLista">
 <tr>
-  <th class='title'>Título</th>
-  <th class='price'>Preço</th>																
-  <th class='stock'>Estoque</th>							
+  <th class='title'><spring:message code="label.title"/></th>
+  <th class='price'><spring:message code="label.price"/></th>
+  <th class='stock'><spring:message code="label.stock"/></th>
 </tr>
 
 <c:forEach var="cd" items="${requestScope.cdlist}">
@@ -28,6 +26,9 @@
 </table>					
 
 <br>
-<a href='${pageContext.request.contextPath}/create'>Novo CD</a>
+
+<a href='${pageContext.request.contextPath}/create'>
+	<spring:message code="command.new"/>
+</a>
 
 <%@include file="footer.jsp"%>

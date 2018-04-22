@@ -1,54 +1,30 @@
 <%@include file="header.jsp"%>
 
-<h2>WEBDISCO - Catálogo de Compact Discs</h2>
+<h2><spring:message code="app.title" /></h2>
 
-<c:if test="${not empty requestScope.error}">
-	<p><font color="red"><b><c:out value="${requestScope.error}"/></b></font></p>
-</c:if>
+<form:form action="${pageContext.request.contextPath}/save.do" commandName="form" role="form" method="post" enctype="utf8">
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+	<form:input type="hidden" name="id-title" path="id"/>
 
-<c:set var="cd" value="${requestScope.cd}"/>
+	<label for="cd-title"><spring:message code="label.title"/>:</label>
+	<form:errors id="error-title" path="title" cssClass="error-block"/>				            
+	<form:input id="cd-title" path="title" size="64"/>
 
-<form method="post" action="${pageContext.request.contextPath}/save.do">
-	<input type="hidden" name="id" value="${cd.id}"/>
+	<label for="cd-price"><spring:message code="label.price"/>:</label>
+	<form:errors id="error-price" path="price" cssClass="error-block"/>
+	<form:input id="cd-price" path="price" size="64"/>
 
-	<table>
-	<tr>
-	  <th align="right">
-		Título:
-	  </th>
-	  <td align="left">
-		<input type="text" name="title" value="${cd.title}" size="64"/>
-	  </td>
-	</tr>
+	<label for="cd-stock"><spring:message code="label.stock"/>:</label>
+	<form:errors id="error-stock" path="stock" cssClass="error-block"/>				            
+	<form:input id="cd-stock" path="stock" size="64"/>
 
-	<tr>
-	  <th align="right">
-		Preço:
-	  </th>
-	  <td align="left">
-		<input type="text" name="price" value="${cd.price}" size="12"/>
-	  </td>
-	</tr>
+	<button type="submit"><spring:message code="command.send"/></button>
+</form:form>
 
-	<tr>
-	  <th align="right">
-		Estoque:
-	  </th>
-	  <td align="left">
-		<input type="text" name="stock" value="${cd.stock}" size="12"/>
-	  </td>
-	</tr>								
+<br/>
 
-	<tr>
-	  <td colspan="2" align="right">
-		<input type="submit"/>
-	  </td>									
-	</tr>
-	</table>					
-</form>
-
-<p>
-  <a href="${pageContext.request.contextPath}/list.do">Retorna para a lista</a>
-</p>
+<a href="${pageContext.request.contextPath}/">
+	<spring:message code="command.return.list" />
+</a>
 
 <%@include file="footer.jsp"%>

@@ -23,3 +23,13 @@
 #tabelaLista tr td.stock {
 	text-align: right;
 }
+form label {
+	display: block;
+}
+form input {
+	display: block;
+	margin-bottom: 16px;
+}
+span.error-block {
+	color: red;
+}

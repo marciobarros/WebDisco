@@ -6,6 +6,9 @@ import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,20 +24,20 @@ import br.unirio.dsw.view.CompactDiscForm;
  * @author marciobarros
  */
 @Controller
-public class CompactDiscController 
+public class CompactDiscController
 {
 	private static final String CDLIST_KEY = "cdlist";
-	
-	private static final String CD_KEY = "cd";
-	
-    @Autowired
-    private MessageSource messageSource;
-    
-    @Autowired
+
+	private static final String CD_KEY = "form";
+
+	@Autowired
+	private MessageSource messageSource;
+
+	@Autowired
 	private CompactDiscDAO compactDiscDAO;
- 
+
 	/**
-	 * Ação que redireciona o usuário para a lista de CD
+	 * Ação que apresenta a lista de CDs
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView lista()
@@ -49,58 +52,48 @@ public class CompactDiscController
 	/**
 	 * Ação que cria um novo CD
 	 */
-    @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public ModelAndView cria()
-    {
-		CompactDisc cd = new CompactDisc ();
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public ModelAndView cria()
+	{
+		CompactDiscForm form = new CompactDiscForm();
 		ModelAndView model = new ModelAndView();
-		model.addObject(CD_KEY, cd);
+		model.addObject(CD_KEY, form);
 		model.setViewName("form");
 		return model;
-    }
+	}
 
 	/**
 	 * Ação que edita um CD
 	 */
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public ModelAndView edita(@PathVariable("id") int id)
-    {
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+	public ModelAndView edita(@PathVariable("id") int id)
+	{
 		CompactDisc cd = compactDiscDAO.getCompactDiscId(id);
+		CompactDiscForm form = new CompactDiscForm(cd);
 		ModelAndView model = new ModelAndView();
-		model.addObject(CD_KEY, cd);
+		model.addObject(CD_KEY, form);
 		model.setViewName("form");
 		return model;
-    }
+	}
 
 	/**
 	 * Ação que salva um CD
 	 */
-    @RequestMapping(value = "/salva", method = RequestMethod.POST)
-    public ModelAndView salva(CompactDiscForm form, Locale locale)
-    {
-		ModelAndView model = new ModelAndView();
-
-		if (form.getTitle() == null || form.getTitle().length() == 0)
-		{
-			model.addObject("error", messageSource.getMessage("erro.formulario.titulo.vazio", null, locale));
-			model.setViewName("form");
-			return model;
-		}
-
-		if (form.getPrice() <= 0.0)
-		{
-			model.addObject("error", messageSource.getMessage("erro.formulario.preco.maior.zero", null, locale));
-			model.setViewName("form");
-			return model;
-		}
-
-		if (form.getStock() < 0.0)
-		{
-			model.addObject("error", messageSource.getMessage("erro.formulario.quantidade.maiorigual.zero", null, locale));
-			model.setViewName("form");
-			return model;
-		}
-
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	public String salva(@ModelAttribute("form") CompactDiscForm form, BindingResult result, Locale locale)
+	{
+		if (form.getTitle().length() == 0)
+			result.addError(new FieldError("form", "title", messageSource.getMessage("cd.title.empty", null, locale)));
+		
+		if (form.getPrice() <= 0)
+			result.addError(new FieldError("form", "price", messageSource.getMessage("cd.price.negativezero", null, locale)));
+		
+		if (form.getStock() <= 0)
+			result.addError(new FieldError("form", "stock", messageSource.getMessage("cd.stock.negative", null, locale)));
+		
+        if (result.hasErrors())
+            return "form";
+ 
 		CompactDisc cd = new CompactDisc();
 		cd.setId(form.getId());
 		cd.setTitle(form.getTitle());
@@ -112,17 +105,16 @@ public class CompactDiscController
 		else
 			compactDiscDAO.atualiza(cd);
 		
-		model.setViewName("redirect:list");
-		return model;
-    }
-	
-    /**
-     * Ação que remove um CD
-     */
+		return "redirect:/";
+	}
+
+	/**
+	 * Ação que remove um CD
+	 */
 	@RequestMapping(value = "/remove/{id}", method = RequestMethod.GET)
 	public String remove(@PathVariable("id") int id)
 	{
 		compactDiscDAO.remove(id);
-		return "redirect:list";
+		return "redirect:/";
 	}
 }

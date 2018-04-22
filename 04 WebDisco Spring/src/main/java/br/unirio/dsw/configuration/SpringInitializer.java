@@ -88,10 +88,6 @@ public class SpringInitializer extends AbstractAnnotationConfigDispatcherServlet
  
         FilterRegistration.Dynamic characterEncoding = servletContext.addFilter("characterEncoding", characterEncodingFilter);
         characterEncoding.addMappingForUrlPatterns(dispatcherTypes, true, "/*");
-
-        // Associa os mecanismos de segurança a todas as requisições
-//        FilterRegistration.Dynamic security = servletContext.addFilter("springSecurityFilterChain", new DelegatingFilterProxy());
-//        security.addMappingForUrlPatterns(dispatcherTypes, true, "/*");
  
         servletContext.addListener(new ContextLoaderListener(rootContext));
     }
