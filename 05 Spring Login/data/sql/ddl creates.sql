@@ -111,7 +111,8 @@ CREATE TABLE InscricaoChamada
 	idChamada INT NOT NULL,
 	idUsuario INT NOT NULL,
 	dataInscricao TIMESTAMP NULL,
-
+	cancelada INT NOT NULL DEFAULT 0,
+	
     CONSTRAINT pkInscricaoChamada PRIMARY KEY(id),
     CONSTRAINT fkInscricaoChamada FOREIGN KEY(idChamada) REFERENCES Chamada(id),
     CONSTRAINT fkInscricaoUsuario FOREIGN KEY(idUsuario) REFERENCES Usuario(id)
