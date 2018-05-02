@@ -6,7 +6,10 @@ DROP PROCEDURE IF EXISTS InscricaoChamadaInsere;
 DELIMITER //
 CREATE PROCEDURE InscricaoChamadaInsere(vIdChamada INT, vIdUsuario INT, OUT id INT)
 BEGIN
-	-- TODO implementar
+	INSERT INTO InscricaoChamada (dataRegistro, dataAtualizacao, idChamada, idUsuario)
+	VALUES (NOW(), NOW(), vIdChamada, vIdUsuario);
+
+	SET id = LAST_INSERT_ID();
 END //
 DELIMITER ;
 
@@ -18,7 +21,9 @@ DROP PROCEDURE IF EXISTS InscricaoChamadaCancela;
 DELIMITER //
 CREATE PROCEDURE InscricaoChamadaCancela(vIdInscricao INT)
 BEGIN
-	-- TODO implementar
+	UPDATE InscricaoChamada
+    SET cancelada = 1
+    WHERE id = vIdInscricao;
 END //
 DELIMITER ;
 
@@ -30,7 +35,8 @@ DROP PROCEDURE IF EXISTS InscricaoChamadaInsereValorCampo;
 DELIMITER //
 CREATE PROCEDURE InscricaoChamadaInsereValorCampo(vIdInscricao INT, vIdCampo INT, vValor VARCHAR(8192))
 BEGIN
-	-- TODO implementar
+    INSERT INTO InscricaoCampoChamada(idInscricao, idCampoChamada, valor)
+	VALUES (vIdInscricao, vIdCampo, vValor);
 END //
 DELIMITER ;
 

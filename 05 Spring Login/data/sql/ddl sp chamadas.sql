@@ -6,7 +6,10 @@ DROP PROCEDURE IF EXISTS ChamadaInsere;
 DELIMITER //
 CREATE PROCEDURE ChamadaInsere(vIdUnidade INT, vNome VARCHAR(80), vSigla VARCHAR(10), vDataAbertura TIMESTAMP, vDataEncerramento TIMESTAMP, OUT id INT)
 BEGIN
-	-- TODO implementar
+    INSERT INTO Chamada (dataRegistro, dataAtualizacao, idUnidade, nome, sigla, dataAbertura, dataEncerramento)
+	VALUES (NOW(), NOW(), vIdUnidade, vNome, vSigla, vDataAbertura, vDataEncerramento);
+
+	SET id = LAST_INSERT_ID();
 END //
 DELIMITER ;
 
@@ -18,7 +21,13 @@ DROP PROCEDURE IF EXISTS ChamadaAtualiza;
 DELIMITER //
 CREATE PROCEDURE ChamadaAtualiza(vIdChamada INT, vNome VARCHAR(80), vSigla VARCHAR(10), vDataAbertura TIMESTAMP, vDataEncerramento TIMESTAMP)
 BEGIN
-	-- TODO implementar
+    UPDATE Chamada
+	SET nome = vNome,
+    sigla = vSigla,
+    dataAbertura = vDataAbertura,
+    dataEncerramento = vDataEncerramento, 
+	dataAtualizacao = NOW()
+	WHERE id = vIdChamada;
 END //
 DELIMITER ;
 
@@ -28,9 +37,12 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS ChamadaRemove;
 DELIMITER //
-CREATE PROCEDURE ChamadaAtualiza(vIdChamada INT)
+CREATE PROCEDURE ChamadaRemove(vIdChamada INT)
 BEGIN
-	-- TODO implementar: cancelado = 1
+    UPDATE Chamada
+    SET cancelada = 1,
+	dataAtualizacao = NOW()
+    WHERE id = vIdChamada;
 END //
 DELIMITER ;
 
@@ -42,7 +54,10 @@ DROP PROCEDURE IF EXISTS ChamadaEncerra;
 DELIMITER //
 CREATE PROCEDURE ChamadaEncerra(vIdChamada INT)
 BEGIN
-	-- TODO implementar: encerrado = 1
+    UPDATE Chamada
+    SET encerrada = 1,
+	dataAtualizacao = NOW()
+    WHERE id = vIdChamada;
 END //
 DELIMITER ;
 
@@ -54,7 +69,10 @@ DROP PROCEDURE IF EXISTS CampoChamadaInsere;
 DELIMITER //
 CREATE PROCEDURE CampoChamadaInsere(vIdChamada INT, vTitulo VARCHAR(40), vTipo INT, vDecimais INT, vOpcional INT, vOpcoes TEXT, OUT id INT)
 BEGIN
-	-- TODO implementar
+    INSERT INTO CampoChamada (idChamada, titulo, tipo, decimais, opcional, jsonOpcoes)
+	VALUES (vIdChamada, vTitulo, vTipo, vDecimais, vOpcional, vOpcoes);
+
+	SET id = LAST_INSERT_ID();
 END //
 DELIMITER ;
 
@@ -64,9 +82,15 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS CampoChamadaAtualiza;
 DELIMITER //
-CREATE PROCEDURE CampoChamadaAtualiza(vIdCampoChamada INT, vTitulo VARCHAR(40), vTipo INT, vDecimais INT, vOpcional INT, vOpcoes TEXT, OUT id INT)
+CREATE PROCEDURE CampoChamadaAtualiza(vIdCampoChamada INT, vTitulo VARCHAR(40), vTipo INT, vDecimais INT, vOpcional INT, vOpcoes TEXT)
 BEGIN
-	-- TODO implementar
+    UPDATE CampoChamada
+	SET  titulo = vTitulo, 
+    tipo = vTipo, 
+    decimais = vDecimais, 
+    opcional = vOpcional, 
+    jsonOpcoes = vOpcoes
+	WHERE id = vIdCampoChamada;
 END //
 DELIMITER ;
 
@@ -78,7 +102,9 @@ DROP PROCEDURE IF EXISTS CampoChamadaRemove;
 DELIMITER //
 CREATE PROCEDURE CampoChamadaRemove(vIdCampoChamada INT)
 BEGIN
-	-- TODO implementar
+    DELETE 
+	FROM CampoChamada 
+	WHERE id = vIdCampoChamada;
 END //
 DELIMITER ;
 
@@ -90,7 +116,10 @@ DROP PROCEDURE IF EXISTS ChamadaInsereResultado;
 DELIMITER //
 CREATE PROCEDURE ChamadaInsereResultado(vIdChamada INT, vValor VARCHAR(8192), OUT id INT)
 BEGIN
-	-- TODO implementar
+	INSERT INTO ResultadoChamada (idChamada, valor)
+	VALUES (vIdChamada, vValor);
+
+	SET id = LAST_INSERT_ID();
 END //
 DELIMITER ;
 
@@ -102,6 +131,7 @@ DROP PROCEDURE IF EXISTS ChamadaRemoveResultado;
 DELIMITER //
 CREATE PROCEDURE ChamadaRemoveResultado(vIdResultado INT)
 BEGIN
-	-- TODO implementar
+	DELETE FROM ResultadoChamada 
+	WHERE id = vIdResultado;
 END //
 DELIMITER ;
