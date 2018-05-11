@@ -1,0 +1,15 @@
+CALL InsereCompactDisc("Pet Sounds", 10.0, 20.0, @id);
+CALL InsereCompactDisc("Sufin' Safari", 10.0, 20.0, @id);
+CALL InsereCompactDisc("The Sound of the Sea", 10.0, 20.0, @id);
+CALL InsereCompactDisc("Let's Go Tripping", 10.0, 20.0, @id);
+CALL InsereCompactDisc("The Wall", 20.0, 30.0, @id);
+CALL InsereCompactDisc("Delicate Sound of the Thunder", 25.0, 40.0, @id);
+CALL InsereCompactDisc("Dire Straits", 10.0, 20.0, @id);
+CALL InsereCompactDisc("Communique", 10.0, 20.0, @id);
+CALL InsereCompactDisc("Making Movies", 10.0, 20.0, @id);
+CALL InsereCompactDisc("Love over Gold", 10.0, 20.0, @id);
+CALL InsereCompactDisc("Money for Nothing", 10.0, 20.0, @id);
+CALL InsereCompactDisc("Brothers in Arms", 10.0, 20.0, @id);
+CALL InsereCompactDisc("Alchemy", 20.0, 40.0, @id);
+CALL InsereCompactDisc("On Every Street", 10.0, 20.0, @id);
+CALL InsereCompactDisc("On the Night", 10.0, 20.0, @id);

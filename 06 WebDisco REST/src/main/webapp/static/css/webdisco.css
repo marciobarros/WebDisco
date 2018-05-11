@@ -1,0 +1,28 @@
+.text-left {
+	text-align: left !important;
+}
+.text-right {
+	text-align: right !important;
+}
+.pull-right {
+	float: left;
+}
+ul.pagination.ng-table-pagination.ng-scope {
+	float: right;
+}
+.ng-scope.ng-isolate-scope {
+	margin-top: 16px;
+}
+table {
+	border: 1px solid lightgray;
+}
+div.filter {
+	border: 1px solid #ccc;
+	background-color: #eee;
+}
+div.filter div.button {
+	margin-top: 8px;
+}
+div.form {
+	border: 1px solid #ccc;
+}

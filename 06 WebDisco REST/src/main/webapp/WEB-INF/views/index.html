@@ -1,0 +1,150 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<!-- Meta definitions -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+	<meta charset="utf-8">
+	
+    <!-- Page setup -->
+    <base href="/WebDisco_REST/"/>
+	<title>WebDisco REST</title>
+
+	<!-- Fav Icon -->
+	<link rel="shortcut icon" href="static/img/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="static/img/favicon.ico" type="image/x-icon">
+
+	<!-- CSS -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link type="text/css" rel="stylesheet" href="third-party/materialize/css/materialize.min.css"  media="screen,projection"/>
+	<link type="text/css" rel="stylesheet" href="third-party/starter-template/css/style.css" media="screen,projection"/>
+	<link type="text/css" rel="stylesheet" href="third-party/ng-table/css/ng-table.min.css" media="screen,projection"/>
+	<link type="text/css" rel="stylesheet" href="static/css/webdisco.css" media="screen,projection"/>
+</head>
+
+<body data-ng-app="webdiscoApp" data-ng-controller="cdController as ctrl">
+
+	<!-- Side menu -->
+	<nav class="light-blue lighten-1" role="navigation">
+		<div class="nav-wrapper container">
+			<a id="logo-container" href="#" class="brand-logo">WebDisco</a>
+		</div>
+	</nav>
+	
+	<!-- List -->
+	<div class="section no-pad-bot" id="index-banner">
+		<div class="container">
+			<br>
+			<h1 class="header center orange-text">Compact Discs</h1>
+
+	        <div class="row filter">
+				<div class="col s10 m10 controls">
+		            <input type="text" data-ng-change='ctrl.atualizaFiltro()' data-ng-model="ctrl.filtros.nome" placeholder="Entre com parte do título do CD" size="40"/>
+				</div>
+				<div class="col s2 m2 center button">
+					<button class="waves-effect waves-light btn customAction" data-ng-click="ctrl.novo()">
+						Novo
+					</button>
+				</div>
+	        </div>
+
+			<div class="row center" data-loading-container="tableParams.settings().$loading">
+				<table data-ng-table="tableParams" class="table hoverable bordered">
+		        <tr data-ng-repeat="item in $data">
+		            <td class="text-left" data-header-class="'text-left'" data-title="'Título'">
+		            	{{ item.title }}
+		            </td>
+		            <td class="text-right" data-header-class="'text-right'" data-title="'Preço'">
+		            	{{ item.price }}
+		            </td>
+		            <td class="text-right" data-header-class="'text-right'" data-title="'Estoque'">
+		            	{{ item.stock }}
+		            </td>
+					<td class="center">
+						<button class="waves-effect waves-light btn customAction" data-ng-click="ctrl.edita(item)">
+							<i class="material-icons">edit</i>
+						</button>
+						<button class="waves-effect waves-light btn customAction" data-ng-click="ctrl.remove(item.id)">
+							<i class="material-icons">delete</i>
+						</button>
+					</td>
+		        </tr>
+				</table>
+  			</div>
+		</div>
+	</div>
+
+	<br/>
+	<br/>
+	
+	<!-- Form  -->
+	<div class="section" data-ng-show="ctrl.cd">
+		<div class="container form">
+			<div class="row">
+				<div class="col s12 m12">
+					<h3 class="header center orange-text">Edição de Compact Disc</h3>
+				</div>
+				<div class="col s12 m12">
+					<label for="cd-title">Título:</label>
+					<input id="cd-title" type="text" data-ng-model="ctrl.cd.title" size="80"/>
+				</div>
+				<div class="col s6 m6">
+					<label for="cd-price">Preço:</label>
+					<input id="cd-price" type="text" data-ng-model="ctrl.cd.price"/>
+				</div>
+				<div class="col s6 m6">
+					<label for="cd-stock">Estoque:</label>
+					<input id="cd-stock" type="text" data-ng-model="ctrl.cd.stock"/>
+				</div>
+				<div class="col s12 m12 text-right">
+					<button class="waves-effect waves-light btn customAction" data-ng-click="ctrl.salva()">
+						Salva
+					</button>
+				</div>
+			</div>	
+		</div>
+	</div>
+	
+	<br/>
+	<br/>
+	
+	<!-- Footer -->
+	<footer class="page-footer orange">
+		<div class="container">
+			<div class="row">
+				<div class="col l6 s12">
+					<h5 class="white-text">WebDisco</h5>
+					<p class="grey-text text-lighten-4">
+					WebDisco é um exemplo de desenvolvimento de sistemas para a Web.
+					Esta versão utiliza chamadas AJAX/REST com o framework Spring MVC.
+					</p>
+				</div>
+				<div class="col l3 s12">
+				</div>
+				<div class="col l3 s12">
+					<ul>
+						<li><a class="white-text" href="http://bsi.uniriotec.br">Bacharelado em SI</a></li>
+						<li><a class="white-text" href="http://www.unirio.br">UNIRIO</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="footer-copyright">
+			<div class="container">
+				Made with <a class="orange-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+			</div>
+		</div>
+	</footer>
+
+	<!-- Scripts -->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+	<script type="text/javascript" src="third-party/materialize/js/materialize.min.js"></script>
+	<script type="text/javascript" src="third-party/starter-template/js/init.js"></script>
+	<script type="text/javascript" src="third-party/ng-sanitize/js/angular-sanitize.min.js"></script>
+	<script type="text/javascript" src="third-party/ng-table/js/ng-table.min.js"></script>
+	
+	<script type="text/javascript" src="static/views/app.js"></script>
+	<script type="text/javascript" src="static/views/index/index.dataservice.js"></script>
+	<script type="text/javascript" src="static/views/index/index.controller.js"></script>
+</body>
+</html>
