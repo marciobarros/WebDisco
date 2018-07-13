@@ -71,7 +71,7 @@ public class SpringInitializer extends AbstractAnnotationConfigDispatcherServlet
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException 
     {
-    		// Indica o contexto da aplicação
+    	// Indica o contexto da aplicação
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
         rootContext.register(SpringConfiguration.class);
 

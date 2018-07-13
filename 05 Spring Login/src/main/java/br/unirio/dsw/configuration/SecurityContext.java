@@ -30,6 +30,8 @@ import br.unirio.dsw.service.dao.UsuarioDAO;
 @EnableWebSecurity
 public class SecurityContext extends WebSecurityConfigurerAdapter
 {
+    private static String REALM = "MY_TEST_REALM";
+
 	/**
 	 * Indica os caminhos que serão ignorados pelos controle de segurança (arquivos CSS e JS)
 	 */
@@ -62,7 +64,8 @@ public class SecurityContext extends WebSecurityConfigurerAdapter
 	protected void configure(HttpSecurity http) throws Exception
 	{
 		// Configures form login
-		http.formLogin()
+		http.csrf().disable()
+			.formLogin()
 			.loginPage("/login")
 			.loginProcessingUrl("/login/authenticate")
 			.failureUrl("/login?error")
@@ -78,9 +81,12 @@ public class SecurityContext extends WebSecurityConfigurerAdapter
 			.and()
 			.authorizeRequests()
 			.antMatchers("/auth/**", "/login/**").permitAll()
-			.antMatchers("/**").hasRole("BASIC");
+			.antMatchers("/**").hasRole("BASIC")
+			
+			.and()
+			.httpBasic();//.realmName(REALM);//.authenticationEntryPoint(getBasicAuthEntryPoint());
 	}
-
+    
 	/**
 	 * Retorna o objeto que codifica senhas na base local
 	 */

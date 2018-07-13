@@ -1,0 +1,43 @@
+<div class="row">
+	<div class="col s3 m3 l3"></div>
+
+	<div class="col s6 m6 l6">
+		<div class="card">
+			<div class="card-content">
+				<span class="card-title">
+					Login
+				</span>
+
+				<br/>
+
+				<div class="input-field">
+					<input class="" type="text" id="user-email" data-ng-model="ctrl.data.email">
+					<label class="" for="user-email"> 
+					Email:
+					</label>
+				</div>
+
+				<div class="input-field">
+					<input class="" type="password" id="user-password" data-ng-model="ctrl.data.senha"> 
+					<label class="" for="user-password"> 
+					Senha:
+					</label>
+				</div>
+			</div>
+			
+	        <div class="card-action">
+				<a data-ng-click="ctrl.envia()" class="btn">
+					Envia
+				</a>
+				<a href="#!forgot" class="right small-text-button">
+					Esqueci minha senha
+				</a>
+				<a href="#!create" class="right small-text-button">
+					Nova Conta
+				</a> 
+			</div>
+		</div>
+	</div>
+
+	<div class="mdl-cell mdl-cell--3-col"></div>
+</div>

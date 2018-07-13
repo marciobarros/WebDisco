@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Login</title>
+
+  <base href="/sistema/"/>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="static/third-party/materialize/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="static/third-party/materialize/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+
+<body data-ng-app="myApp" class="grey lighten-2">
+  <nav class="light-blue lighten-1" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Logo</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="#">Navbar Link</a></li>
+      </ul>
+
+      <ul id="nav-mobile" class="sidenav">
+        <li><a href="#">Navbar Link</a></li>
+      </ul>
+      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+  
+  <!-- div class="section no-pad-bot" id="index-banner">
+    <div class="container">
+      <br><br>
+      <h1 class="header center orange-text">Starter Template</h1>
+      <div class="row center">
+        <h5 class="header col s12 light">A modern responsive front-end framework based on Material Design</h5>
+      </div>
+      <div class="row center">
+        <a href="http://materializecss.com/getting-started.html" id="download-button" class="btn-large waves-effect waves-light orange">Get Started</a>
+      </div>
+      <br><br>
+    </div>
+  </div -->
+
+
+  <div class="container">
+    <br>
+	<div data-ng-view></div>
+    <br><br>
+    <br><br>
+    <br><br>
+  </div>
+
+  <footer class="page-footer orange">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">Company Bio</h5>
+          <p class="grey-text text-lighten-4">We are a team of college students working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.</p>
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Settings</h5>
+          <ul>
+            <li><a class="white-text" href="#!">Link 1</a></li>
+            <li><a class="white-text" href="#!">Link 2</a></li>
+            <li><a class="white-text" href="#!">Link 3</a></li>
+            <li><a class="white-text" href="#!">Link 4</a></li>
+          </ul>
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Connect</h5>
+          <ul>
+            <li><a class="white-text" href="#!">Link 1</a></li>
+            <li><a class="white-text" href="#!">Link 2</a></li>
+            <li><a class="white-text" href="#!">Link 3</a></li>
+            <li><a class="white-text" href="#!">Link 4</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      Made by <a class="orange-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+      </div>
+    </div>
+  </footer>
+
+
+  <!--  Scripts-->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="static/third-party/materialize/js/materialize.js"></script>
+  <script src="static/third-party/materialize/js/init.js"></script>
+
+  <script>
+  var app = angular.module("myApp", ["ngRoute"]);
+  
+  app.config(function($routeProvider) {
+	$routeProvider
+	    .when("/", {
+	        templateUrl: "static/html/login/login/login.html",
+	        controller: "loginController as ctrl"
+	    })
+	    .when("/forgot", {
+	        templateUrl: "static/html/login/forgot/forgot.html",
+	        controller: "forgotController as ctrl"
+	    })
+	    .when("/create", {
+	        templateUrl: "static/html/login/create/create.html",
+	        controller: "createController as ctrl"
+	    })
+	    .when("/reset", {
+	        templateUrl : "blue.html"
+	    })
+	    .when("/change", {
+	        templateUrl : "blue.html"
+	    });
+  });
+  </script>
+
+  <script src="static/html/login/login/login.controller.js"></script>
+  <script src="static/html/login/forgot/forgot.controller.js"></script>
+  <script src="static/html/login/create/create.controller.js"></script>
+  </body>
+</html>
