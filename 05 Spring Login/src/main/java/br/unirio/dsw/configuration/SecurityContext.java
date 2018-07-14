@@ -68,7 +68,8 @@ public class SecurityContext extends WebSecurityConfigurerAdapter
 			.formLogin()
 			.loginPage("/login")
 			.loginProcessingUrl("/login/authenticate")
-			.failureUrl("/login?error")
+			.defaultSuccessUrl("/login/success")
+			.failureUrl("/login/error")
 			
 			// Configures the logout function
 			.and()

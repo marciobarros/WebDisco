@@ -11,10 +11,9 @@ app.controller("loginController", function ($http) {
 		var password = window.encodeURIComponent(self.data.senha);
 
 		$http.post("login/authenticate?username=" + username + "&password=" + password, "").then(function(data) { 
-			console.log(data);
 			if (data.data.result == "OK") {
 				M.toast({html: "Logado?"});
-				window.location = "#!";
+				window.location = "homepage";
 			}
 			else
 				M.toast({html: data.data.message});

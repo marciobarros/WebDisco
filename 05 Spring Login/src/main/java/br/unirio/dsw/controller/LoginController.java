@@ -2,8 +2,12 @@ package br.unirio.dsw.controller;
 
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,6 +33,8 @@ import lombok.Data;
 @RestController
 public class LoginController 
 {
+	private static final String LOGIN_ERROR_KEY = "login.reset.password.error.email.invalid"; 
+	
     @Autowired
     private MessageSource messageSource;
     
@@ -41,22 +47,34 @@ public class LoginController
     @Autowired
 	private EmailService emailService;
 
-    /**
-     * Retorna a última mensagem de erro do processo de login
-     */
-/*	private String pegaMensagemErro(HttpServletRequest request, String key){
-
-		Exception exception = (Exception) request.getSession().getAttribute(key);
+	/**
+	 * Acao chamada quando ocorre um erro de login
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/login/error", method = RequestMethod.GET, produces="application/json")
+    public String loginError(HttpServletRequest request, Locale locale) 
+	{
+		Exception exception = (Exception) request.getSession().getAttribute(LOGIN_ERROR_KEY);
 
 		if (exception instanceof BadCredentialsException) 
-			return "login.login.message.invalid.credentials";
+			return JsonUtils.ajaxError(messageSource.getMessage("login.login.message.invalid.credentials", null, locale));
 		
 		if (exception instanceof LockedException) 
-			return "login.login.message.locked.account";
+			return JsonUtils.ajaxError(messageSource.getMessage("login.login.message.locked.account", null, locale));
 
-		return "login.login.message.invalid.credentials";
-	}*/
-	
+		return JsonUtils.ajaxError(messageSource.getMessage("login.login.message.invalid.credentials", null, locale));
+    }
+
+	/**
+	 * Acao chamada quando ocorre um login bem sucedido
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/login/success", method = RequestMethod.GET, produces="application/json")
+    public String loginSuccess(HttpServletRequest request, Locale locale) 
+	{
+		return JsonUtils.ajaxSuccess();
+    }
+
 	/**
 	 * Ação que cria uma nova conta
 	 */
@@ -201,6 +219,9 @@ public class LoginController
 	}
 }
 
+/**
+ * Classe que representa o formulario de criacao de nova conta
+ */
 @Data class FormCriacaoConta
 {
 	private String nome;
@@ -209,11 +230,17 @@ public class LoginController
 	private String senhaRepetida;
 }
 
+/**
+ * Classe que representa o formulario de esquecimento de senha
+ */
 @Data class FormEsqueciSenha
 {
 	private String email;
 }
 
+/**
+ * Classe que representa o formulario de reinicializacao de senha
+ */
 @Data class FormReinicializacaoSenha
 {
 	private String email;
@@ -222,6 +249,9 @@ public class LoginController
 	private String senhaRepetida;
 }
 
+/**
+ * Classe que representa o formulario de troca de senha
+ */
 @Data class FormTrocaSenha
 {
 	private String senhaAtual;

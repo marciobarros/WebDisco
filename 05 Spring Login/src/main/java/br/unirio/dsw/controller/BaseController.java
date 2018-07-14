@@ -16,7 +16,7 @@ public class BaseController
 	 * Ação que redireciona o usuário para a página inicial da aplicação
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String mostraHomepage()
+	public String mostraLoginRaiz()
 	{
 		return "login/index";
 	}
@@ -28,5 +28,14 @@ public class BaseController
 	public String mostraLogin()
 	{
 		return "login/index";
+	}
+
+	/**
+	 * Ação que redireciona o usuário para a página inicial da aplicação
+	 */
+	@RequestMapping(value = "/homepage", method = RequestMethod.GET)
+	public String mostraHomepage()
+	{
+		return "homepage/index";
 	}
 }
