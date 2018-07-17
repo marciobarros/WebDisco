@@ -38,4 +38,13 @@ public class BaseController
 	{
 		return "homepage/index";
 	}
+
+	/**
+	 * Ação que redireciona o usuário para a página de edição de unidades
+	 */
+	@RequestMapping(value = "/unidade", method = RequestMethod.GET)
+	public String mostraUnidades()
+	{
+		return "unidade/index";
+	}
 }
