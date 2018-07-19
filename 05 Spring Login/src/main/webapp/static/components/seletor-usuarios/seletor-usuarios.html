@@ -1,0 +1,43 @@
+<style>
+.modal-content { padding: 32px !important; }
+.filtros { border: 1px solid #ccc; margin: 0 0.75rem; background-color: #eee; }
+table { margin-bottom: 16px; }
+.modal div.tabela table>tbody>tr { cursor: pointer; }
+.btn { margin-right: 5px;}
+.text-left { text-align: left !important; }
+</style>
+
+<div id="{{$ctrl.modalName}}" class="modal">
+	<div class="modal-content">
+		<div class="row">
+			<h4>{{$ctrl.title}}</h4>
+		</div>
+		<div class="row filtros">
+			<div class="col l12 m12 s12">
+				<div class="input-field col l12 m12 s12">
+          			<input id="filtro-nome" type="text" data-ng-model="$ctrl.filtro.nome" data-ng-change="$ctrl.atualizaFiltro()">
+          			<label for="filtro-nome">Filtro:</label>
+        		</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col l12 m12 s12 tabela" data-loading-container="$ctrl.tableUsuarios.settings().$loading">
+				<table data-ng-table="$ctrl.tableUsuarios" class="highlight responsive-table"> 
+					<tbody>
+						<tr data-ng-repeat="usuario in $data" data-ng-click="$ctrl.select(usuario)">
+							<td><span data-ng-if="usuario.nome">{{ usuario.nome }}</span></td>
+						</tr>
+						<tr data-ng-if="$data.length == 0">
+							<td class="center-align" colspan="3">Nenhum usuário disponível.</translate></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button class="modal-close waves-effect waves-green btn-flat">
+			Fechar
+		</button>
+	</div>
+</div>

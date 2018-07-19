@@ -6,12 +6,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
 
 import br.unirio.dsw.model.usuario.Usuario;
 import br.unirio.dsw.utils.DateUtils;
+import lombok.Data;
 
 /**
  * Classe responsavel pela persistencia de usuários
@@ -92,6 +95,78 @@ public class UsuarioDAO extends AbstractDAO
 		{
 			log("UserDAO.carregaUsuarioEmail: " + e.getMessage());
 			return null;
+		}
+	}
+	
+	/**
+	 * Conta o número de resumos de usuários segundo um filtro
+	 */
+	public int contaResumos(String filtroNome)
+	{
+		String SQL = "SELECT COUNT(*) " +
+					 "FROM Usuario " + 
+					 "WHERE nome like ? ";
+		
+		Connection c = getConnection();
+		
+		if (c == null)
+			return 0;
+		
+		try
+		{
+			PreparedStatement ps = c.prepareStatement(SQL);
+			ps.setString(1, "%" + filtroNome + "%");
+			ResultSet rs = ps.executeQuery();
+			int contador = rs.next() ? rs.getInt(1) : null;
+			c.close();
+			return contador;
+	
+		} catch (SQLException e)
+		{
+			log("UsuarioDAO.contaResumos: " + e.getMessage());
+			return 0;
+		}
+	}
+	
+	/**
+	 * Gera uma lista paginada de resumos de usuários
+	 */
+	public List<ResumoUsuario> listaResumos(int pagina, int tamanhoPagina, String filtroNome)
+	{
+		String SQL = "SELECT id, nome " +
+					 "FROM Usuario " + 
+					 "WHERE nome like ? " + 
+					 "LIMIT ? OFFSET ? ";
+		
+		Connection c = getConnection();
+		List<ResumoUsuario> resumos = new ArrayList<ResumoUsuario>();
+		
+		if (c == null)
+			return resumos;
+		
+		try
+		{
+			PreparedStatement ps = c.prepareStatement(SQL);
+			ps.setString(1, "%" + filtroNome + "%");
+			ps.setInt(2, tamanhoPagina);
+			ps.setInt(3, pagina * tamanhoPagina);
+			ResultSet rs = ps.executeQuery();
+			
+			while (rs.next())
+			{
+				ResumoUsuario resumo = new ResumoUsuario();
+				resumo.setId(rs.getInt(1));
+				resumo.setNome(rs.getString(2));
+				resumos.add(resumo);
+			}
+			
+			c.close();
+			return resumos;
+	
+		} catch (SQLException e)
+		{
+			log("UsuarioDAO.listaResumos: " + e.getMessage());
+			return resumos;
 		}
 	}
 	
@@ -265,5 +340,17 @@ public class UsuarioDAO extends AbstractDAO
 			log("UserDAO.verificaValidadeTokenLogin: " + e.getMessage());
 			return false;
 		}
+	}
+	
+	/**
+	 * Classe que representa um resumo de usuário
+	 * 
+	 * @author Marcio
+	 *
+	 */
+	public @Data class ResumoUsuario
+	{
+		private int id;
+		private String nome;
 	}
 }

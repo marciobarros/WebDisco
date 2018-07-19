@@ -1,4 +1,4 @@
-app.controller("listaController", function ($http, NgTableParams) {
+app.controller("listaController", function ($log, $location, $http, NgTableParams, unidadeService) {
 	var self = this;
 
 	/*
@@ -8,11 +8,6 @@ app.controller("listaController", function ($http, NgTableParams) {
 		sigla: "",
 		nome: ""
 	}
-	
-	/*
-	 * Unidade selecionada
-	 */
-	self.unidade = null;
 	
 	/*
 	 * Altera os filtros de consulta
@@ -39,16 +34,18 @@ app.controller("listaController", function ($http, NgTableParams) {
 	 * Cria uma nova unidade
 	 */
 	self.nova = function() {
-		self.unidade = { id: -1, sigla: "", nome: "" };
-		mostraFormulario();
+		var unidade = { id: -1, sigla: "", nome: "" };
+		unidadeService.setUnidade (unidade);
+        $location.path('/form');
 	}
 	
 	/*
 	 * Edita uma unidade
 	 */
 	self.edita = function(item) {
-		self.unidade = angular.copy(item);
-		mostraFormulario();
+		var unidade = angular.copy(item);
+		unidadeService.setUnidade (unidade);
+        $location.path('/form');
 	}
 	
 	/*
@@ -57,24 +54,6 @@ app.controller("listaController", function ($http, NgTableParams) {
 	self.remove = function(id) {
 		return $http.delete("unidade/" + id);
 	}
-	
-	/*
-	 * Mostra a lista
-	 */
-	/*var mostraLista = function() {
-		setTimeout(function() {
-			$("html,body").animate({scrollTop: $("nav").offset().top}, "slow");
-		}, 0);
-	}*/
-	
-	/*
-	 * Mostra o formulario
-	 */
-	/*var mostraFormulario = function() {
-		setTimeout(function() {
-			$("html,body").animate({scrollTop: $("div.form").offset().top}, "slow");
-		}, 0);
-	}*/
 
 	/*
 	 * Prepara a tabela

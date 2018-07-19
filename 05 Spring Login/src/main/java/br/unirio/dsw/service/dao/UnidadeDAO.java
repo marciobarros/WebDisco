@@ -154,6 +154,7 @@ public class UnidadeDAO extends AbstractDAO
 			
 			adicionaGestores(c, unidade);
 			unidade.setId(cs.getInt(3));
+			
 			c.close();
 			return true;
 
@@ -181,11 +182,11 @@ public class UnidadeDAO extends AbstractDAO
 			cs.setString(2, unidade.getNome());
 			cs.setString(3, unidade.getSigla());
 			cs.execute();
-			c.close();
 			
 			removeGestores(c, unidade.getId());
 			adicionaGestores(c, unidade);
-			
+
+			c.close();
 			return true;
 
 		} catch (SQLException e)
