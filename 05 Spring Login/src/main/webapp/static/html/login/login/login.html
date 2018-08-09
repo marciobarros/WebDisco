@@ -25,6 +25,11 @@
 				</div>
 			</div>
 			
+			<form action="auth/facebook" method="POST">
+				<input type="hidden" name="scope" value="public_profile" />
+				<input type="submit" value="Login using Facebook"/>
+			</form>
+			
 	        <div class="card-action">
 				<a data-ng-click="ctrl.envia()" class="btn">
 					Envia

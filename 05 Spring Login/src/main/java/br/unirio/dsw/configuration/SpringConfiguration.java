@@ -28,7 +28,7 @@ import br.unirio.dsw.service.message.ExposedResourceMessageBundleSource;
 @EnableWebMvc
 @ComponentScan(basePackages = "br.unirio.dsw")
 @PropertySource("classpath:configuration.properties")
-@Import({SecurityContext.class})
+@Import({SecurityConfiguration.class})
 public class SpringConfiguration extends WebMvcConfigurerAdapter
 {
 	/**
