@@ -19,6 +19,8 @@ import org.springframework.social.twitter.connect.TwitterConnectionFactory;
 
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
+import br.unirio.dsw.controller.LoginSocialController;
+
 /**
  * Spring Social Configuration
  * 
@@ -67,6 +69,6 @@ public class SocialConfiguration implements SocialConfigurer
     @Bean
     public ConnectController connectController(ConnectionFactoryLocator connectionFactoryLocator, ConnectionRepository connectionRepository) 
     {
-        return new ConnectController(connectionFactoryLocator, connectionRepository);
+        return new LoginSocialController(connectionFactoryLocator, connectionRepository);
     }
 }

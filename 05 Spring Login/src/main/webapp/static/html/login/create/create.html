@@ -27,6 +27,11 @@
 		           	<input type="password" id="user-repeatPassword" data-ng-model="ctrl.data.senhaRepetida"/>
 		            <label for="user-repeatPassword">Repita sua senha:</label>
 		        </div>
+			
+				<form action="connect/facebook" method="POST">
+					<input type="hidden" name="scope" value="public_profile"></input>
+					<button type="submit"><img src="static/img/social/facebook/connect.gif"></img></button>
+				</form>
 			</div>
 
 			<div class="card-action">

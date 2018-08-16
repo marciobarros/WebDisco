@@ -34,24 +34,6 @@ import br.unirio.dsw.service.dao.UsuarioDAO;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 {
-//    private static String REALM = "MY_TEST_REALM";
-
-//    @Autowired
-//    private ConnectionFactoryLocator connectionFactoryLocator;
-// 
-//    @Autowired
-//    private UsersConnectionRepository usersConnectionRepository;
-// 
-//    @Autowired
-//    private FacebookConnectionSignup facebookConnectionSignup;
-
-//    @Bean
-//    public ProviderSignInController providerSignInController() 
-//    {
-//        ((InMemoryUsersConnectionRepository) usersConnectionRepository).setConnectionSignUp(facebookConnectionSignup);
-//        return new ProviderSignInController(connectionFactoryLocator, usersConnectionRepository, new FacebookSignInAdapter());
-//    }
-
 	/**
 	 * Indica os caminhos que serão ignorados pelos controle de segurança (arquivos CSS e JS)
 	 */
@@ -93,19 +75,22 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 			
 			// Configures the logout function
 			.and()
-			.logout()
-			.deleteCookies("JSESSIONID")
-			.logoutUrl("/logout")
-			.logoutSuccessUrl("/login")
+				.logout()
+				.deleteCookies("JSESSIONID")
+				.logoutUrl("/logout")
+				.logoutSuccessUrl("/login")
 			
 			// Configures url based authorization
 			.and()
-			.authorizeRequests()
-			.antMatchers("/auth/**", "/login/**", "/signin/**", "/connect/**", "/signup/**").permitAll()
-			.anyRequest().authenticated()
+				.authorizeRequests()
+				.antMatchers("/auth/**", "/login/**", "/signin/**", "/connect/**", "/signup/**").permitAll()
+				.anyRequest().authenticated()
 			
 			.and()
-            .apply(new SpringSocialConfigurer());
+				.apply(new SpringSocialConfigurer())
+
+			.and()
+				.rememberMe();
 	}
     
 	/**
