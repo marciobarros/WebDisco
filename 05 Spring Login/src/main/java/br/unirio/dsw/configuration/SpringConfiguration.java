@@ -2,27 +2,20 @@ package br.unirio.dsw.configuration;
 
 import java.util.Properties;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.spring4.SpringTemplateEngine;
-import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
-import org.thymeleaf.spring4.view.ThymeleafViewResolver;
-import org.thymeleaf.templatemode.TemplateMode;
-import org.thymeleaf.templateresolver.ITemplateResolver;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.JstlView;
 
 import br.unirio.dsw.service.message.ExposedResourceMessageBundleSource;
 
@@ -36,56 +29,19 @@ import br.unirio.dsw.service.message.ExposedResourceMessageBundleSource;
 @ComponentScan(basePackages = "br.unirio.dsw")
 @PropertySource("classpath:configuration.properties")
 @Import({ SecurityConfiguration.class })
-public class SpringConfiguration extends WebMvcConfigurerAdapter implements ApplicationContextAware
+public class SpringConfiguration extends WebMvcConfigurerAdapter
 {
-	private ApplicationContext applicationContext;
-
-	public void setApplicationContext(ApplicationContext applicationContext)
-	{
-		this.applicationContext = applicationContext;
-	}
-
-	@Bean
-	public ViewResolver viewResolver()
-	{
-		ThymeleafViewResolver resolver = new ThymeleafViewResolver();
-		resolver.setTemplateEngine(templateEngine());
-		resolver.setCharacterEncoding("UTF-8");
-		return resolver;
-	}
-
-	@Bean
-	public TemplateEngine templateEngine()
-	{
-		SpringTemplateEngine engine = new SpringTemplateEngine();
-		engine.setEnableSpringELCompiler(true);
-		engine.setTemplateResolver(templateResolver());
-		return engine;
-	}
-
-	private ITemplateResolver templateResolver()
-	{
-		SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
-		resolver.setApplicationContext(applicationContext);
-		resolver.setPrefix("/WEB-INF/views/");
-		resolver.setSuffix(".html");
-		resolver.setTemplateMode(TemplateMode.HTML);
-		resolver.setCacheable(false);
-		return resolver;
-	}
-
 	/**
 	 * Configura a classe que resolve o acesso aos arquivos JSP
 	 */
 	@Override
 	public void configureViewResolvers(ViewResolverRegistry registry)
 	{
-//		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-//		viewResolver.setViewClass(JstlView.class);
-//		viewResolver.setPrefix("/WEB-INF/views/");
-//		viewResolver.setSuffix(".html");
-//		registry.viewResolver(viewResolver);
-		registry.viewResolver(viewResolver());
+		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+		viewResolver.setViewClass(JstlView.class);
+		viewResolver.setPrefix("/WEB-INF/views/");
+		viewResolver.setSuffix(".jsp");
+		registry.viewResolver(viewResolver);
 	}
 
 	/**
