@@ -2,15 +2,14 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="default">
+      th:replace="~{helper/layout :: layout(~{::title}, ~{::div})}">
 
 <head>
-    <title>Hello world page</title>
-    <link rel="stylesheet" href="/css/hello.css"/>
+    <title>Login</title>
 </head>
 
 <body>
-  <div layout:fragment="content" data-ng-app="myApp">
+  <div layout:fragment="content">
    <br/>
    <div data-ng-view></div>
    <br/><br/>
@@ -19,15 +18,14 @@
    <br/><br/>
    <br/><br/>
    <br/><br/>
-  </div>
 
-  <script>
+  <script type="application/javascript">
   var app = angular.module("myApp", ["ngRoute"]);
   
   app.config(function($routeProvider) {
 	$routeProvider
 	    .when("/", {
-	        templateUrl: "static/html/login/login/login.html",
+	        templateUrl: @{"static/html/login/login/login.html"},
 	        controller: "loginController as ctrl"
 	    })
 	    .when("/forgot", {
@@ -47,8 +45,9 @@
   });
   </script>
 
-  <script src="static/html/login/login/login.controller.js"></script>
-  <script src="static/html/login/forgot/forgot.controller.js"></script>
-  <script src="static/html/login/create/create.controller.js"></script>
+  <script type="application/javascript" th:src="@{static/html/login/login/login.controller.js}"></script>
+  <script type="application/javascript" th:src="@{static/html/login/forgot/forgot.controller.js}"></script>
+  <script type="application/javascript" th:src="@{static/html/login/create/create.controller.js}"></script>
+  </div>
   </body>
 </html>

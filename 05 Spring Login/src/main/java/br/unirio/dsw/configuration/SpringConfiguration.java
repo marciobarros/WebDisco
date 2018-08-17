@@ -67,8 +67,10 @@ public class SpringConfiguration extends WebMvcConfigurerAdapter implements Appl
 	{
 		SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
 		resolver.setApplicationContext(applicationContext);
-		resolver.setPrefix("/WEB-INF/templates/");
+		resolver.setPrefix("/WEB-INF/views/");
+		resolver.setSuffix(".html");
 		resolver.setTemplateMode(TemplateMode.HTML);
+		resolver.setCacheable(false);
 		return resolver;
 	}
 
