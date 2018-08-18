@@ -202,6 +202,7 @@ public class LoginController
         return JsonUtils.ajaxSuccess();
 //        return "redirect:/?message=login.change.password.success.created";
 	}
+	
 	/**
 	 * Ação que troca a senha do usuário logado
 	 */
