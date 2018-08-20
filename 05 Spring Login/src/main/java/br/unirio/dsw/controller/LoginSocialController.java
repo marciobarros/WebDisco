@@ -17,6 +17,11 @@ public class LoginSocialController extends ConnectController
 	@Override
 	protected String connectedView(String providerId)
 	{
-		return "login/facebook/facebookConnected";
+		return "login/" + providerId + "/" + providerId + "Connected";
+	}
+	
+	@Override
+	protected String connectView(String providerId) {
+		return "login/" + providerId + "/" + providerId + "Connect";		
 	}
 }

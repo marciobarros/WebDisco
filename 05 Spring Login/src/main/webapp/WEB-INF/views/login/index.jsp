@@ -29,7 +29,7 @@
 						</div>
 					</div>
 					
-					<form action="auth/facebook" method="POST">
+					<form action="auth/facebook" method="GET">
 						<input type="hidden" name="scope" value="public_profile"></input>
 						<button type="submit"><img src="static/img/social/facebook/signin.png"></img></button>
 					</form>

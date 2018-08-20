@@ -27,12 +27,6 @@
 			</fieldset>
 			<br />
 
-			<p>Some test user/password pairs you may use are:</p>
-			<ul>
-				<li>habuma/tacos</li>
-				<li>rclarkson/atlanta</li>
-			</ul>
-
 			<p>
 				Or you can <a href="/signup">signup</a> with a new account.
 			</p>
@@ -47,8 +41,8 @@
 		</form -->
 
 		<!-- FACEBOOK SIGNIN -->
-		<form name="fb_signin" id="fb_signin" action="signin/facebook" method="POST">
-			<input type="hidden" name="scope" value="read_stream,user_posts"></input>
+		<form name="fb_signin" id="fb_signin" action="auth/facebook" method="GET">
+			<input type="hidden" name="scope" value="public_profile"></input>
 			<button type="submit">
 				<img src="static/img/social/facebook/signin.png"></img>
 			</button>
