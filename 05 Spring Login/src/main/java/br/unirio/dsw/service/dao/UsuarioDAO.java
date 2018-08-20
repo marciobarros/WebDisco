@@ -41,6 +41,14 @@ public class UsuarioDAO extends AbstractDAO
 		user.setTokenLogin(rs.getString("tokenSenha"));
 		user.setDataTokenLogin(DateUtils.toDateTime(rs.getTimestamp("dataTokenSenha")));
 		user.setAdministrador(rs.getInt("administrador") != 0);
+		user.setProviderId(rs.getString("providerId"));
+		user.setProviderUserId(rs.getString("providerUserId"));
+		user.setProfileUrl(rs.getString("profilerUrl"));
+		user.setImageUrl(rs.getString("imageUrl"));
+		user.setAccessToken(rs.getString("accessToken"));
+		user.setSecret(rs.getString("secret"));
+		user.setRefreshToken(rs.getString("refreshToken"));
+		user.setExpireTime(rs.getLong("expireTime"));
 		return user;
 	}
 
@@ -94,6 +102,35 @@ public class UsuarioDAO extends AbstractDAO
 		} catch (SQLException e)
 		{
 			log("UserDAO.carregaUsuarioEmail: " + e.getMessage());
+			return null;
+		}
+	}
+	
+	/**
+	 * Carrega um usuário, dado seu provedor e identificador no provedor
+	 */
+	public Usuario carregaUsuarioProvedor(String providerId, String providerUserId)
+	{
+		Connection c = getConnection();
+		
+		if (c == null)
+			return null;
+		
+		try
+		{
+			PreparedStatement ps = c.prepareStatement("SELECT * FROM Usuario WHERE providerId = ? AND providerUserId = ?");
+			ps.setString(1, providerId);
+			ps.setString(2, providerUserId);
+
+			ResultSet rs = ps.executeQuery();
+			Usuario item = rs.next() ? carrega(rs) : null;
+			
+			c.close();
+			return item;
+
+		} catch (SQLException e)
+		{
+			log("UserDAO.carregaUsuarioProvedor: " + e.getMessage());
 			return null;
 		}
 	}
@@ -195,6 +232,39 @@ public class UsuarioDAO extends AbstractDAO
 		} catch (SQLException e)
 		{
 			log("UserDAO.criaNovo: " + e.getMessage());
+			return false;
+		}
+	}
+	
+	/**
+	 * Conecta um usuário no sistema
+	 */
+	public boolean conectaUsuario(Usuario usuario)
+	{
+		Connection c = getConnection();
+		
+		if (c == null)
+			return false;
+		
+		try
+		{
+			CallableStatement cs = c.prepareCall("{call UsuarioConecta(?, ?, ?, ?, ?, ?, ?, ?, ?)}");
+			cs.setInt(1, usuario.getId());
+			cs.setString(2, usuario.getProviderId());
+			cs.setString(3, usuario.getProviderUserId());
+			cs.setString(4, usuario.getProfileUrl());
+			cs.setString(5, usuario.getImageUrl());
+			cs.setString(6, usuario.getAccessToken());
+			cs.setString(7, usuario.getSecret());
+			cs.setString(8, usuario.getRefreshToken());
+			cs.setLong(9, usuario.getExpireTime());
+			cs.execute();
+			c.close();
+			return true;
+
+		} catch (SQLException e)
+		{
+			log("UserDAO.conecta: " + e.getMessage());
 			return false;
 		}
 	}

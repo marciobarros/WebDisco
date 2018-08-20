@@ -1,23 +1,8 @@
 package br.unirio.dsw.controller;
 
-import java.awt.TrayIcon.MessageType;
-
-import javax.inject.Inject;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.social.connect.Connection;
-import org.springframework.social.connect.ConnectionFactoryLocator;
-import org.springframework.social.connect.UsersConnectionRepository;
-import org.springframework.social.connect.web.ProviderSignInUtils;
-import org.springframework.social.facebook.api.Account;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.context.request.WebRequest;
-
-import br.unirio.dsw.service.dao.UsuarioDAO;
 
 /**
  * Controller responsável pelas ações de login

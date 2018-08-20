@@ -6,7 +6,7 @@
 	
 		<div class="col s6 m6 l6">
 			<sec:authorize access="isAnonymous()">
-				<div class="card" sec:authorize="isAnonymous()">
+				<div class="card">
 					<div class="card-content">
 						<span class="card-title">
 							Login

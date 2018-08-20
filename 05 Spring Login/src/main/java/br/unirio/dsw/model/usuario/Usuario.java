@@ -30,6 +30,14 @@ public class Usuario extends User
 	private @Setter @Getter DateTime dataUltimoLogin;
 	private @Setter @Getter boolean bloqueado;
 	private @Setter @Getter boolean administrador;
+	private @Setter @Getter String providerId;
+	private @Setter @Getter String providerUserId;
+	private @Setter @Getter String profileUrl;
+	private @Setter @Getter String imageUrl;
+	private @Setter @Getter String accessToken;
+	private @Setter @Getter String secret;
+	private @Setter @Getter String refreshToken;
+	private @Setter @Getter long expireTime;
 
 	/**
 	 * Inicializa um usuário
@@ -45,6 +53,14 @@ public class Usuario extends User
 		this.dataUltimoLogin = null;
 		this.bloqueado = bloqueado;
 		this.administrador = false;
+		this.providerId = "";
+		this.providerUserId = "";
+		this.profileUrl = "";
+		this.imageUrl = "";
+		this.accessToken = "";
+		this.secret = "";
+		this.refreshToken = "";
+		this.expireTime = 0;
 	}
 
 	/**
