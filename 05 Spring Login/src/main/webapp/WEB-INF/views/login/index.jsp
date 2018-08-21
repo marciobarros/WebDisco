@@ -30,14 +30,22 @@
 					</div>
 					
 					<form action="auth/facebook" method="GET">
-						<input type="hidden" name="scope" value="public_profile"></input>
+						<input type="hidden" name="scope" value="public_profile,email"></input>
 						<button type="submit"><img src="static/img/social/facebook/signin.png"></img></button>
 					</form>
 					
-					<!-- form action="auth/facebook" method="POST">
+					<form action="auth/twitter" method="POST">
 						<input type="hidden" name="scope" value="public_profile" />
-						<input type="submit" value="Login using Facebook"/>
-					</form -->
+						<button type="submit"><img src="static/img/social/twitter/signin.png"></img></button>
+					</form>
+					
+					<form action="auth/linkedin" method="POST">
+						<button type="submit"><img src="static/img/social/twitter/signin.png"></img></button>
+					</form>
+					
+					<form action="auth/google" method="POST">
+						<button type="submit"><img src="static/img/social/twitter/signin.png"></img></button>
+					</form>
 					
 			        <div class="card-action">
 						<a data-ng-click="ctrl.envia()" class="btn">

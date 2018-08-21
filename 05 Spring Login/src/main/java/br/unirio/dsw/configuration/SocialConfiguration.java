@@ -24,9 +24,15 @@ import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.ConnectionKey;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.NotConnectedException;
+import org.springframework.social.connect.UserProfile;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.web.ConnectController;
+import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
+import org.springframework.social.google.connect.GoogleConnectionFactory;
+import org.springframework.social.linkedin.connect.LinkedInConnectionFactory;
+import org.springframework.social.oauth2.AccessGrant;
+import org.springframework.social.oauth2.OAuth2Operations;
 import org.springframework.social.security.AuthenticationNameUserIdSource;
 import org.springframework.social.twitter.connect.TwitterConnectionFactory;
 import org.springframework.util.LinkedMultiValueMap;
@@ -62,9 +68,13 @@ public class SocialConfiguration implements SocialConfigurer
         String facebookSecret = env.getProperty("facebook.appSecret");
         cfConfig.addConnectionFactory(new FacebookConnectionFactory(facebookId, facebookSecret));
         
-//        String linkedinKey = env.getProperty("linkedin.consumerKey");
-//        String linkedinSecret = env.getProperty("linkedin.consumerSecret");
-//        cfConfig.addConnectionFactory(new LinkedInConnectionFactory(linkedinKey, linkedinSecret));
+        String linkedinKey = env.getProperty("linkedin.client.key");
+        String linkedinSecret = env.getProperty("linkedin.client.secret");
+        cfConfig.addConnectionFactory(new LinkedInConnectionFactory(linkedinKey, linkedinSecret));
+        
+        String googleKey = env.getProperty("google.client.key");
+        String googleSecret = env.getProperty("google.client.secret");
+        cfConfig.addConnectionFactory(new GoogleConnectionFactory(googleKey, googleSecret));
     }
     
     @Override
@@ -132,6 +142,9 @@ class SocialUserConnectionRepository implements UsersConnectionRepository
 		ConnectionKey key = connection.getKey();
 		Usuario usuario = usuarioDAO.carregaUsuarioProvedor(key.getProviderId(), key.getProviderUserId());
 		
+//		UserProfile profile = connection.fetchUserProfile();
+//		String email = profile.getEmail();
+
 		if (usuario == null) 
 		{
 			usuario = new Usuario(connection.getDisplayName(), connection.getKey().getProviderUserId(), "", false);

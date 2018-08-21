@@ -114,7 +114,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
     @Bean
     public SocialUserDetailsService socialUserDetailsService() 
     {
-        return new SimpleSocialUserDetailsService(userDetailsService());
+        return new SimpleSocialUserDetailsService();
     }
 
 	/**
@@ -183,44 +183,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 	 */
 	private class SimpleSocialUserDetailsService implements SocialUserDetailsService
 	{
-		private UserDetailsService userDetailsService;
-
-		public SimpleSocialUserDetailsService(UserDetailsService userDetailsService)
-		{
-			this.userDetailsService = userDetailsService;
-		}
-
+		@Autowired
+		private UsuarioDAO userDAO;
+		
 		@Override
 		public SocialUserDetails loadUserByUserId(String userId) throws UsernameNotFoundException, DataAccessException
 		{
-			return (SocialUserDetails) userDetailsService.loadUserByUsername(userId);
+			return userDAO.carregaUsuarioId(Integer.parseInt(userId));
 		}
 	}
 }
-
-//class FacebookSignInAdapter implements SignInAdapter 
-//{
-//    @Override
-//    public String signIn(String localUserId, Connection<?> connection, NativeWebRequest request) 
-//    {
-//    	SimpleGrantedAuthority authority = new SimpleGrantedAuthority("FACEBOOK_USER");
-//		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(connection.getDisplayName(), null, Arrays.asList(authority));
-//		SecurityContextHolder.getContext().setAuthentication(authentication);
-//        return null;
-//    }
-//}
-
-//@Service
-//class FacebookConnectionSignup implements ConnectionSignUp
-//{
-//	@Autowired
-//	private UsuarioDAO userDAO;
-//	
-//	@Override
-//	public String execute(Connection<?> connection) 
-//	{
-//		Usuario usuario = new Usuario(connection.getDisplayName(), connection.getDisplayName(), "FACEBOOK_SOURCE", false);
-//		userDAO.criaNovoUsuario(usuario);
-//		return usuario.getNome();
-//	}
-//}

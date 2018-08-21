@@ -43,7 +43,7 @@ public class UsuarioDAO extends AbstractDAO
 		user.setAdministrador(rs.getInt("administrador") != 0);
 		user.setProviderId(rs.getString("providerId"));
 		user.setProviderUserId(rs.getString("providerUserId"));
-		user.setProfileUrl(rs.getString("profilerUrl"));
+		user.setProfileUrl(rs.getString("profileUrl"));
 		user.setImageUrl(rs.getString("imageUrl"));
 		user.setAccessToken(rs.getString("accessToken"));
 		user.setSecret(rs.getString("secret"));
