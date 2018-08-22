@@ -6,12 +6,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
 
 import br.unirio.dsw.model.usuario.Usuario;
 import br.unirio.dsw.utils.DateUtils;
+import lombok.Data;
 
 /**
  * Classe responsavel pela persistencia de usuários
@@ -38,6 +41,14 @@ public class UsuarioDAO extends AbstractDAO
 		user.setTokenLogin(rs.getString("tokenSenha"));
 		user.setDataTokenLogin(DateUtils.toDateTime(rs.getTimestamp("dataTokenSenha")));
 		user.setAdministrador(rs.getInt("administrador") != 0);
+		user.setProviderId(rs.getString("providerId"));
+		user.setProviderUserId(rs.getString("providerUserId"));
+		user.setProfileUrl(rs.getString("profileUrl"));
+		user.setImageUrl(rs.getString("imageUrl"));
+		user.setAccessToken(rs.getString("accessToken"));
+		user.setSecret(rs.getString("secret"));
+		user.setRefreshToken(rs.getString("refreshToken"));
+		user.setExpireTime(rs.getLong("expireTime"));
 		return user;
 	}
 
@@ -96,6 +107,107 @@ public class UsuarioDAO extends AbstractDAO
 	}
 	
 	/**
+	 * Carrega um usuário, dado seu provedor e identificador no provedor
+	 */
+	public Usuario carregaUsuarioProvedor(String providerId, String providerUserId)
+	{
+		Connection c = getConnection();
+		
+		if (c == null)
+			return null;
+		
+		try
+		{
+			PreparedStatement ps = c.prepareStatement("SELECT * FROM Usuario WHERE providerId = ? AND providerUserId = ?");
+			ps.setString(1, providerId);
+			ps.setString(2, providerUserId);
+
+			ResultSet rs = ps.executeQuery();
+			Usuario item = rs.next() ? carrega(rs) : null;
+			
+			c.close();
+			return item;
+
+		} catch (SQLException e)
+		{
+			log("UserDAO.carregaUsuarioProvedor: " + e.getMessage());
+			return null;
+		}
+	}
+	
+	/**
+	 * Conta o número de resumos de usuários segundo um filtro
+	 */
+	public int contaResumos(String filtroNome)
+	{
+		String SQL = "SELECT COUNT(*) " +
+					 "FROM Usuario " + 
+					 "WHERE nome like ? ";
+		
+		Connection c = getConnection();
+		
+		if (c == null)
+			return 0;
+		
+		try
+		{
+			PreparedStatement ps = c.prepareStatement(SQL);
+			ps.setString(1, "%" + filtroNome + "%");
+			ResultSet rs = ps.executeQuery();
+			int contador = rs.next() ? rs.getInt(1) : null;
+			c.close();
+			return contador;
+	
+		} catch (SQLException e)
+		{
+			log("UsuarioDAO.contaResumos: " + e.getMessage());
+			return 0;
+		}
+	}
+	
+	/**
+	 * Gera uma lista paginada de resumos de usuários
+	 */
+	public List<ResumoUsuario> listaResumos(int pagina, int tamanhoPagina, String filtroNome)
+	{
+		String SQL = "SELECT id, nome " +
+					 "FROM Usuario " + 
+					 "WHERE nome like ? " + 
+					 "LIMIT ? OFFSET ? ";
+		
+		Connection c = getConnection();
+		List<ResumoUsuario> resumos = new ArrayList<ResumoUsuario>();
+		
+		if (c == null)
+			return resumos;
+		
+		try
+		{
+			PreparedStatement ps = c.prepareStatement(SQL);
+			ps.setString(1, "%" + filtroNome + "%");
+			ps.setInt(2, tamanhoPagina);
+			ps.setInt(3, pagina * tamanhoPagina);
+			ResultSet rs = ps.executeQuery();
+			
+			while (rs.next())
+			{
+				ResumoUsuario resumo = new ResumoUsuario();
+				resumo.setId(rs.getInt(1));
+				resumo.setNome(rs.getString(2));
+				resumos.add(resumo);
+			}
+			
+			c.close();
+			return resumos;
+	
+		} catch (SQLException e)
+		{
+			log("UsuarioDAO.listaResumos: " + e.getMessage());
+			return resumos;
+		}
+	}
+	
+	/**
 	 * Adiciona um usuário no sistema
 	 */
 	public boolean criaNovoUsuario(Usuario usuario)
@@ -120,6 +232,39 @@ public class UsuarioDAO extends AbstractDAO
 		} catch (SQLException e)
 		{
 			log("UserDAO.criaNovo: " + e.getMessage());
+			return false;
+		}
+	}
+	
+	/**
+	 * Conecta um usuário no sistema
+	 */
+	public boolean conectaUsuario(Usuario usuario)
+	{
+		Connection c = getConnection();
+		
+		if (c == null)
+			return false;
+		
+		try
+		{
+			CallableStatement cs = c.prepareCall("{call UsuarioConecta(?, ?, ?, ?, ?, ?, ?, ?, ?)}");
+			cs.setInt(1, usuario.getId());
+			cs.setString(2, usuario.getProviderId());
+			cs.setString(3, usuario.getProviderUserId());
+			cs.setString(4, usuario.getProfileUrl());
+			cs.setString(5, usuario.getImageUrl());
+			cs.setString(6, usuario.getAccessToken());
+			cs.setString(7, usuario.getSecret());
+			cs.setString(8, usuario.getRefreshToken());
+			cs.setLong(9, usuario.getExpireTime());
+			cs.execute();
+			c.close();
+			return true;
+
+		} catch (SQLException e)
+		{
+			log("UserDAO.conecta: " + e.getMessage());
 			return false;
 		}
 	}
@@ -265,5 +410,17 @@ public class UsuarioDAO extends AbstractDAO
 			log("UserDAO.verificaValidadeTokenLogin: " + e.getMessage());
 			return false;
 		}
+	}
+	
+	/**
+	 * Classe que representa um resumo de usuário
+	 * 
+	 * @author Marcio
+	 *
+	 */
+	public @Data class ResumoUsuario
+	{
+		private int id;
+		private String nome;
 	}
 }

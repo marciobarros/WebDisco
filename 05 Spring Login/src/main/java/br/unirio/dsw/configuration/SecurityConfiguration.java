@@ -3,6 +3,7 @@ package br.unirio.dsw.configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -18,6 +19,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.social.security.SocialUserDetails;
+import org.springframework.social.security.SocialUserDetailsService;
+import org.springframework.social.security.SpringSocialConfigurer;
 
 import br.unirio.dsw.service.dao.UsuarioDAO;
 
@@ -28,7 +32,7 @@ import br.unirio.dsw.service.dao.UsuarioDAO;
  */
 @Configuration
 @EnableWebSecurity
-public class SecurityContext extends WebSecurityConfigurerAdapter
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 {
 	/**
 	 * Indica os caminhos que serão ignorados pelos controle de segurança (arquivos CSS e JS)
@@ -62,25 +66,33 @@ public class SecurityContext extends WebSecurityConfigurerAdapter
 	protected void configure(HttpSecurity http) throws Exception
 	{
 		// Configures form login
-		http.formLogin()
+		http.csrf().disable()
+			.formLogin()
 			.loginPage("/login")
 			.loginProcessingUrl("/login/authenticate")
-			.failureUrl("/login?error")
+			.defaultSuccessUrl("/login/success")
+			.failureUrl("/login/error")
 			
 			// Configures the logout function
 			.and()
-			.logout()
-			.deleteCookies("JSESSIONID")
-			.logoutUrl("/logout")
-			.logoutSuccessUrl("/login")
+				.logout()
+				.deleteCookies("JSESSIONID")
+				.logoutUrl("/logout")
+				.logoutSuccessUrl("/login")
 			
 			// Configures url based authorization
 			.and()
-			.authorizeRequests()
-			.antMatchers("/auth/**", "/login/**").permitAll()
-			.antMatchers("/**").hasRole("BASIC");
-	}
+				.authorizeRequests()
+				.antMatchers("/auth/**", "/login/**", "/signin/**", "/connect/**", "/signup/**").permitAll()
+				.anyRequest().authenticated()
+			
+			.and()
+				.apply(new SpringSocialConfigurer())
 
+			.and()
+				.rememberMe();
+	}
+    
 	/**
 	 * Retorna o objeto que codifica senhas na base local
 	 */
@@ -98,6 +110,12 @@ public class SecurityContext extends WebSecurityConfigurerAdapter
 	{
 		return new LocalAccountUserDetailsService();
 	}
+
+    @Bean
+    public SocialUserDetailsService socialUserDetailsService() 
+    {
+        return new SimpleSocialUserDetailsService();
+    }
 
 	/**
 	 * Retorna o objeto que realiza a autenticação
@@ -155,6 +173,23 @@ public class SecurityContext extends WebSecurityConfigurerAdapter
 			{
 				throw e;
 			}
+		}
+	}
+
+	/**
+	 * 
+	 * @author marcio.barros
+	 *
+	 */
+	private class SimpleSocialUserDetailsService implements SocialUserDetailsService
+	{
+		@Autowired
+		private UsuarioDAO userDAO;
+		
+		@Override
+		public SocialUserDetails loadUserByUserId(String userId) throws UsernameNotFoundException, DataAccessException
+		{
+			return userDAO.carregaUsuarioId(Integer.parseInt(userId));
 		}
 	}
 }

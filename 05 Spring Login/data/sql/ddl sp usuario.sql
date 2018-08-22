@@ -15,6 +15,29 @@ DELIMITER ;
 
 
 --
+-- CONECTA UM USUARIO A UMA REDE SOCIAL
+--
+
+DROP PROCEDURE IF EXISTS UsuarioConecta;
+DELIMITER //
+CREATE PROCEDURE UsuarioConecta(vId INT, vProviderId VARCHAR(255), vProviderUserId VARCHAR(255), vProfileUrl VARCHAR(512), vImageUrl VARCHAR(512), vAccessToken VARCHAR(255), vSecret VARCHAR(255), vRefreshToken VARCHAR(255), vExpireTime BIGINT(20))
+BEGIN
+	UPDATE Usuario
+	SET providerId = vProviderId,
+	providerUserId = vProviderUserId,
+	profileUrl = vProfileUrl,
+	imageUrl = vImageUrl,
+	accessToken = vAccessToken,
+	secret = vSecret,
+	refreshToken = vRefreshToken,
+	expireTime = vExpireTime,
+	dataAtualizacao = NOW()
+	WHERE id = vId;
+END //
+DELIMITER ;
+
+
+--
 -- ATUALIZA A SENHA DE UM USUARIO
 --
 

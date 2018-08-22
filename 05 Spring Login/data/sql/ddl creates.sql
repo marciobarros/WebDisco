@@ -23,7 +23,15 @@ CREATE TABLE Usuario
     bloqueado INT NOT NULL DEFAULT 0,
     dataUltimoLogin TIMESTAMP NULL,
     administrador INT NOT NULL DEFAULT 0,
-    
+	providerId VARCHAR(255) DEFAULT NULL,
+	providerUserId VARCHAR(255) DEFAULT NULL,
+	profileUrl VARCHAR(512) DEFAULT NULL,
+	imageUrl VARCHAR(512) DEFAULT NULL,
+	accessToken VARCHAR(255) DEFAULT NULL,
+	secret VARCHAR(255) DEFAULT NULL,
+	refreshToken VARCHAR(255) DEFAULT NULL,
+	expireTime bigint(20) DEFAULT NULL,
+
     CONSTRAINT pkUsuario PRIMARY KEY(id),
     CONSTRAINT ctEmailUnico UNIQUE(email)
 );

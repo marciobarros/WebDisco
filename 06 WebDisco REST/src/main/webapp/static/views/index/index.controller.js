@@ -32,7 +32,10 @@ App.controller("cdController", function ($scope, dataService, NgTableParams) {
 	 */
 	self.edita = function(item) {
 		self.cd = angular.copy(item);
+<<<<<<< HEAD
+=======
 		mostraFormulario();
+>>>>>>> ad606f2086453b511dfa03724ae37043005ff0ad
 	}
 	
 	/*
@@ -40,6 +43,8 @@ App.controller("cdController", function ($scope, dataService, NgTableParams) {
 	 */
 	self.novo = function() {
 		self.cd = { id: -1, title: "", price: "1", stock: "0" };
+<<<<<<< HEAD
+=======
 		mostraFormulario();
 	}
 	
@@ -59,6 +64,7 @@ App.controller("cdController", function ($scope, dataService, NgTableParams) {
 		setTimeout(function() {
 			$("html,body").animate({scrollTop: $("div.form").offset().top}, "slow");
 		}, 0);
+>>>>>>> ad606f2086453b511dfa03724ae37043005ff0ad
 	}
 	
 	/*
@@ -67,6 +73,13 @@ App.controller("cdController", function ($scope, dataService, NgTableParams) {
 	self.salva = function() {
 		dataService.salva(self.cd).then(function(data) { 
 			if (data.data.result == "OK") {
+<<<<<<< HEAD
+				atualizaLista();
+				self.cd = null;
+			}
+			else
+				M.toast(data.data.message, 4000);
+=======
 				self.cd = null;
 				atualizaLista();
 				mostraLista();
@@ -74,6 +87,7 @@ App.controller("cdController", function ($scope, dataService, NgTableParams) {
 			else {
 				M.toast({ html: data.data.message }, 4000);
 			}
+>>>>>>> ad606f2086453b511dfa03724ae37043005ff0ad
 		});
 	}
 	

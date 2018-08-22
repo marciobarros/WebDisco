@@ -28,7 +28,7 @@ import br.unirio.dsw.service.message.ExposedResourceMessageBundleSource;
 @EnableWebMvc
 @ComponentScan(basePackages = "br.unirio.dsw")
 @PropertySource("classpath:configuration.properties")
-@Import({SecurityContext.class})
+@Import({ SecurityConfiguration.class })
 public class SpringConfiguration extends WebMvcConfigurerAdapter
 {
 	/**
@@ -45,7 +45,7 @@ public class SpringConfiguration extends WebMvcConfigurerAdapter
 	}
 
 	/**
-	 * Registra os diretórios onde são armazenados os recursos do sistema 
+	 * Registra os diretórios onde são armazenados os recursos do sistema
 	 */
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry)
@@ -56,51 +56,58 @@ public class SpringConfiguration extends WebMvcConfigurerAdapter
 	/**
 	 * Habilita a configuração do framework por anotações
 	 */
-    @Override
-    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) 
-    {
-        configurer.enable();
-    }
- 
-    /**
-     * Configura a classe que resolve exceções do sistema
-     */
-    @Bean
-    public SimpleMappingExceptionResolver exceptionResolver() 
-    {
-        SimpleMappingExceptionResolver exceptionResolver = new SimpleMappingExceptionResolver();
- 
-        Properties exceptionMappings = new Properties();
-        exceptionMappings.put("java.lang.Exception", "error/error");
-        exceptionMappings.put("java.lang.RuntimeException", "error/error");
-        exceptionResolver.setExceptionMappings(exceptionMappings);
- 
-        Properties statusCodes = new Properties();
-        statusCodes.put("error/404", "404");
-        statusCodes.put("error/error", "500");
-        exceptionResolver.setStatusCodes(statusCodes);
- 
-        return exceptionResolver;
-    }
-    
+	@Override
+	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer)
+	{
+		configurer.enable();
+	}
+
+	/**
+	 * Configura a classe que resolve exceções do sistema
+	 */
+	@Bean
+	public SimpleMappingExceptionResolver exceptionResolver()
+	{
+		SimpleMappingExceptionResolver exceptionResolver = new SimpleMappingExceptionResolver();
+
+		Properties exceptionMappings = new Properties();
+		exceptionMappings.put("java.lang.Exception", "error/error");
+		exceptionMappings.put("java.lang.RuntimeException", "error/error");
+		exceptionResolver.setExceptionMappings(exceptionMappings);
+
+		Properties statusCodes = new Properties();
+		statusCodes.put("error/404", "404");
+		statusCodes.put("error/error", "500");
+		exceptionResolver.setStatusCodes(statusCodes);
+
+		return exceptionResolver;
+	}
+
 	/**
 	 * Retorna o objeto responsável pela tradução de mensagens
 	 */
 	@Bean
-    public ExposedResourceMessageBundleSource messageSource() 
-    {
+	public ExposedResourceMessageBundleSource messageSource()
+	{
 		ExposedResourceMessageBundleSource messageSource = new ExposedResourceMessageBundleSource();
-        messageSource.setBasename("classpath:i18n/messages");
-        messageSource.setUseCodeAsDefaultMessage(true);
-        return messageSource;
-    }
- 
+		messageSource.setBasename("classpath:i18n/messages");
+		messageSource.setUseCodeAsDefaultMessage(true);
+		return messageSource;
+	}
+
 	/**
 	 * Prepara a leitura do arquivo de propriedades
 	 */
-    @Bean
-    public PropertySourcesPlaceholderConfigurer propertyPlaceHolderConfigurer() 
-    {
-        return new PropertySourcesPlaceholderConfigurer();
-    }
+	@Bean
+	public PropertySourcesPlaceholderConfigurer propertyPlaceHolderConfigurer()
+	{
+		return new PropertySourcesPlaceholderConfigurer();
+	}
+
+	// @Override
+	// public void setApplicationContext(ApplicationContext applicationContext)
+	// throws BeansException
+	// {
+	// this.applicationContext = applicationContext;
+	// }
 }

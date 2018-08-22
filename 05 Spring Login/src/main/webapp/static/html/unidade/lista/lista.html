@@ -1,0 +1,69 @@
+<style>
+.filter { border: 1px solid #ccc; background-color: #eee; }
+.card-title { margin-bottom: 32px !important; }
+.filter .button { padding-top: 24px; }
+.ng-table-pager { margin-top: 16px; }
+.ng-table-counts { text-align: left; float: left; }
+.ng-table-pagination { float: right; }
+.text-right { text-align: right !important; }
+.text-left { text-align: left !important; }
+</style>
+
+<div class="row">
+	<div class="col s1 m1 l1"></div>
+
+	<div class="col s10 m10 l10">
+		<div class="card">
+			<div class="card-content">
+				<span class="card-title">
+					Cadastro de unidades funcionais
+				</span>
+
+				<div class="row filter">
+					<div class="col s2 m2 l2">
+						<div class="input-field">
+							<input type="text" data-ng-change='ctrl.atualizaFiltro()' data-ng-model="ctrl.filtros.sigla" id="filtro-sigla">
+							<label for="filtro-sigla">Sigla:</label>
+						</div>
+					</div>
+	
+					<div class="col s8 m8 l8">
+						<div class="input-field">
+							<input type="text" data-ng-change='ctrl.atualizaFiltro()' data-ng-model="ctrl.filtros.nome" id="filtro-nome">
+							<label for="filtro-nome">Nome:</label>
+						</div>
+					</div>
+
+					<div class="col s2 m2 l2 text-right button">
+						<button class="waves-effect waves-light btn customAction" data-ng-click="ctrl.nova()">
+							Nova
+						</button>
+					</div>
+				</div>
+	
+				<div class="row center" data-loading-container="ctrl.tableParams.settings().$loading">
+					<table data-ng-table="ctrl.tableParams" class="table bordered">
+				       <tr data-ng-repeat="item in $data">
+				           	<td class="text-left" data-header-class="'text-left'" data-title="'Código'">
+				           		{{ item.sigla }}
+				           	</td>
+				           	<td class="text-left" data-header-class="'text-left'" data-title="'Nome'">
+				           		{{ item.nome }}
+				           	</td>
+							<td class="right">
+								<button class="waves-effect waves-light btn customAction" data-ng-click="ctrl.edita(item)">
+									<i class="material-icons">edit</i>
+								</button>
+								<button class="waves-effect waves-light btn customAction" data-ng-click="ctrl.remove(item.id)">
+									<i class="material-icons">delete</i>
+								</button>
+							</td>
+				       </tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col s1 m1 l1"></div>
+</div>

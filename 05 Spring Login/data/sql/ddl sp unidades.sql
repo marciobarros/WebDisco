@@ -14,34 +14,6 @@ END //
 DELIMITER ;
 
 --
--- ASSOCIAR UM GESTOR A UMA UNIDADE FUNCIONAL
---
-
-DROP PROCEDURE IF EXISTS UnidadeFuncionalAssociaGestor;
-DELIMITER //
-CREATE PROCEDURE UnidadeFuncionalAssociaGestor(vIdUnidade INT, vIdUsuario INT)
-BEGIN
-    INSERT INTO GestorUnidadeFuncional (idUnidade, idGestor)
-	VALUES (vIdUnidade, vIdUsuario);
-END //
-DELIMITER ;
-
---
--- DESASSOCIAR UM GESTOR A UMA UNIDADE FUNCIONAL
---
-
-DROP PROCEDURE IF EXISTS UnidadeFuncionalDesassociaGestor;
-DELIMITER //
-CREATE PROCEDURE UnidadeFuncionalDesassociaGestor(vIdUnidade INT, vIdUsuario INT)
-BEGIN
-    DELETE 
-	FROM GestorUnidadeFuncional 
-	WHERE idUnidade = vIdUnidade 
-	AND idGestor = vIdUsuario;
-END //
-DELIMITER ;
-
---
 -- ATUALIZAR OS DADOS DE UMA UNIDADE FUNCIONAL
 --
 
@@ -65,8 +37,39 @@ DROP PROCEDURE IF EXISTS UnidadeFuncionalRemove;
 DELIMITER //
 CREATE PROCEDURE UnidadeFuncionalRemove(vIdUnidade INT)
 BEGIN
+	DELETE
+	FROM GestorUnidadeFuncional
+	WHERE idUnidade = vIdUnidade;
+	
     DELETE 
 	FROM UnidadeFuncional 
 	WHERE id = vIdUnidade;
+END //
+DELIMITER ;
+
+--
+-- ASSOCIAR UM GESTOR A UMA UNIDADE FUNCIONAL
+--
+
+DROP PROCEDURE IF EXISTS UnidadeFuncionalAssociaGestor;
+DELIMITER //
+CREATE PROCEDURE UnidadeFuncionalAssociaGestor(vIdUnidade INT, vIdUsuario INT)
+BEGIN
+    INSERT INTO GestorUnidadeFuncional (idUnidade, idGestor)
+	VALUES (vIdUnidade, vIdUsuario);
+END //
+DELIMITER ;
+
+--
+-- DESASSOCIAR UM GESTOR A UMA UNIDADE FUNCIONAL
+--
+
+DROP PROCEDURE IF EXISTS UnidadeFuncionalDesassociaGestores;
+DELIMITER //
+CREATE PROCEDURE UnidadeFuncionalDesassociaGestores(vIdUnidade INT)
+BEGIN
+	DELETE
+	FROM GestorUnidadeFuncional
+	WHERE idUnidade = vIdUnidade;
 END //
 DELIMITER ;

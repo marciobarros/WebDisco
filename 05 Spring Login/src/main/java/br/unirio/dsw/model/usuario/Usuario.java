@@ -9,6 +9,7 @@ import org.joda.time.format.DateTimeFormatter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.social.security.SocialUserDetails;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +19,7 @@ import lombok.Setter;
  * 
  * @author marciobarros
  */
-public class Usuario extends User
+public class Usuario extends User implements SocialUserDetails
 {
 	private static final long serialVersionUID = 7512107428170018274L;
 
@@ -30,6 +31,14 @@ public class Usuario extends User
 	private @Setter @Getter DateTime dataUltimoLogin;
 	private @Setter @Getter boolean bloqueado;
 	private @Setter @Getter boolean administrador;
+	private @Setter @Getter String providerId;
+	private @Setter @Getter String providerUserId;
+	private @Setter @Getter String profileUrl;
+	private @Setter @Getter String imageUrl;
+	private @Setter @Getter String accessToken;
+	private @Setter @Getter String secret;
+	private @Setter @Getter String refreshToken;
+	private @Setter @Getter long expireTime;
 
 	/**
 	 * Inicializa um usuário
@@ -45,6 +54,14 @@ public class Usuario extends User
 		this.dataUltimoLogin = null;
 		this.bloqueado = bloqueado;
 		this.administrador = false;
+		this.providerId = "";
+		this.providerUserId = "";
+		this.profileUrl = "";
+		this.imageUrl = "";
+		this.accessToken = "";
+		this.secret = "";
+		this.refreshToken = "";
+		this.expireTime = 0;
 	}
 
 	/**
@@ -55,6 +72,15 @@ public class Usuario extends User
 		Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
         authorities.add(new SimpleGrantedAuthority("ROLE_BASIC"));
 		return authorities;
+	}
+
+	/**
+	 * Retorna o identificador do usuário
+	 */
+	@Override
+	public String getUserId()
+	{
+		return "" + id;
 	}
 	
 	/**

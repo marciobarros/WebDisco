@@ -1,0 +1,85 @@
+<style>
+.filter { border: 1px solid #ccc; background-color: #eee; }
+.card-title { margin-bottom: 32px !important; }
+.filter .button { padding-top: 24px; }
+.ng-table-pager { margin-top: 16px; }
+.ng-table-counts { text-align: left; float: left; }
+.ng-table-pagination { float: right; }
+.text-right { text-align: right !important; }
+.text-left { text-align: left !important; }
+.section-header { margin-top: 32px; }
+.section-header h5 { margin-top: 0px; font-weight: 300; }
+</style>
+
+<div class="row">
+	<div class="col s1 m1 l1"></div>
+
+	<div class="col s10 m10 l10">
+		<div class="card">
+			<div class="card-content">
+				<span class="card-title" data-ng-show="ctrl.unidade.id == -1">
+					Nova unidade funcional
+				</span>
+				<span class="card-title" data-ng-show="ctrl.unidade.id != -1">
+					Edita unidade funcional #{{ctrl.unidade.id}}
+				</span>
+
+				<div class="row">
+					<div class="col s12 m12 l12">
+						<div class="input-field">
+							<input type="text" data-ng-model="ctrl.unidade.sigla" id="sigla">
+							<label for="sigla">Sigla:</label>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col s12 m12 l12">
+						<div class="input-field">
+							<input type="text" data-ng-model="ctrl.unidade.nome" id="nome">
+							<label for="nome">Nome:</label>
+						</div>
+					</div>
+				</div>
+
+				<div class="row section-header">
+					<div class="col s6 m6 l6">
+						<h5>Gestores da unidade</h5>
+					</div>
+					<div class="col s6 m6 l6 text-right">
+						<button class="right-align waves-effect waves-light btn modal-trigger" data-target="usuarioGestorModal">Novo gestor</button>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col s12 m12 l12">
+						<table class="table bordered" data-ng-show="ctrl.unidade.gestores.length > 0">
+					       <tr data-ng-repeat="item in ctrl.unidade.gestores">
+					           	<td class="text-left" data-header-class="'text-left'" data-title="'Nome do gestor'">
+					           		{{ item.nome }}
+					           	</td>
+								<td class="right">
+									<button class="waves-effect waves-light btn customAction" data-ng-click="ctrl.removeGestor(item.id)">
+										<i class="material-icons">delete</i>
+									</button>
+								</td>
+					       </tr>
+						</table>
+						<p data-ng-show="ctrl.unidade.gestores.length == 0">
+							Nenhum gestor registrado nesta unidade.
+						</p>
+					</div>
+				</div>
+
+			  	<seletor-usuarios on-select="ctrl.adicionaUsuarioGestor" modal-name="'usuarioGestorModal'" title="'Selecione um novo gestor'"></seletor-individuos>
+			</div>
+				
+	        <div class="card-action text-right">
+	        	<button class="waves-effect waves-teal btn-flat" data-ng-click="ctrl.lista()">Cancela</button>
+	        	<button class="waves-effect btn" data-ng-click="ctrl.salva()">Salva</button>
+	        </div>
+		</div>
+	</div>
+
+	<div class="col s1 m1 l1"></div>
+</div>
