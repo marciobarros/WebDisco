@@ -43,13 +43,13 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS UsuarioTrocaSenha;
 DELIMITER //
-CREATE PROCEDURE UsuarioTrocaSenha(vId INT, vSenha VARCHAR(1024))
+CREATE PROCEDURE UsuarioTrocaSenha(vId INT, vSenha VARCHAR(80))
 BEGIN
 	UPDATE Usuario
 	SET senha = vSenha,
 	bloqueado = 0,
 	dataAtualizacao = NOW()
-	WHERE id = VId;
+	WHERE id = vId;
 END //
 DELIMITER ;
 
@@ -114,9 +114,25 @@ DELIMITER //
 CREATE PROCEDURE UsuarioRegistraTokenResetSenha(vId INT, vToken VARCHAR(256))
 BEGIN
 	UPDATE Usuario
-	SET dataAtualizacao = NOW(),
-	tokenSenha = vToken,
+	SET tokenSenha = vToken,
 	dataTokenSenha = NOW(),
+	dataAtualizacao = NOW()
+	WHERE id = vId;
+END //
+DELIMITER ;
+
+
+--
+-- ATUALIZA O NOME E A FOTO DE UM USUARIO
+--
+
+DROP PROCEDURE IF EXISTS UsuarioAtualiza;
+DELIMITER //
+CREATE PROCEDURE UsuarioAtualiza(vId INT, vNome VARCHAR(80), vImageUrl VARCHAR(512))
+BEGIN
+	UPDATE Usuario
+	SET nome = vNome,
+	imageUrl = vImageUrl,
 	dataAtualizacao = NOW()
 	WHERE id = vId;
 END //

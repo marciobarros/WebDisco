@@ -19,7 +19,7 @@ public class SupportDAO
 		try
 		{
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			Connection conexao = DriverManager.getConnection("jdbc:mysql://localhost", "root", "jaffarmg");
+			Connection conexao = DriverManager.getConnection("jdbc:mysql://localhost", "root", "");
 			conexao.setCatalog("webdisco");
 			return conexao;
 			
