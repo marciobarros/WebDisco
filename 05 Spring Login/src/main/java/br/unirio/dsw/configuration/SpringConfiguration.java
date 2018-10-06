@@ -103,11 +103,4 @@ public class SpringConfiguration extends WebMvcConfigurerAdapter
 	{
 		return new PropertySourcesPlaceholderConfigurer();
 	}
-
-	// @Override
-	// public void setApplicationContext(ApplicationContext applicationContext)
-	// throws BeansException
-	// {
-	// this.applicationContext = applicationContext;
-	// }
 }

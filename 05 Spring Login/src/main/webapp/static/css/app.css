@@ -64,3 +64,75 @@ body, .form-control{
 .email.ng-dirty.ng-invalid-email {
     background-color: yellow;
 }
+
+button.form-submission {
+    background:none!important;
+    border:none; 
+    padding:0!important;
+}
+
+.login-box {
+	margin-top: 32px;	
+	margin-bottom: 128px;	
+}
+
+.authenticated-box {
+	margin-top: 32px;	
+	margin-bottom: 384px;	
+}
+
+.nav-identification-box {
+    margin-top: 8px;
+    margin-right: 64px;
+}
+
+.nav-identification-box > div {
+    line-height: 20px;
+}
+
+.brand-logo {
+	margin-left: 8px;
+}
+
+/* DROPDOWN DO NAVBAR */
+.dropdown-content {
+  min-width: 120px;
+  z-index: 1;
+  top: 70px !important;
+}
+
+body {
+    margin-bottom:54px;
+}
+footer {
+    position: fixed;
+    height: 54px;
+    background-color: red;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    margin-bottom: 0px;
+}
+footer div {
+	margin-left: 8px;
+	color: white; 
+    border-top: 1px solid white;
+}
+footer div p.major {
+	margin: 0px;
+	padding-top: 8px;
+	padding-bottom: 0px;
+	font-size: 14px;
+	font-weight: 400;
+}
+footer div p.minor {
+	margin: 0px;
+	padding-top: 0px;
+	padding-bottom: 8px;
+	font-size: 12px;
+	font-weight: 100;
+}
+
+.error-block {
+	color: red;
+} 

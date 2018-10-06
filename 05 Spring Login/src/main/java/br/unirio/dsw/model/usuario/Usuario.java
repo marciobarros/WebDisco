@@ -9,7 +9,7 @@ import org.joda.time.format.DateTimeFormatter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.social.security.SocialUserDetails;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +19,7 @@ import lombok.Setter;
  * 
  * @author marciobarros
  */
-public class Usuario extends User implements SocialUserDetails
+public class Usuario extends User implements UserDetails
 {
 	private static final long serialVersionUID = 7512107428170018274L;
 
@@ -72,15 +72,6 @@ public class Usuario extends User implements SocialUserDetails
 		Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
         authorities.add(new SimpleGrantedAuthority("ROLE_BASIC"));
 		return authorities;
-	}
-
-	/**
-	 * Retorna o identificador do usuário
-	 */
-	@Override
-	public String getUserId()
-	{
-		return "" + id;
 	}
 	
 	/**
