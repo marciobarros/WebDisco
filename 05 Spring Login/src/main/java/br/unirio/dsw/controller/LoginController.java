@@ -92,6 +92,7 @@ public class LoginController
 	{
 		Exception exception = (Exception) request.getSession().getAttribute(LOGIN_ERROR_KEY);
 
+		// TODO: o sistema não está entrando neste IF quando uma conta está bloqueada
 		if (exception instanceof LockedException) 
 	        return "redirect:/login?message=login.login.message.locked.account";
 
