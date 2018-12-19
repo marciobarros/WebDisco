@@ -3,7 +3,6 @@ package br.unirio.dsw.configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.dao.DataAccessException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -19,9 +18,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.social.security.SocialUserDetails;
-import org.springframework.social.security.SocialUserDetailsService;
-import org.springframework.social.security.SpringSocialConfigurer;
 
 import br.unirio.dsw.service.dao.UsuarioDAO;
 
@@ -85,9 +81,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 				.authorizeRequests()
 				.antMatchers("/auth/**", "/login/**", "/signin/**", "/connect/**", "/signup/**").permitAll()
 				.anyRequest().authenticated()
-			
-			.and()
-				.apply(new SpringSocialConfigurer())
 
 			.and()
 				.rememberMe();
@@ -110,12 +103,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 	{
 		return new LocalAccountUserDetailsService();
 	}
-
-    @Bean
-    public SocialUserDetailsService socialUserDetailsService() 
-    {
-        return new SimpleSocialUserDetailsService();
-    }
 
 	/**
 	 * Retorna o objeto que realiza a autenticação
@@ -173,23 +160,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 			{
 				throw e;
 			}
-		}
-	}
-
-	/**
-	 * 
-	 * @author marcio.barros
-	 *
-	 */
-	private class SimpleSocialUserDetailsService implements SocialUserDetailsService
-	{
-		@Autowired
-		private UsuarioDAO userDAO;
-		
-		@Override
-		public SocialUserDetails loadUserByUserId(String userId) throws UsernameNotFoundException, DataAccessException
-		{
-			return userDAO.carregaUsuarioId(Integer.parseInt(userId));
 		}
 	}
 }
