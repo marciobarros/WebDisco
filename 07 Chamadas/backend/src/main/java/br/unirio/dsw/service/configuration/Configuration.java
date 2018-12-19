@@ -1,0 +1,98 @@
+package br.unirio.dsw.service.configuration;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
+/**
+ * Classe que permite acesso aos dados de configuracao do sistema (.properties)
+ * 
+ * @author marcio.barros
+ */
+public class Configuration 
+{
+	private static Properties configuracao = null;
+
+	/**
+	 * Carrega as configuracoes do arquivo
+	 */
+	private static void carregaConfiguracao()
+	{
+		configuracao = new Properties();
+		
+		try 
+		{
+			InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("configuration.properties");
+			
+			if (is != null)
+				configuracao.load(is);
+		}
+		catch (IOException e) 
+		{
+			System.out.println(e.getMessage());
+		}
+	}
+
+	/**
+	 * Retorna o endereco do host
+	 */
+	public static String getHostname()
+	{
+		if (configuracao == null)
+			carregaConfiguracao();
+		
+		return configuracao.getProperty("HOSTNAME").trim(); 
+	}
+
+	/**
+	 * Retorna o nome do ambiente
+	 */
+	public static String getEnvironmentName()
+	{
+		if (configuracao == null)
+			carregaConfiguracao();
+		
+		return configuracao.getProperty("ENVIRONMENT_NAME").trim(); 
+	}
+	
+	/**
+	 * Verifica se esta executando em ambiente de homologacao
+	 */
+	public static boolean isStaggingEnvironment()
+	{
+		return getEnvironmentName().trim().length() > 0; 
+	}
+	
+	/**
+	 * Retorna a string de conexão ao banco de dados
+	 */
+	public static String getDatabaseConnection()
+	{
+		if (configuracao == null)
+			carregaConfiguracao();
+		
+		return configuracao.getProperty("CONNECTION_STRING").trim(); 
+	}
+
+	/**
+	 * Retorna o usuário do banco de dados
+	 */
+	public static String getDatabaseUser()
+	{
+		if (configuracao == null)
+			carregaConfiguracao();
+		
+		return configuracao.getProperty("CONNECTION_USER").trim(); 
+	}
+
+	/**
+	 * Retorna a senha de acesso ao banco de dados
+	 */
+	public static String getDatabasePassword()
+	{
+		if (configuracao == null)
+			carregaConfiguracao();
+		
+		return configuracao.getProperty("CONNECTION_PASSWORD").trim(); 
+	}
+}
