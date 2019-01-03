@@ -2,10 +2,10 @@ package br.unirio.dsw.controller;
 
 import java.util.Locale;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,8 +34,8 @@ public class LoginController
     @Autowired
     private MessageSource messageSource;
     
-//    @Autowired
-//	private PasswordEncoder passwordEncoder;
+    @Autowired
+	private PasswordEncoder passwordEncoder;
     
     @Autowired
 	private UsuarioDAO userDAO;
@@ -46,30 +46,30 @@ public class LoginController
 	/**
 	 * Acao chamada quando ocorre um erro de login
 	 */
-//	@ResponseBody
-//	@RequestMapping(value = "/login/error", method = RequestMethod.GET, produces="application/json")
-//    public String loginError(HttpServletRequest request, Locale locale) 
-//	{
-//		Exception exception = (Exception) request.getSession().getAttribute(LOGIN_ERROR_KEY);
-//
-//		if (exception instanceof BadCredentialsException) 
-//			return JsonUtils.ajaxError(messageSource.getMessage("login.login.message.invalid.credentials", null, locale));
-//		
-//		if (exception instanceof LockedException) 
-//			return JsonUtils.ajaxError(messageSource.getMessage("login.login.message.locked.account", null, locale));
-//
-//		return JsonUtils.ajaxError(messageSource.getMessage("login.login.message.invalid.credentials", null, locale));
-//    }
+/*	@ResponseBody
+	@RequestMapping(value = "/login/error", method = RequestMethod.GET, produces="application/json")
+    public String loginError(HttpServletRequest request, Locale locale) 
+	{
+		Exception exception = (Exception) request.getSession().getAttribute(LOGIN_ERROR_KEY);
+
+		if (exception instanceof BadCredentialsException) 
+			return JsonUtils.ajaxError(messageSource.getMessage("login.login.message.invalid.credentials", null, locale));
+		
+		if (exception instanceof LockedException) 
+			return JsonUtils.ajaxError(messageSource.getMessage("login.login.message.locked.account", null, locale));
+
+		return JsonUtils.ajaxError(messageSource.getMessage("login.login.message.invalid.credentials", null, locale));
+    }*/
 
 	/**
 	 * Acao chamada quando ocorre um login bem sucedido
 	 */
-	@ResponseBody
+/*	@ResponseBody
 	@RequestMapping(value = "/login/success", method = RequestMethod.GET, produces="application/json")
     public String loginSuccess(HttpServletRequest request, Locale locale) 
 	{
 		return JsonUtils.ajaxSuccess();
-    }
+    }*/
 
 	/**
 	 * Ação que cria uma nova conta
@@ -96,9 +96,11 @@ public class LoginController
 		if (!form.getSenha().equals(form.getSenhaRepetida()))
 			return JsonUtils.ajaxError("A senha repetida não confere com a senha.");
  
-//        String encodedPassword = passwordEncoder.encode(form.getSenha());
-//        Usuario user = new Usuario(form.getNome(), form.getEmail(), encodedPassword, false);
-//        userDAO.criaNovoUsuario(user);
+        Usuario user = new Usuario();
+        user.setNome(form.getNome());
+        user.setEmail(form.getEmail());
+        user.setSenha(passwordEncoder.encode(form.getSenha()));
+        userDAO.criaNovoUsuario(user);
  
 //        SecurityUtils.logInUser(registered);
 //        ProviderSignInUtils.handlePostSignUp(user.getEmail(), request);
@@ -164,10 +166,9 @@ public class LoginController
 		if (!form.getSenha().equals(form.getSenhaRepetida()))
 			return JsonUtils.ajaxError(messageSource.getMessage("login.reset.password.error.password.different", null, locale));
  
-        String encodedPassword = "";// TODO passwordEncoder.encode(form.getSenha());
+        String encodedPassword = passwordEncoder.encode(form.getSenha());
         userDAO.atualizaSenha(user.getId(), encodedPassword);
         return JsonUtils.ajaxSuccess();
-//        return "redirect:/login?message=login.reset.password.success.created";
 	}
 	
 	/**
@@ -177,39 +178,24 @@ public class LoginController
 	@RequestMapping(value = "/login/change", method = RequestMethod.POST, consumes="application/json")
 	public String trocaSenha(@RequestBody FormTrocaSenha form, Locale locale)
 	{
-//		Usuario usuario = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//
-//		if (usuario == null)
-//			return JsonUtils.ajaxError(messageSource.getMessage("login.change.password.error.user.not.logged", null, locale));
-//
-//        Usuario user = userDAO.carregaUsuarioId(usuario.getId());
-//
-//        if (!passwordEncoder.matches(form.getSenhaAtual(), user.getPassword()))
-//        	return JsonUtils.ajaxError(messageSource.getMessage("login.change.password.invalid.current.password", null, locale));
-//		
-//		if (!ValidationUtils.validPassword(form.getSenhaNova()))
-//			return JsonUtils.ajaxError(messageSource.getMessage("login.change.password.error.password.invalid", null, locale));
-//		
-//		if (!form.getSenhaNova().equals(form.getSenhaNovaRepetida()))
-//			return JsonUtils.ajaxError(messageSource.getMessage("login.change.password.error.password.different", null, locale));
-// 
-//        String encodedPassword = passwordEncoder.encode(form.getSenhaNova());
-//        userDAO.atualizaSenha(usuario.getId(), encodedPassword);
-        return JsonUtils.ajaxSuccess();
-	}
-	
-	/**
-	 * Ação que troca a senha do usuário logado
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/login/xyz", method = RequestMethod.GET)
-	public String trocaSenha(Locale locale)
-	{
-//		Usuario usuario = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//
-//		if (usuario == null)
-//			return JsonUtils.ajaxError(messageSource.getMessage("login.change.password.error.user.not.logged", null, locale));
+		Usuario usuario = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
+		if (usuario == null)
+			return JsonUtils.ajaxError(messageSource.getMessage("login.change.password.error.user.not.logged", null, locale));
+
+        Usuario user = userDAO.carregaUsuarioId(usuario.getId());
+
+        if (!passwordEncoder.matches(form.getSenhaAtual(), user.getPassword()))
+        	return JsonUtils.ajaxError(messageSource.getMessage("login.change.password.invalid.current.password", null, locale));
+		
+		if (!ValidationUtils.validPassword(form.getSenhaNova()))
+			return JsonUtils.ajaxError(messageSource.getMessage("login.change.password.error.password.invalid", null, locale));
+		
+		if (!form.getSenhaNova().equals(form.getSenhaNovaRepetida()))
+			return JsonUtils.ajaxError(messageSource.getMessage("login.change.password.error.password.different", null, locale));
+ 
+        String encodedPassword = passwordEncoder.encode(form.getSenhaNova());
+        userDAO.atualizaSenha(usuario.getId(), encodedPassword);
         return JsonUtils.ajaxSuccess();
 	}
 }

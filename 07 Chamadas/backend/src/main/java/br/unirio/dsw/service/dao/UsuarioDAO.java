@@ -29,26 +29,18 @@ public class UsuarioDAO extends AbstractDAO
 	 */
 	private Usuario carrega(ResultSet rs) throws SQLException
 	{
-		String nome = rs.getString("nome");
-		String email = rs.getString("email");
-		String senha = rs.getString("senha");
-		boolean bloqueado = rs.getInt("bloqueado") != 0;
-
-		Usuario user = new Usuario(nome, email, senha, bloqueado);
+		Usuario user = new Usuario();
 		user.setId(rs.getInt("id"));
+		user.setNome(rs.getString("nome"));
+		user.setEmail(rs.getString("email"));
+		user.setSenha(rs.getString("senha"));
+		user.setBloqueado(rs.getInt("bloqueado") != 0);
 		user.setDataUltimoLogin(DateUtils.toDateTime(rs.getTimestamp("dataUltimoLogin")));
 		user.setContadorFalhasLogin(rs.getInt("falhasLogin"));
 		user.setTokenLogin(rs.getString("tokenSenha"));
 		user.setDataTokenLogin(DateUtils.toDateTime(rs.getTimestamp("dataTokenSenha")));
 		user.setAdministrador(rs.getInt("administrador") != 0);
-		user.setProviderId(rs.getString("providerId"));
-		user.setProviderUserId(rs.getString("providerUserId"));
-		user.setProfileUrl(rs.getString("profileUrl"));
-		user.setImageUrl(rs.getString("imageUrl"));
-		user.setAccessToken(rs.getString("accessToken"));
-		user.setSecret(rs.getString("secret"));
-		user.setRefreshToken(rs.getString("refreshToken"));
-		user.setExpireTime(rs.getLong("expireTime"));
+		user.setTempoExpiracaoCredenciais(rs.getLong("expireTime"));
 		return user;
 	}
 
@@ -102,35 +94,6 @@ public class UsuarioDAO extends AbstractDAO
 		} catch (SQLException e)
 		{
 			log("UserDAO.carregaUsuarioEmail: " + e.getMessage());
-			return null;
-		}
-	}
-	
-	/**
-	 * Carrega um usuário, dado seu provedor e identificador no provedor
-	 */
-	public Usuario carregaUsuarioProvedor(String providerId, String providerUserId)
-	{
-		Connection c = getConnection();
-		
-		if (c == null)
-			return null;
-		
-		try
-		{
-			PreparedStatement ps = c.prepareStatement("SELECT * FROM Usuario WHERE providerId = ? AND providerUserId = ?");
-			ps.setString(1, providerId);
-			ps.setString(2, providerUserId);
-
-			ResultSet rs = ps.executeQuery();
-			Usuario item = rs.next() ? carrega(rs) : null;
-			
-			c.close();
-			return item;
-
-		} catch (SQLException e)
-		{
-			log("UserDAO.carregaUsuarioProvedor: " + e.getMessage());
 			return null;
 		}
 	}
@@ -221,8 +184,8 @@ public class UsuarioDAO extends AbstractDAO
 		{
 			CallableStatement cs = c.prepareCall("{call UsuarioInsere(?, ?, ?, ?)}");
 			cs.setString(1, usuario.getNome());
-			cs.setString(2, usuario.getUsername());
-			cs.setString(3, ""); // TODO usuario.getPassword());
+			cs.setString(2, usuario.getEmail());
+			cs.setString(3, usuario.getSenha());
 			cs.registerOutParameter(4, Types.INTEGER);
 			cs.execute();
 			usuario.setId(cs.getInt(4));
@@ -236,39 +199,6 @@ public class UsuarioDAO extends AbstractDAO
 		}
 	}
 	
-	/**
-	 * Conecta um usuário no sistema
-	 */
-	public boolean conectaUsuario(Usuario usuario)
-	{
-		Connection c = getConnection();
-		
-		if (c == null)
-			return false;
-		
-		try
-		{
-			CallableStatement cs = c.prepareCall("{call UsuarioConecta(?, ?, ?, ?, ?, ?, ?, ?, ?)}");
-			cs.setInt(1, usuario.getId());
-			cs.setString(2, usuario.getProviderId());
-			cs.setString(3, usuario.getProviderUserId());
-			cs.setString(4, usuario.getProfileUrl());
-			cs.setString(5, usuario.getImageUrl());
-			cs.setString(6, usuario.getAccessToken());
-			cs.setString(7, usuario.getSecret());
-			cs.setString(8, usuario.getRefreshToken());
-			cs.setLong(9, usuario.getExpireTime());
-			cs.execute();
-			c.close();
-			return true;
-
-		} catch (SQLException e)
-		{
-			log("UserDAO.conecta: " + e.getMessage());
-			return false;
-		}
-	}
-
 	/**
 	 * Atualiza a senha de um usuário
 	 */
@@ -416,7 +346,6 @@ public class UsuarioDAO extends AbstractDAO
 	 * Classe que representa um resumo de usuário
 	 * 
 	 * @author Marcio
-	 *
 	 */
 	public @Data class ResumoUsuario
 	{
