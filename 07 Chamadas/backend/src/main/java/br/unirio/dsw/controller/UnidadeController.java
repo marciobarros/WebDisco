@@ -5,7 +5,6 @@ import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -58,6 +57,8 @@ public class UnidadeController
 	@RequestMapping(value = "/unidade", method = RequestMethod.POST, consumes="application/json")
 	public String salva(@RequestBody Unidade unidade)
 	{
+		// TODO tradução das mensagens abaixo
+
 		if (unidade.getSigla().length() == 0)
 			return JsonUtils.ajaxError("O código não pode ficar vazio.");
 		
@@ -93,14 +94,6 @@ public class UnidadeController
 			return JsonUtils.ajaxError(messageSource.getMessage("unidade.lista.remocao.nao.encontrado", null, locale));
 
 		unidadeDAO.remove(id);
-		return JsonUtils.ajaxSuccess();
-	}
-
-	@Secured("ROLE_ADMIN")
-	@ResponseBody
-	@RequestMapping(value = "/admin/test", method = RequestMethod.POST)
-	public String admin()
-	{
 		return JsonUtils.ajaxSuccess();
 	}
 }

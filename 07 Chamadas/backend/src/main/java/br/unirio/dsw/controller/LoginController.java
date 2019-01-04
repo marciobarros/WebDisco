@@ -29,8 +29,6 @@ import lombok.Data;
 @RestController
 public class LoginController 
 {
-//	private static final String LOGIN_ERROR_KEY = "login.reset.password.error.email.invalid"; 
-	
     @Autowired
     private MessageSource messageSource;
     
@@ -44,66 +42,35 @@ public class LoginController
 	private EmailService emailService;
 
 	/**
-	 * Acao chamada quando ocorre um erro de login
-	 */
-/*	@ResponseBody
-	@RequestMapping(value = "/login/error", method = RequestMethod.GET, produces="application/json")
-    public String loginError(HttpServletRequest request, Locale locale) 
-	{
-		Exception exception = (Exception) request.getSession().getAttribute(LOGIN_ERROR_KEY);
-
-		if (exception instanceof BadCredentialsException) 
-			return JsonUtils.ajaxError(messageSource.getMessage("login.login.message.invalid.credentials", null, locale));
-		
-		if (exception instanceof LockedException) 
-			return JsonUtils.ajaxError(messageSource.getMessage("login.login.message.locked.account", null, locale));
-
-		return JsonUtils.ajaxError(messageSource.getMessage("login.login.message.invalid.credentials", null, locale));
-    }*/
-
-	/**
-	 * Acao chamada quando ocorre um login bem sucedido
-	 */
-/*	@ResponseBody
-	@RequestMapping(value = "/login/success", method = RequestMethod.GET, produces="application/json")
-    public String loginSuccess(HttpServletRequest request, Locale locale) 
-	{
-		return JsonUtils.ajaxSuccess();
-    }*/
-
-	/**
 	 * Ação que cria uma nova conta
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/login/create", method = RequestMethod.POST, consumes="application/json")
-    public String novaConta(@RequestBody FormCriacaoConta form) 
+    public String novaConta(@RequestBody FormCriacaoConta form, Locale locale) 
 	{
 		if (form.getNome().length() == 0)
-			return JsonUtils.ajaxError("O nome não pode ficar vazio.");
+			return JsonUtils.ajaxError(messageSource.getMessage("login.new.account.error.name.empty", null, locale));
 		
 		if (form.getEmail().length() == 0)
-			return JsonUtils.ajaxError("O e-mail não pode ficar vazio.");
+			return JsonUtils.ajaxError(messageSource.getMessage("login.new.account.error.email.empty", null, locale));
 		
 		if (!ValidationUtils.validEmail(form.getEmail()))
-			return JsonUtils.ajaxError("O e-mail não é válido.");
-		
+			return JsonUtils.ajaxError(messageSource.getMessage("login.new.account.error.email.invalid", null, locale));
+
 		if (userDAO.carregaUsuarioEmail(form.getEmail()) != null)
-			return JsonUtils.ajaxError("O e-mail já está registrado no sistema.");
+			return JsonUtils.ajaxError(messageSource.getMessage("login.new.account.error.email.taken", null, locale));
 		
 		if (!ValidationUtils.validPassword(form.getSenha()))
-			return JsonUtils.ajaxError("A senha não é válida.");
+			return JsonUtils.ajaxError(messageSource.getMessage("login.new.account.error.password.invalid", null, locale));
 		
 		if (!form.getSenha().equals(form.getSenhaRepetida()))
-			return JsonUtils.ajaxError("A senha repetida não confere com a senha.");
+			return JsonUtils.ajaxError(messageSource.getMessage("login.new.account.error.password.different", null, locale));
  
         Usuario user = new Usuario();
         user.setNome(form.getNome());
         user.setEmail(form.getEmail());
         user.setSenha(passwordEncoder.encode(form.getSenha()));
         userDAO.criaNovoUsuario(user);
- 
-//        SecurityUtils.logInUser(registered);
-//        ProviderSignInUtils.handlePostSignUp(user.getEmail(), request);
         return JsonUtils.ajaxSuccess();
     }
 	
@@ -112,13 +79,13 @@ public class LoginController
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/login/forgot", method = RequestMethod.POST, consumes="application/json")
-    public String novaConta(@RequestBody FormEsqueciSenha form, Locale locale) 
+    public String enviaRecuperacaoSenha(@RequestBody FormEsqueciSenha form, Locale locale) 
 	{
 		if (form.getEmail().length() == 0)
-			return JsonUtils.ajaxError("O email não pode ficar vazio.");
+			return JsonUtils.ajaxError(messageSource.getMessage("login.forgot.password.error.email.empty", null, locale));
 		
 		if (!ValidationUtils.validEmail(form.getEmail()))
-			return JsonUtils.ajaxError("O nome não é válido.");
+			return JsonUtils.ajaxError(messageSource.getMessage("login.forgot.password.error.email.invalid", null, locale));
 		
 		Usuario user = userDAO.carregaUsuarioEmail(form.getEmail());
 
