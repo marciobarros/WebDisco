@@ -15,8 +15,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -77,8 +75,18 @@ public class TestAuthentication
 
 		Mockito.when(usuarioDAO.carregaUsuarioEmail("fulano@somewhere.com")).thenReturn(this.fulano);
 		Mockito.when(usuarioDAO.carregaUsuarioEmail("admin@somewhere.com")).thenReturn(this.administrador);
-		Mockito.when(usuarioDAO.registraLoginSucesso("fulano@somewhere.com")).thenAnswer(invocation -> { fulano.setContadorFalhasLogin(0); return null; });
-		Mockito.when(usuarioDAO.registraLoginFalha("fulano@somewhere.com")).thenAnswer(invocation -> { fulano.setContadorFalhasLogin(fulano.getContadorFalhasLogin() + 1); return null; });
+
+		Mockito.when(usuarioDAO.registraLoginSucesso("fulano@somewhere.com")).thenAnswer(invocation -> { 
+			fulano.setContadorFalhasLogin(0); 
+			return null; 
+		});
+		
+		Mockito.when(usuarioDAO.registraLoginFalha("fulano@somewhere.com")).thenAnswer(invocation -> {
+			int count = fulano.getContadorFalhasLogin();
+			fulano.setContadorFalhasLogin(count + 1);
+			fulano.setBloqueado(count >= 2);
+			return null; 
+		});
 
 		Mockito.when(unidadeDAO.lista(anyInt(), anyInt(), anyString(), anyString())).thenReturn(new ArrayList<Unidade>());
 	}
@@ -105,6 +113,43 @@ public class TestAuthentication
 		this.mockMvc.perform(request)
         	.andExpect(status().is(401))
         	.andExpect(header().string("X-AUTH-TOKEN", nullValue()));
+	}
+	
+	@Test
+	public void testThreeFailedAuthentication() throws Exception
+	{
+		MockHttpServletRequestBuilder request = post("/login")
+				.contentType(APPLICATION_JSON_UTF8)
+                .content("{ \"email\": \"fulano@somewhere.com\", \"senha\": \"xxx\" }");
+        
+		this.mockMvc.perform(request)
+        	.andExpect(status().is(401))
+        	.andExpect(header().string("X-AUTH-TOKEN", nullValue()))
+        	.andExpect(header().string("error", "Bad credentials"));
+        
+		this.mockMvc.perform(request)
+        	.andExpect(status().is(401))
+        	.andExpect(header().string("X-AUTH-TOKEN", nullValue()))
+        	.andExpect(header().string("error", "Bad credentials"));
+        
+		this.mockMvc.perform(request)
+        	.andExpect(status().is(401))
+        	.andExpect(header().string("X-AUTH-TOKEN", nullValue()))
+        	.andExpect(header().string("error", "Bad credentials"));
+        
+		this.mockMvc.perform(request)
+        	.andExpect(status().is(401))
+        	.andExpect(header().string("X-AUTH-TOKEN", nullValue()))
+        	.andExpect(header().string("error", "User account is locked"));
+        
+		MockHttpServletRequestBuilder secondRequest = post("/login")
+				.contentType(APPLICATION_JSON_UTF8)
+                .content("{ \"email\": \"fulano@somewhere.com\", \"senha\": \"abc\" }");
+        
+		this.mockMvc.perform(secondRequest)
+        	.andExpect(status().is(401))
+        	.andExpect(header().string("X-AUTH-TOKEN", nullValue()))
+        	.andExpect(header().string("error", "User account is locked"));
 	}
 	
 	@Test
@@ -146,7 +191,54 @@ public class TestAuthentication
         	.andExpect(status().is(403));
 	}
 	
-	// TODO testes com URL de administrador
+	@Test
+	public void testLoggedAdministratorAccessingAdministrationPage() throws Exception
+	{
+		MockHttpServletRequestBuilder authRequest = post("/login")
+				.contentType(APPLICATION_JSON_UTF8)
+                .content("{ \"email\": \"admin@somewhere.com\", \"senha\": \"root\" }");
+
+		MvcResult authResult = this.mockMvc.perform(authRequest)
+        	.andExpect(status().isOk())
+        	.andExpect(header().exists("X-AUTH-TOKEN"))
+        	.andReturn();
+		
+	    String token = authResult.getResponse().getHeader("X-AUTH-TOKEN");
+		
+		MockHttpServletRequestBuilder secondRequest = post("/admin/test", "").
+				header("X-AUTH-TOKEN", token);
+        
+		this.mockMvc.perform(secondRequest)
+        	.andExpect(status().is(200));
+	}
 	
-	// TODO caso de teste de bloqueio em três falhas de login
+	@Test
+	public void testLoggedBasicUserAccessingAdministrationPage() throws Exception
+	{
+		MockHttpServletRequestBuilder authRequest = post("/login")
+				.contentType(APPLICATION_JSON_UTF8)
+                .content("{ \"email\": \"fulano@somewhere.com\", \"senha\": \"abc\" }");
+
+		MvcResult authResult = this.mockMvc.perform(authRequest)
+        	.andExpect(status().isOk())
+        	.andExpect(header().exists("X-AUTH-TOKEN"))
+        	.andReturn();
+		
+	    String token = authResult.getResponse().getHeader("X-AUTH-TOKEN");
+		
+		MockHttpServletRequestBuilder secondRequest = post("/admin/test", "").
+				header("X-AUTH-TOKEN", token);
+        
+		this.mockMvc.perform(secondRequest)
+        	.andExpect(status().is(403));
+	}
+	
+	@Test
+	public void testUnloggedAccessAdministrationPage() throws Exception
+	{
+		MockHttpServletRequestBuilder secondRequest = post("/admin/test", "");
+        
+		this.mockMvc.perform(secondRequest)
+        	.andExpect(status().is(403));
+	}
 }

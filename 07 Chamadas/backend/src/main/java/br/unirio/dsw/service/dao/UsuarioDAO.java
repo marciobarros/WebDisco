@@ -40,7 +40,6 @@ public class UsuarioDAO extends AbstractDAO
 		user.setTokenLogin(rs.getString("tokenSenha"));
 		user.setDataTokenLogin(DateUtils.toDateTime(rs.getTimestamp("dataTokenSenha")));
 		user.setAdministrador(rs.getInt("administrador") != 0);
-		user.setTempoExpiracaoCredenciais(rs.getLong("expireTime"));
 		return user;
 	}
 

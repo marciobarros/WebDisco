@@ -32,7 +32,6 @@ public class StatelessAuthenticationSecurityConfig extends WebSecurityConfigurer
 	/**
 	 * Serviço de geração de tokens para usuários
 	 */
-	@Autowired
 	private TokenAuthenticationService tokenAuthenticationService;
 
 	/**
@@ -41,6 +40,8 @@ public class StatelessAuthenticationSecurityConfig extends WebSecurityConfigurer
 	public StatelessAuthenticationSecurityConfig()
 	{
 		super(true);
+		String secretKey = br.unirio.dsw.service.configuration.Configuration.getChaveSecretaTokenAutenticacao();
+		this.tokenAuthenticationService = new TokenAuthenticationService(secretKey);
 	}
 
 	/**
@@ -67,10 +68,10 @@ public class StatelessAuthenticationSecurityConfig extends WebSecurityConfigurer
 				.anyRequest().hasRole("BASIC").and()
 
 				// filtro de login
-				.addFilterBefore(new StatelessLoginFilter("/login", tokenAuthenticationService, userDetailsService, authenticationManager()), UsernamePasswordAuthenticationFilter.class)
+				.addFilterBefore(new FilterStatelessLogin("/login", tokenAuthenticationService, userDetailsService, authenticationManager()), UsernamePasswordAuthenticationFilter.class)
 
 				// filter de reconhecimento de token
-				.addFilterBefore(new StatelessAuthenticationFilter(tokenAuthenticationService), UsernamePasswordAuthenticationFilter.class);
+				.addFilterBefore(new FilterStatelessAuthentication(tokenAuthenticationService, userDetailsService), UsernamePasswordAuthenticationFilter.class);
 	}
 
 	/**

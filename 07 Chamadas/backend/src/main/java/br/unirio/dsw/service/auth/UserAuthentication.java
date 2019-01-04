@@ -9,47 +9,76 @@ import br.unirio.dsw.model.Usuario;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Classe que representa o usuário logado para o Spring Security
+ * 
+ * @author Marcio
+ */
 public class UserAuthentication implements Authentication
 {
-	// TODO não poderia substituir a classe usuário no gerador de tokens???
-	
 	private static final long serialVersionUID = 8124356846233199802L;
 	
-	private final Usuario user;
+	/**
+	 * Usuário logado
+	 */
+	private final Usuario usuario;
+	
+	/**
+	 * Indica se o usuário está logado
+	 */
 	private @Getter @Setter boolean authenticated = true;
 
-	public UserAuthentication(Usuario user) 
+	/**
+	 * Inicializa a autenticação do usuário
+	 */
+	public UserAuthentication(Usuario user)
 	{
-		this.user = user;
+		this.usuario = user;
 	}
 
+	/**
+	 * Retorna o nome do usuário
+	 */
 	@Override
 	public String getName()
 	{
-		return user.getNome();
+		return usuario.getNome();
 	}
 
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities()
-	{
-		return user.getAuthorities();
-	}
-
+	/**
+	 * Retorna a senha do usuário
+	 */
 	@Override
 	public Object getCredentials()
 	{
-		return user.getPassword();
+		return usuario.getPassword();
 	}
 
+	/**
+	 * Retorna todos os detalhes do usuário
+	 */
 	@Override
 	public Usuario getDetails()
 	{
-		return user;
+		return usuario;
 	}
 
+	/**
+	 * Retorna o usuário como principal do Spring Security
+	 */
 	@Override
-	public Object getPrincipal()
+	public Usuario getPrincipal()
 	{
-		return user.getNome();
+		return usuario;
 	}
+
+	/**
+	 * Retorna os direitos de acesso do usuário
+	 */
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities()
+	{
+		return usuario.getAuthorities();
+	}
+
 }

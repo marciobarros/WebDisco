@@ -33,7 +33,6 @@ public class Usuario implements UserDetails
 	private @Setter @Getter DateTime dataUltimoLogin;
 	private @Setter @Getter boolean bloqueado;
 	private @Setter @Getter boolean administrador;
-	private @Setter @Getter long tempoExpiracaoCredenciais;
 
 	/**
 	 * Inicializa um usuário
@@ -50,7 +49,6 @@ public class Usuario implements UserDetails
 		this.dataUltimoLogin = null;
 		this.bloqueado = false;
 		this.administrador = false;
-		this.tempoExpiracaoCredenciais = 0;
 	}
 	
 	/**
@@ -105,7 +103,6 @@ public class Usuario implements UserDetails
 	public boolean isCredentialsNonExpired()
 	{
 		return true;
-//		return System.currentTimeMillis() < tempoExpiracaoCredenciais;
 	}
 
 	/**

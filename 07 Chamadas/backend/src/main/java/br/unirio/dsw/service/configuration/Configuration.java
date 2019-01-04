@@ -95,4 +95,15 @@ public class Configuration
 		
 		return configuracao.getProperty("CONNECTION_PASSWORD").trim(); 
 	}
+
+	/**
+	 * Retorna a chave secreta do gerador de tokens de autenticação
+	 */
+	public static String getChaveSecretaTokenAutenticacao()
+	{
+		if (configuracao == null)
+			carregaConfiguracao();
+		
+		return configuracao.getProperty("auth.token.secret").trim(); 
+	}
 }

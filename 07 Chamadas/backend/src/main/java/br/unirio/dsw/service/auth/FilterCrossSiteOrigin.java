@@ -1,4 +1,4 @@
-package br.unirio.dsw.service.filters;
+package br.unirio.dsw.service.auth;
 
 import java.io.IOException;
 
@@ -11,8 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Component;
 
+/**
+ * Fltro que permite o uso de todos os métodos HTTP relevantes via Cross-Site Origin
+ * 
+ * @author Marcio
+ */
 @Component
-public class CrossOriginFilter implements Filter
+public class FilterCrossSiteOrigin implements Filter
 {
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException
 	{

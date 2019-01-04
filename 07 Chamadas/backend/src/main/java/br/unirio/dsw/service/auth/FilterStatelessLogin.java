@@ -29,8 +29,13 @@ import br.unirio.dsw.model.Usuario;
  * 
  * @author Marcio
  */
-class StatelessLoginFilter extends AbstractAuthenticationProcessingFilter
+class FilterStatelessLogin extends AbstractAuthenticationProcessingFilter
 {
+	/**
+	 * Chave de acesso ao e-mail do usuário que está tentando se logar
+	 */
+	private static final String ATTEMPTING_USER_EMAIL_KEY = "email";  
+	
 	/**
 	 * Serviço de geração de tokens para usuários logados
 	 */
@@ -44,7 +49,7 @@ class StatelessLoginFilter extends AbstractAuthenticationProcessingFilter
 	/**
 	 * Inicializa o filtro de servlet
 	 */
-	StatelessLoginFilter(String urlMapping, TokenAuthenticationService tokenAuthenticationService, UserDetailsService userDetailsService, AuthenticationManager authManager)
+	FilterStatelessLogin(String urlMapping, TokenAuthenticationService tokenAuthenticationService, UserDetailsService userDetailsService, AuthenticationManager authManager)
 	{
 		super(new AntPathRequestMatcher(urlMapping));
 		this.tokenAuthenticationService = tokenAuthenticationService;
@@ -74,8 +79,11 @@ class StatelessLoginFilter extends AbstractAuthenticationProcessingFilter
 		JsonElement jsonSenha = jsonLogin.get("senha");
 		String senha = (jsonSenha != null) ? jsonSenha.getAsString() : "";
 		
+		// Limpa a memória de sessão
+		request.getSession().invalidate();
+		
 		// Guarda o email na requisição para casos de falha de login
-		request.setAttribute("email", email);
+		request.setAttribute(ATTEMPTING_USER_EMAIL_KEY, email);
 
 		// Tenta fazer o login
 		UsernamePasswordAuthenticationToken loginToken = new UsernamePasswordAuthenticationToken(email, senha);
@@ -94,13 +102,15 @@ class StatelessLoginFilter extends AbstractAuthenticationProcessingFilter
 		// Pega o usuário que logou no sistema
 		Usuario user = userDetailsService.loadUserByUsername(authentication.getName());
 		
-		// Cria uma autenticação para o usuário
-		UserAuthentication userAuthentication = new UserAuthentication(user);
+		// Salva o usuário na memória de sessão
+		request.getSession().setAttribute(Constants.SESSION_USER_KEY, user);
 		
 		// Adiciona o token do usuário na resposta
-		tokenAuthenticationService.addAuthentication(response, userAuthentication);
+		String token = tokenAuthenticationService.createAuthenticationToken(user.getEmail());
+		response.addHeader(Constants.AUTH_HEADER_NAME, token);
 		
-		// Registra a autenticação no Spring Security
+		// Cria e registra uma autenticação para o usuário
+		UserAuthentication userAuthentication = new UserAuthentication(user);
 		SecurityContextHolder.getContext().setAuthentication(userAuthentication);
 	}
 
@@ -111,13 +121,13 @@ class StatelessLoginFilter extends AbstractAuthenticationProcessingFilter
 	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException
 	{
 		// Pega o email do usuário na memória de requisição 
-		String email = (String) request.getAttribute("email");
+		String email = (String) request.getAttribute(ATTEMPTING_USER_EMAIL_KEY);
 
 		// Registra o login com falha
 		userDetailsService.registraLoginFalha(email);
 		
 		// Adiciona um header na resposta com o motivo da falha
-		response.setHeader("error", failed.getLocalizedMessage());
+		response.setHeader(Constants.ERROR_HEADER_NAME, failed.getLocalizedMessage());
 
 		// Chama a superclasse
 		super.unsuccessfulAuthentication(request, response, failed);
