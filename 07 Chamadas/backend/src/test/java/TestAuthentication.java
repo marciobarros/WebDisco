@@ -1,11 +1,15 @@
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.Matchers.containsString;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +28,9 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import br.unirio.dsw.MainProgram;
+import br.unirio.dsw.model.Unidade;
 import br.unirio.dsw.model.Usuario;
+import br.unirio.dsw.service.dao.UnidadeDAO;
 import br.unirio.dsw.service.dao.UsuarioDAO;
 
 @RunWith(SpringRunner.class)
@@ -37,6 +43,9 @@ public class TestAuthentication
 	
 	@MockBean
 	private UsuarioDAO usuarioDAO;
+	
+	@MockBean
+	private UnidadeDAO unidadeDAO;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -68,24 +77,10 @@ public class TestAuthentication
 
 		Mockito.when(usuarioDAO.carregaUsuarioEmail("fulano@somewhere.com")).thenReturn(this.fulano);
 		Mockito.when(usuarioDAO.carregaUsuarioEmail("admin@somewhere.com")).thenReturn(this.administrador);
-		
-		Mockito.doAnswer(new Answer<Void>() {
+		Mockito.when(usuarioDAO.registraLoginSucesso("fulano@somewhere.com")).thenAnswer(invocation -> { fulano.setContadorFalhasLogin(0); return null; });
+		Mockito.when(usuarioDAO.registraLoginFalha("fulano@somewhere.com")).thenAnswer(invocation -> { fulano.setContadorFalhasLogin(fulano.getContadorFalhasLogin() + 1); return null; });
 
-            @Override
-            public Void answer(InvocationOnMock invocation) throws Throwable {
-            	fulano.setContadorFalhasLogin(0);
-                return null;
-            }
-        }).when(usuarioDAO).registraLoginSucesso("fulano@somewhere.com");
-		
-		Mockito.doAnswer(new Answer<Void>() {
-
-            @Override
-            public Void answer(InvocationOnMock invocation) throws Throwable {
-            	fulano.setContadorFalhasLogin(fulano.getContadorFalhasLogin() + 1);
-                return null;
-            }
-        }).when(usuarioDAO).registraLoginFalha("fulano@somewhere.com");
+		Mockito.when(unidadeDAO.lista(anyInt(), anyInt(), anyString(), anyString())).thenReturn(new ArrayList<Unidade>());
 	}
 	
 	@Test
@@ -153,5 +148,5 @@ public class TestAuthentication
 	
 	// TODO testes com URL de administrador
 	
-	// Mockar o DAo de unidades para evitar os erros
+	// TODO caso de teste de bloqueio em três falhas de login
 }
