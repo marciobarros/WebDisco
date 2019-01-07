@@ -5,6 +5,9 @@ import java.util.List;
 
 import org.joda.time.DateTime;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -137,5 +140,37 @@ public class Chamada
 	public void removeAnexos()
 	{
 		this.anexos.clear();
+	}
+	
+	/**
+	 * Gera a representação Json da lista de campos
+	 */
+	public String geraRepresentacaoJsonCampos()
+	{
+		return new Gson().toJson(campos);
+	}
+	
+	/**
+	 * Carrega a lista de campos a partir de sua representação Json
+	 */
+	public void carregaRepresentacaoJsonCampos(String json)
+	{
+		campos = new Gson().fromJson(json, new TypeToken<ArrayList<CampoChamada>>(){}.getType());
+	}
+	
+	/**
+	 * Gera a representação Json da lista de anexos
+	 */
+	public String geraRepresentacaoJsonAnexos()
+	{
+		return new Gson().toJson(anexos);
+	}
+	
+	/**
+	 * Carrega a lista de anexos a partir de sua representação Json
+	 */
+	public void carregaRepresentacaoJsonAnexos(String json)
+	{
+		anexos = new Gson().fromJson(json, new TypeToken<ArrayList<String>>(){}.getType());
 	}
 }

@@ -4,12 +4,8 @@ Antes de rodar a aplicação, copie o arquivo "configuration-default.properties"
 
 # Pendências
 
-- implementar a verificação de gestores nas ações de unidades
+- [ok] implementar a verificação de gestores nas ações de unidades
 
-- implementar os DAO de chamadas e inscrições
-
-- implementar as consultas em todos os DAO
-
-- implementar as ações de chamadas e inscrições
+- [ok] implementar o DAO de chamadas
 
 - pensar nos slides da parte de back-end do curso

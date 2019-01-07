@@ -17,7 +17,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import br.unirio.dsw.model.Unidade;
+import br.unirio.dsw.model.Unidade.GestorUnidade;
+import br.unirio.dsw.model.Usuario;
 import br.unirio.dsw.service.dao.UnidadeDAO;
+import br.unirio.dsw.service.dao.UsuarioDAO;
 import br.unirio.dsw.utils.JsonUtils;
 
 /**
@@ -33,6 +36,9 @@ public class UnidadeController
 
 	@Autowired
 	private UnidadeDAO unidadeDAO;
+
+	@Autowired
+	private UsuarioDAO usuarioDAO;
 
 	/**
 	 * Ação que lista todas as unidades
@@ -55,23 +61,32 @@ public class UnidadeController
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/unidade", method = RequestMethod.POST, consumes="application/json")
-	public String salva(@RequestBody Unidade unidade)
+	public String salva(@RequestBody Unidade unidade, Locale locale)
 	{
-		// TODO tradução das mensagens abaixo
-
 		if (unidade.getSigla().length() == 0)
-			return JsonUtils.ajaxError("O código não pode ficar vazio.");
+			return JsonUtils.ajaxError(messageSource.getMessage("unidade.cadastro.erro.codigo.nao.vazio", null, locale));
 		
 		if (unidade.getSigla().length() > 10)
-			return JsonUtils.ajaxError("O código não deve ter mais do que 10 caracteres.");
+			return JsonUtils.ajaxError(messageSource.getMessage("unidade.cadastro.erro.codigo.menor.10char", null, locale));
 		
 		if (unidade.getNome().length() <= 0)
-			return JsonUtils.ajaxError("O nome não pode ficar vazio.");
+			return JsonUtils.ajaxError(messageSource.getMessage("unidade.cadastro.erro.nome.nao.vazio", null, locale));
 		
 		if (unidade.getNome().length() > 80)
-			return JsonUtils.ajaxError("O nome não pode ter mais do que 80 caracteres.");
+			return JsonUtils.ajaxError(messageSource.getMessage("unidade.cadastro.erro.codigo.menor.80char", null, locale));
  
-		// TODO; testar os gestores
+		for (int i = 0; i < unidade.contaGestores(); i++)
+		{
+			GestorUnidade gestor = unidade.pegaGestorIndice(i);
+			
+			if (verificaDuplicado(unidade, gestor, i))
+				return JsonUtils.ajaxError(messageSource.getMessage("unidade.cadastro.erro.gestor.duplicado", new Object[]{ gestor.getNome() }, locale));
+			
+			Usuario usuarioGestor = usuarioDAO.carregaUsuarioId(gestor.getId());
+			
+			if (usuarioGestor == null)
+				return JsonUtils.ajaxError(messageSource.getMessage("unidade.cadastro.erro.gestor.nao.encontrado", new Object[]{ gestor.getNome() }, locale));
+		}
 		
 		if (unidade.getId() == -1)
 			unidadeDAO.cria(unidade);
@@ -80,6 +95,23 @@ public class UnidadeController
 		
 		return JsonUtils.ajaxSuccess();
 	}
+
+	/**
+	 * Verifica se um gestor de unidade está duplicado
+	 */
+	private boolean verificaDuplicado(Unidade unidade, GestorUnidade gestor, int posicao)
+	{
+		for (int i = 0; i < posicao; i++)
+		{
+			GestorUnidade atual = unidade.pegaGestorIndice(i);
+			
+			if (atual.getId() == gestor.getId())
+				return true;
+		}
+		
+		return false;
+	}
+	
 
 	/**
 	 * Ação que remove uma unidade
@@ -91,7 +123,7 @@ public class UnidadeController
 		Unidade unidade = unidadeDAO.carregaUnidadeId(id);
 
 		if (unidade == null)
-			return JsonUtils.ajaxError(messageSource.getMessage("unidade.lista.remocao.nao.encontrado", null, locale));
+			return JsonUtils.ajaxError(messageSource.getMessage("unidade.cadastro.remocao.nao.encontrado", null, locale));
 
 		unidadeDAO.remove(id);
 		return JsonUtils.ajaxSuccess();

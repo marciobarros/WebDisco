@@ -83,8 +83,8 @@ CREATE TABLE Chamada
     dataEncerramento TIMESTAMP NULL,
     cancelada INT NOT NULL DEFAULT 0,
     encerrada INT NOT NULL DEFAULT 0,
-    campos LONGTEXT DEFAULT "",
-    anexos LONGTEXT DEFAULT "",
+    campos LONGTEXT,
+    anexos LONGTEXT,
 
     CONSTRAINT pkChamada PRIMARY KEY(id),
     CONSTRAINT ctSiglaChamadaUnica UNIQUE(sigla),
@@ -104,7 +104,7 @@ CREATE TABLE InscricaoChamada
 	idUsuario INT NOT NULL,
 	dataInscricao TIMESTAMP NULL,
 	cancelada INT NOT NULL DEFAULT 0,
-    valoresCampos LONGTEXT DEFAULT "",
+    valoresCampos LONGTEXT,
 
     CONSTRAINT pkInscricaoChamada PRIMARY KEY(id),
     CONSTRAINT fkInscricaoChamada FOREIGN KEY(idChamada) REFERENCES Chamada(id),
