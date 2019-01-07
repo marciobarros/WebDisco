@@ -4,4 +4,12 @@ Antes de rodar a aplicação, copie o arquivo "configuration-default.properties"
 
 # Pendências
 
-- implementar as acoes de criacao de conta e login
+- implementar a verificação de gestores nas ações de unidades
+
+- implementar os DAO de chamadas e inscrições
+
+- implementar as consultas em todos os DAO
+
+- implementar as ações de chamadas e inscrições
+
+- pensar nos slides da parte de back-end do curso
