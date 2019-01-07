@@ -172,7 +172,7 @@ public class UsuarioDAO extends AbstractDAO
 	/**
 	 * Adiciona um usuário no sistema
 	 */
-	public boolean criaNovoUsuario(Usuario usuario)
+	public boolean criaUsuario(Usuario usuario)
 	{
 		Connection c = getConnection();
 		

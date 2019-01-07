@@ -70,7 +70,7 @@ public class LoginController
         user.setNome(form.getNome());
         user.setEmail(form.getEmail());
         user.setSenha(passwordEncoder.encode(form.getSenha()));
-        userDAO.criaNovoUsuario(user);
+        userDAO.criaUsuario(user);
         return JsonUtils.ajaxSuccess();
     }
 	

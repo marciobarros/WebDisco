@@ -16,12 +16,11 @@ import lombok.Setter;
 public class Chamada
 {
 	private @Getter @Setter int id;
+	private @Getter @Setter int idUnidade;
 	private @Getter @Setter String nome;
 	private @Getter @Setter String sigla;
 	private @Getter @Setter DateTime dataAberturaInscricoes;
 	private @Getter @Setter DateTime dataEncerramentoInscricoes;
-	private @Getter @Setter int idUnidade;
-	private @Getter @Setter int idResponsavel;
 	private @Getter @Setter boolean cancelada;
 	private @Getter @Setter boolean encerrada;
 	private List<CampoChamada> campos;
@@ -38,7 +37,6 @@ public class Chamada
 		this.dataAberturaInscricoes = null;
 		this.dataEncerramentoInscricoes = null;
 		this.idUnidade = -1;
-		this.idResponsavel = -1;
 		this.cancelada = false;
 		this.encerrada = false;
 		this.campos = new ArrayList<CampoChamada>();

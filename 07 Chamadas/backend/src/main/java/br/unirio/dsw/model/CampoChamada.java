@@ -13,9 +13,9 @@ import lombok.Setter;
  */
 public class CampoChamada
 {
-	private @Getter @Setter int id;
 	private @Getter @Setter String titulo;
 	private @Getter @Setter TipoCampoChamada tipo;
+	private @Getter @Setter boolean opcional;
 	private @Getter @Setter int decimais;
 	private List<String> opcoes;
 
@@ -24,9 +24,9 @@ public class CampoChamada
 	 */
 	public CampoChamada()
 	{
-		this.id = -1;
 		this.titulo = "";
 		this.tipo = null;
+		this.opcional = true;
 		this.decimais = 0;
 		this.opcoes = new ArrayList<String>();
 	}

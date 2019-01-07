@@ -4,14 +4,15 @@
 
 DROP PROCEDURE IF EXISTS InscricaoChamadaInsere;
 DELIMITER //
-CREATE PROCEDURE InscricaoChamadaInsere(vIdChamada INT, vIdUsuario INT, OUT id INT)
+CREATE PROCEDURE InscricaoChamadaInsere(vIdChamada INT, vIdUsuario INT, vValoresCampos LONGTEXT, OUT id INT)
 BEGIN
-	INSERT INTO InscricaoChamada (dataRegistro, dataAtualizacao, idChamada, idUsuario)
-	VALUES (NOW(), NOW(), vIdChamada, vIdUsuario);
+	INSERT INTO InscricaoChamada (dataRegistro, dataAtualizacao, idChamada, idUsuario, valoresCampos)
+	VALUES (NOW(), NOW(), vIdChamada, vIdUsuario, vValoresCampos);
 
 	SET id = LAST_INSERT_ID();
 END //
 DELIMITER ;
+
 
 --
 -- CANCELAR UMA INSCRICAO EM CHAMADA
@@ -27,17 +28,17 @@ BEGIN
 END //
 DELIMITER ;
 
+
 --
--- REGISTRAR O VALOR DE UM CAMPO EM UMA INSCRICAO EM CHAMADA
+-- ENVIAR UMA INSCRICAO EM CHAMADA
 --
 
-DROP PROCEDURE IF EXISTS InscricaoChamadaInsereValorCampo;
+DROP PROCEDURE IF EXISTS InscricaoChamadaEnvia;
 DELIMITER //
-CREATE PROCEDURE InscricaoChamadaInsereValorCampo(vIdInscricao INT, vIdCampo INT, vValor VARCHAR(8192))
+CREATE PROCEDURE InscricaoChamadaEnvia(vIdInscricao INT)
 BEGIN
-    INSERT INTO InscricaoCampoChamada(idInscricao, idCampoChamada, valor)
-	VALUES (vIdInscricao, vIdCampo, vValor);
+	UPDATE InscricaoChamada
+    SET dataInscricao = NOW()
+    WHERE id = vIdInscricao;
 END //
 DELIMITER ;
-
-

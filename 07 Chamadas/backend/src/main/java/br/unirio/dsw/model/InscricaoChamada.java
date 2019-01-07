@@ -18,7 +18,7 @@ public class InscricaoChamada
 	private @Getter @Setter Chamada chamada;
 	private @Getter @Setter int idUsuario;
 	private @Getter @Setter DateTime dataRegistro;
-	private @Getter @Setter DateTime dataEnvio;
+	private @Getter @Setter DateTime dataInscricao;
 	private @Getter @Setter boolean cancelada;
 	private HashMap<CampoChamada, String> valoresCampos;
 	
@@ -31,7 +31,7 @@ public class InscricaoChamada
 		this.chamada = chamada;
 		this.idUsuario = -1;
 		this.dataRegistro = DateTime.now();
-		this.dataEnvio = null;
+		this.dataInscricao = null;
 		this.cancelada = false;
 		this.valoresCampos = new HashMap<CampoChamada, String>();
 	}
